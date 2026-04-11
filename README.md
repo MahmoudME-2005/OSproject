@@ -24,7 +24,7 @@ Then when you need to push use this (only for the first push):
 
 After this you can just use `git push` for any further pushing.
 
-## How to update your local repo with your colleague's work:
+## How to update your local repo with your colleague's work
 
 To get your colleague's changes on the same team:
 
@@ -34,4 +34,6 @@ To get your colleague's changes on the same team:
 
 When you finish a task and you make sure that it's working create a pull request here on the repo for me to review the work then merge the changes into the main branch.
 
-NOTE: don't merge the code and gui branches together if you want to try the whole project use the main branch or create a third branch and merge both the gui and code branches their and keep this third branch local and don't push from it.
+## NOTE
+
+don't merge the code and gui branches together if you want to try the whole project use the main branch or create a third branch and merge both the gui and code branches their and keep this third branch local and don't push from it.
