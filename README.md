@@ -4,6 +4,16 @@ secondary branches already created one named code for the code team and the othe
 
 ## setup
 
-let's say you are on the code team you will first have to clone the remote repo:
+first clone the repo
 
-* **markdown:** `git clone https://github.com/MahmoudME-2005/OSproject`
+`git clone https://github.com/MahmoudME-2005/OSproject`
+
+Then jump into your branch:
+
+* **For Code team:** `git checkout -b code`
+* **For GUI team:** `git checkout -b gui`
+
+Then when you need to push use this:
+
+* **For Code team:** `git push -u origin code`
+* **For GUI team:** `git push -u origin gui`
