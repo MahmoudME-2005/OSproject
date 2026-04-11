@@ -1,4 +1,4 @@
-# OS project
+# OS Project
 Each team (GUI and Code teams) will have a seperate branch to work on (Don't push to main branch) there are two
 secondary branches already created one named code for the code team and the other named gui for the gui team.
 
