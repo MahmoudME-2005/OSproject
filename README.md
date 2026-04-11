@@ -7,11 +7,12 @@ secondary branches already created one named code for the code team and the othe
 first clone the repo
 
 `git clone https://github.com/MahmoudME-2005/OSproject`
+`cd OSproject`
 
 Then jump into your branch:
 
-* **For Code team:** `git checkout -b code`
-* **For GUI team:**  `git checkout -b gui`
+* **For Code team:** `git switch code`
+* **For GUI team:**  `git switch gui`
 
 Then when you need to push use this:
 
