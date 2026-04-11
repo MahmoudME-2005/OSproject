@@ -11,9 +11,9 @@ first clone the repo
 Then jump into your branch:
 
 * **For Code team:** `git checkout -b code`
-* **For GUI team:** `git checkout -b gui`
+* **For GUI team:**  `git checkout -b gui`
 
 Then when you need to push use this:
 
 * **For Code team:** `git push -u origin code`
-* **For GUI team:** `git push -u origin gui`
+* **For GUI team:**  `git push -u origin gui`
