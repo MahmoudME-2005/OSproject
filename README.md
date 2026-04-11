@@ -4,7 +4,7 @@ secondary branches already created one named code for the code team and the othe
 
 ## setup
 
-first clone the repo
+First clone the repo:
 
 `git clone https://github.com/MahmoudME-2005/OSproject`
 `cd OSproject`
