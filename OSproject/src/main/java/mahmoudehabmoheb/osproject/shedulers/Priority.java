@@ -10,7 +10,7 @@ import mahmoudehabmoheb.osproject.Process;
  *
  * @author Mahmoud Ehab
  */
-public class Priority implements Shedulable {
+public class Priority extends Sheduler {
     @Override
     public void schedule()
     {

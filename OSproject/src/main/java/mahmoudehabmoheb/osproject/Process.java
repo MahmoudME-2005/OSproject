@@ -16,6 +16,14 @@ public class Process {
     private int remainingBurstTime;
     private int finishedTime;
     
+    public Process(int initialBurstTime)
+    {
+        this.initialBurstTime = initialBurstTime;
+        this.arrivalTime = 0;
+        this.remainingBurstTime = this.initialBurstTime;
+        this.finishedTime = 0;
+    }
+    
     public void set_initialBurstTime(int initialBurstTime)
     {
         this.initialBurstTime = initialBurstTime;

@@ -12,22 +12,18 @@ import java.util.List;
  * SJF Scheduler
  * Supports Preemptive (SRTF) and Non-Preemptive scheduling without modifying the original Process class.
  */
-public class SJF implements Shedulable {
+public class SJF extends Sheduler {
 
-    private PriorityQueue<Process> readyQueue;
-    private Process currentProcess;
     private boolean isPreemptive;
-    private int currentTime;
+    private PriorityQueue<Process> readyQueue;
 
     // We use a Map to track remaining times without needing to alter Process.java
     private Map<Process, Integer> remainingTimes;
-    private List<Process> completedProcesses;
 
     public SJF(boolean isPreemptive) {
+        super();
         this.isPreemptive = isPreemptive;
-        this.currentTime = 0;
         this.remainingTimes = new HashMap<>();
-        this.completedProcesses = new ArrayList<>();
 
         // PriorityQueue sorts by Shortest Remaining Time. Tie-breaker: Arrival Time.
         this.readyQueue = new PriorityQueue<>(11,
@@ -62,6 +58,8 @@ public class SJF implements Shedulable {
             if (timeLeft == 0) {
                 currentProcess.set_finishedTime(this.currentTime);
                 completedProcesses.add(currentProcess);
+                this.calculate_averageWaitingTime();
+                this.calculate_averageTurnAroundTime();
                 currentProcess = null; // Free CPU
             }
         }

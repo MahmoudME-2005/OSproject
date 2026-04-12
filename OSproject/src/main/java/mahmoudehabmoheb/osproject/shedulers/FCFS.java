@@ -10,7 +10,7 @@ import java.util.ArrayList;
  *
  * @author Mahmoud Ehab
  */
-public class FCFS implements Shedulable {
+public class FCFS extends Sheduler {
     ArrayList<Process> processes;
     
     @Override
