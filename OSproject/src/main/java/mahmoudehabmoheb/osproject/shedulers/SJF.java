@@ -3,87 +3,95 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * SJF Scheduler
  * Supports Preemptive (SRTF) and Non-Preemptive scheduling without modifying the original Process class.
  */
-public class SJF extends Sheduler {
-
+public class SJF extends Sheduler
+{
     private boolean isPreemptive;
     private PriorityQueue<Process> readyQueue;
 
-    // We use a Map to track remaining times without needing to alter Process.java
-    private Map<Process, Integer> remainingTimes;
-
-    public SJF(boolean isPreemptive) {
+    public SJF(boolean isPreemptive)
+    {
         super();
         this.isPreemptive = isPreemptive;
-        this.remainingTimes = new HashMap<>();
-
-        // PriorityQueue sorts by Shortest Remaining Time. Tie-breaker: Arrival Time.
-        this.readyQueue = new PriorityQueue<>(11,
-            Comparator.comparingInt((Process p) -> remainingTimes.getOrDefault(p, 0)).thenComparingInt(Process::get_arrivalTime)
+        
+        // Sorting using Mahmoud's getter methods
+        this.readyQueue = new PriorityQueue<>(
+                Comparator.comparingInt(Process::get_remainingBurstTime).thenComparingInt(Process::get_arrivalTime)
         );
     }
 
-    public void addProcess(Process p) {
-        // Log the initial burst time when the process enters the system
-        remainingTimes.put(p, (Integer) p.get_initialBurstTime());
+    public void addProcess(Process p)
+    {
         readyQueue.add(p);
     }
 
     @Override
-    public void schedule() {
-        // Runs the algorithm instantly to the end for the "Instant Evaluation" requirement
-        while (currentProcess != null || !readyQueue.isEmpty()) {
-            tick(currentTime);
-            currentTime++;
+    public void schedule()
+    {
+        while (currentProcess != null || !readyQueue.isEmpty())
+        {
+            try 
+            {
+                tick(currentTime);
+                Thread.sleep(1000);
+                currentTime++;
+            }
+            catch (InterruptedException e)
+            {
+                Thread.currentThread().interrupt();
+                break;
+            }
         }
     }
 
-    public Process tick(int time) {
+    public Process tick(int time)
+    {
         this.currentTime = time;
 
         // 1. Execute current process
-        if (currentProcess != null) {
-            int timeLeft = remainingTimes.get(currentProcess) - 1;
-            remainingTimes.put(currentProcess, timeLeft);
+        if (this.currentProcess != null)
+        {
+            this.currentProcess.set_remainingBurstTime(this.currentProcess.get_remainingBurstTime() - 1);
 
-            // If finished
-            if (timeLeft == 0) {
-                currentProcess.set_finishedTime(this.currentTime);
-                completedProcesses.add(currentProcess);
+            if (this.currentProcess.get_remainingBurstTime() == 0) 
+            {
+                this.currentProcess.set_finishedTime(this.currentTime + 1);
+                this.completedProcesses.add(this.currentProcess);
                 this.calculate_averageWaitingTime();
                 this.calculate_averageTurnAroundTime();
-                currentProcess = null; // Free CPU
+                this.currentProcess = null; // Free CPU
             }
         }
 
         // 2. Preemption Check
-        if (isPreemptive && currentProcess != null && !readyQueue.isEmpty()) {
-            Process shortestInQueue = readyQueue.peek();
-            if (remainingTimes.get(shortestInQueue) < remainingTimes.get(currentProcess)) {
-                readyQueue.add(currentProcess);
-                currentProcess = null;
+        if (this.isPreemptive && this.currentProcess != null && !this.readyQueue.isEmpty())
+        {
+            if (this.readyQueue.peek().get_remainingBurstTime() < this.currentProcess.get_remainingBurstTime())
+            {
+                this.readyQueue.add(this.currentProcess);
+                this.currentProcess = null;
             }
         }
 
         // 3. Load next shortest process
-        if (currentProcess == null && !readyQueue.isEmpty()) {
-            if (readyQueue.peek().get_arrivalTime() <= this.currentTime) {
-                currentProcess = readyQueue.poll();
+        if (this.currentProcess == null && !this.readyQueue.isEmpty())
+        {
+            if (this.readyQueue.peek().get_arrivalTime() <= this.currentTime)
+            {
+                this.currentProcess = this.readyQueue.poll();
             }
         }
 
-        return currentProcess;
+        return this.currentProcess;
     }
 
-    public List<Process> getCompletedProcesses() {
-        return completedProcesses;
+    public List<Process> getCompletedProcesses()
+    {
+        return this.completedProcesses;
     }
 }

@@ -24,7 +24,7 @@ public class RoundRobin extends Sheduler {
     
     public void add_Process(Process p)
     {
-        p.set_arrivatTime(this.currentTime);
+        p.set_arrivalTime(this.currentTime);
         this.readyQueue.addLast(p);
     }
     

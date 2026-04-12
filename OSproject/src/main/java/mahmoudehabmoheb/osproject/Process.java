@@ -1,16 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mahmoudehabmoheb.osproject;
-
-/**
- *
- * @author Mahmoud Ehab
- */
 
 // You can edit this class to your liking I'll handle it's final form in the end.
 public class Process {
+    private String id;
     private int initialBurstTime;
     private int arrivalTime;
     private int remainingBurstTime;
@@ -18,47 +10,58 @@ public class Process {
     
     public Process(int initialBurstTime)
     {
+        this.id = id;
         this.initialBurstTime = initialBurstTime;
         this.arrivalTime = 0;
         this.remainingBurstTime = this.initialBurstTime;
         this.finishedTime = 0;
     }
     
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+    
     public void set_initialBurstTime(int initialBurstTime)
     {
         this.initialBurstTime = initialBurstTime;
     }
-    
-    public void set_remainingBurstTime(int remainingBurstTime)
+
+    public void set_remainingBurstTime(int remainingBurstTime) 
     {
         this.remainingBurstTime = remainingBurstTime;
     }
-    
-    public void set_arrivatTime(int arrivalTime)
+
+    public void set_arrivalTime(int arrivalTime) 
     {
         this.arrivalTime = arrivalTime;
     }
-    
-    public void set_finishedTime(int finishedTime)
+
+    public void set_finishedTime(int finishedTime) 
     {
         this.finishedTime = finishedTime;
     }
+
+    public String getId()
+    {
+        return id;
+    }
     
-    public int get_initialBurstTime()
+    public int get_initialBurstTime() 
     {
         return this.initialBurstTime;
     }
-    
-    public int get_remainingBurstTime()
+
+    public int get_remainingBurstTime() 
     {
-        return this.initialBurstTime;
+        return this.remainingBurstTime;
     }
-    
+
     public int get_arrivalTime()
     {
         return this.arrivalTime;
     }
-    
+
     public int get_finishedTime()
     {
         return this.finishedTime;
