@@ -30,15 +30,14 @@ public class SJF implements Shedulable {
         this.completedProcesses = new ArrayList<>();
 
         // PriorityQueue sorts by Shortest Remaining Time. Tie-breaker: Arrival Time.
-        this.readyQueue = new PriorityQueue<>(
-                Comparator.comparingInt((Process p) -> remainingTimes.getOrDefault(p, 0))
-                        .thenComparingInt(Process::getArrivalTime)
+        this.readyQueue = new PriorityQueue<>(11,
+            Comparator.comparingInt((Process p) -> remainingTimes.getOrDefault(p, 0)).thenComparingInt(Process::get_arrivalTime)
         );
     }
 
     public void addProcess(Process p) {
         // Log the initial burst time when the process enters the system
-        remainingTimes.put(p, p.getBurstTime());
+        remainingTimes.put(p, (Integer) p.get_burstTime());
         readyQueue.add(p);
     }
 
@@ -61,7 +60,7 @@ public class SJF implements Shedulable {
 
             // If finished
             if (timeLeft == 0) {
-                currentProcess.setFinishedTime(this.currentTime);
+                currentProcess.set_finishedTime(this.currentTime);
                 completedProcesses.add(currentProcess);
                 currentProcess = null; // Free CPU
             }
@@ -78,7 +77,7 @@ public class SJF implements Shedulable {
 
         // 3. Load next shortest process
         if (currentProcess == null && !readyQueue.isEmpty()) {
-            if (readyQueue.peek().getArrivalTime() <= this.currentTime) {
+            if (readyQueue.peek().get_arrivalTime() <= this.currentTime) {
                 currentProcess = readyQueue.poll();
             }
         }

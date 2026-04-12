@@ -8,6 +8,8 @@ package mahmoudehabmoheb.osproject;
  *
  * @author Mahmoud Ehab
  */
+
+// You can edit this class to your liking I'll handle it's final form in the end.
 public class Process {
     private int burstTime;
     private int arrivalTime;
