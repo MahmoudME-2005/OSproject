@@ -3,50 +3,44 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * SJF Scheduler
- * Supports Preemptive (SRTF) and Non-Preemptive scheduling without modifying the original Process class.
- */
 public class SJF implements Shedulable {
 
     private PriorityQueue<Process> readyQueue;
     private Process currentProcess;
     private boolean isPreemptive;
     private int currentTime;
-
-    // We use a Map to track remaining times without needing to alter Process.java
-    private Map<Process, Integer> remainingTimes;
     private List<Process> completedProcesses;
 
     public SJF(boolean isPreemptive) {
         this.isPreemptive = isPreemptive;
         this.currentTime = 0;
-        this.remainingTimes = new HashMap<>();
         this.completedProcesses = new ArrayList<>();
 
-        // PriorityQueue sorts by Shortest Remaining Time. Tie-breaker: Arrival Time.
-        this.readyQueue = new PriorityQueue<>(11,
-            Comparator.comparingInt((Process p) -> remainingTimes.getOrDefault(p, 0)).thenComparingInt(Process::get_arrivalTime)
+        // Sorting using Mahmoud's getter methods
+        this.readyQueue = new PriorityQueue<>(
+                Comparator.comparingInt(Process::get_remainingBurstTime)
+                        .thenComparingInt(Process::get_arrivalTime)
         );
     }
 
     public void addProcess(Process p) {
-        // Log the initial burst time when the process enters the system
-        remainingTimes.put(p, (Integer) p.get_initialBurstTime());
         readyQueue.add(p);
     }
 
     @Override
     public void schedule() {
-        // Runs the algorithm instantly to the end for the "Instant Evaluation" requirement
         while (currentProcess != null || !readyQueue.isEmpty()) {
-            tick(currentTime);
-            currentTime++;
+            try {
+                tick(currentTime);
+                Thread.sleep(1000);
+                currentTime++;
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
         }
     }
 
@@ -55,21 +49,21 @@ public class SJF implements Shedulable {
 
         // 1. Execute current process
         if (currentProcess != null) {
-            int timeLeft = remainingTimes.get(currentProcess) - 1;
-            remainingTimes.put(currentProcess, timeLeft);
+            currentProcess.set_remainingBurstTime(currentProcess.get_remainingBurstTime() - 1);
 
-            // If finished
-            if (timeLeft == 0) {
-                currentProcess.set_finishedTime(this.currentTime);
+            if (currentProcess.get_remainingBurstTime() == 0) {
+                currentProcess.set_finishedTime(this.currentTime + 1);
+                currentProcess.set_turnaroundTime(currentProcess.get_finishedTime() - currentProcess.get_arrivalTime());
+                currentProcess.set_waitingTime(currentProcess.get_turnaroundTime() - currentProcess.get_initialBurstTime());
+
                 completedProcesses.add(currentProcess);
-                currentProcess = null; // Free CPU
+                currentProcess = null;
             }
         }
 
         // 2. Preemption Check
         if (isPreemptive && currentProcess != null && !readyQueue.isEmpty()) {
-            Process shortestInQueue = readyQueue.peek();
-            if (remainingTimes.get(shortestInQueue) < remainingTimes.get(currentProcess)) {
+            if (readyQueue.peek().get_remainingBurstTime() < currentProcess.get_remainingBurstTime()) {
                 readyQueue.add(currentProcess);
                 currentProcess = null;
             }
