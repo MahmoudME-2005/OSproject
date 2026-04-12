@@ -11,13 +11,19 @@ package mahmoudehabmoheb.osproject;
 
 // You can edit this class to your liking I'll handle it's final form in the end.
 public class Process {
-    private int burstTime;
+    private int initialBurstTime;
     private int arrivalTime;
+    private int remainingBurstTime;
     private int finishedTime;
     
-    public void set_burstTime(int burstTime)
+    public void set_initialBurstTime(int initialBurstTime)
     {
-        this.burstTime = burstTime;
+        this.initialBurstTime = initialBurstTime;
+    }
+    
+    public void set_remainingBurstTime(int remainingBurstTime)
+    {
+        this.remainingBurstTime = remainingBurstTime;
     }
     
     public void set_arrivatTime(int arrivalTime)
@@ -30,9 +36,14 @@ public class Process {
         this.finishedTime = finishedTime;
     }
     
-    public int get_burstTime()
+    public int get_initialBurstTime()
     {
-        return this.burstTime;
+        return this.initialBurstTime;
+    }
+    
+    public int get_remainingBurstTime()
+    {
+        return this.initialBurstTime;
     }
     
     public int get_arrivalTime()

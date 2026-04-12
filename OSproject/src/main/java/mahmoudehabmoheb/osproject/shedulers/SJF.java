@@ -37,7 +37,7 @@ public class SJF implements Shedulable {
 
     public void addProcess(Process p) {
         // Log the initial burst time when the process enters the system
-        remainingTimes.put(p, (Integer) p.get_burstTime());
+        remainingTimes.put(p, (Integer) p.get_initialBurstTime());
         readyQueue.add(p);
     }
 
