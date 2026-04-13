@@ -3,13 +3,12 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.List;
 
 /**
  * SJF Scheduler
  * Supports Preemptive (SRTF) and Non-Preemptive scheduling without modifying the original Process class.
  */
-public class SJF extends Sheduler
+public class SJF extends Scheduler
 {
     private boolean isPreemptive;
     private PriorityQueue<Process> readyQueue;
@@ -88,10 +87,5 @@ public class SJF extends Sheduler
         }
 
         return this.currentProcess;
-    }
-
-    public List<Process> getCompletedProcesses()
-    {
-        return this.completedProcesses;
     }
 }

@@ -13,7 +13,7 @@ import mahmoudehabmoheb.osproject.Process;
  *
  * @author Mahmoud Ehab
  */
-public class Priority extends Sheduler {
+public class Priority extends Scheduler {
     private List<Process> processes;
     private boolean isPreemptive;
 

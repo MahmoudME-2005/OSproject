@@ -5,16 +5,15 @@
 package mahmoudehabmoheb.osproject.shedulers;
 
 import mahmoudehabmoheb.osproject.Process;
-import java.util.Deque;
+import java.util.Queue;
 import java.util.ArrayDeque;
-import java.util.List;
 
 /**
  *
  * @author Mahmoud Ehab
  */
-public class RoundRobin extends Sheduler {
-    private Deque<Process> readyQueue;
+public class RoundRobin extends Scheduler {
+    private Queue<Process> readyQueue;
     
     public RoundRobin()
     {
@@ -25,7 +24,7 @@ public class RoundRobin extends Sheduler {
     public void add_Process(Process p)
     {
         p.set_arrivalTime(this.currentTime);
-        this.readyQueue.addLast(p);
+        this.readyQueue.add(p);
     }
     
     @Override
@@ -33,7 +32,7 @@ public class RoundRobin extends Sheduler {
     {
         while (!this.readyQueue.isEmpty())
         {
-            this.currentProcess = this.readyQueue.pollFirst();
+            this.currentProcess = this.readyQueue.poll();
             
             try
             {
@@ -56,12 +55,7 @@ public class RoundRobin extends Sheduler {
                 continue;
             }
             
-            this.readyQueue.addLast(this.currentProcess);
+            this.readyQueue.add(this.currentProcess);
         }
-    }
-    
-    public List<Process> get_completedProcesses()
-    {
-        return this.completedProcesses;
     }
 }
