@@ -13,6 +13,11 @@ public class SJF extends Scheduler
     private boolean isPreemptive;
     private PriorityQueue<Process> readyQueue;
 
+    public SJF() // Defaults to non-preemptive scheduling.
+    {
+        this(false);
+    }
+    
     public SJF(boolean isPreemptive)
     {
         super();
@@ -20,13 +25,14 @@ public class SJF extends Scheduler
         
         // Sorting using Mahmoud's getter methods
         this.readyQueue = new PriorityQueue<>(
-                Comparator.comparingInt(Process::get_remainingBurstTime).thenComparingInt(Process::get_arrivalTime)
+                Comparator.comparingInt(Process::get_remainingBurstTime).thenComparingInt(Process::get_id)
         );
     }
 
-    public void addProcess(Process p)
+    public void add_Process(Process p)
     {
-        readyQueue.add(p);
+        p.set_arrivalTime(this.currentTime);
+        this.readyQueue.add(p);
     }
 
     @Override
@@ -80,10 +86,7 @@ public class SJF extends Scheduler
         // 3. Load next shortest process
         if (this.currentProcess == null && !this.readyQueue.isEmpty())
         {
-            if (this.readyQueue.peek().get_arrivalTime() <= this.currentTime)
-            {
-                this.currentProcess = this.readyQueue.poll();
-            }
+            this.currentProcess = this.readyQueue.poll();
         }
 
         return this.currentProcess;
