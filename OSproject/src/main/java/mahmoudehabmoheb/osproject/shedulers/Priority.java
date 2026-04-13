@@ -10,7 +10,7 @@ import mahmoudehabmoheb.osproject.Process;
  *
  * @author Mahmoud Ehab
  */
-public class Priority extends Sheduler {
+public class Priority extends Scheduler {
     @Override
     public void schedule()
     {

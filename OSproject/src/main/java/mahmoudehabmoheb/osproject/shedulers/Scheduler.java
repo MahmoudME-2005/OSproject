@@ -12,14 +12,14 @@ import java.util.ArrayList;
  *
  * @author Mahmoud Ehab
  */
-public abstract class Sheduler {
+public abstract class Scheduler {
     protected Process currentProcess;
     protected int currentTime;
     protected List<Process> completedProcesses;
     protected int averageWaitingTime;
     protected int averageTurnAroundTime;
     
-    public Sheduler()
+    public Scheduler()
     {
         this.currentProcess = null;
         this.currentTime = 0;
@@ -58,5 +58,10 @@ public abstract class Sheduler {
         
         this.averageTurnAroundTime = result/this.completedProcesses.size();
         return this.averageTurnAroundTime;
+    }
+    
+    public List<Process> get_completedProcesses()
+    {
+        return this.completedProcesses;
     }
 }

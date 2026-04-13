@@ -5,104 +5,53 @@
 package mahmoudehabmoheb.osproject.shedulers;
 
 import mahmoudehabmoheb.osproject.Process;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Queue;
+import java.util.ArrayDeque;
 
 /**
  *
  * @author Mahmoud Ehab
  */
-public class FCFS extends Sheduler {
-    ArrayList<Process> processes;
-    ArrayList<Double>waiting;
-    ArrayList<Double>turnaround;
-    double waitingTime=0;
-    double turnaroundTime=0;
-    ArrayList<String> gantt;
+public class FCFS extends Scheduler {
+    private Queue<Process> readyQueue;
 
-    public FCFS(ArrayList<Process> processes){
-        this.processes=processes;
-        waiting=new ArrayList<>();
-        turnaround=new ArrayList<>();
-        gantt=new ArrayList<>();
+    public FCFS()
+    {
+        super();
+        readyQueue = new ArrayDeque<>();
     }
+    
+    public void add_Process(Process p)
+    {
+        p.set_arrivalTime(this.currentTime);
+        readyQueue.add(p);
+    }
+    
     @Override
-    public void schedule() {
-
-        processes.sort(Comparator.comparingInt(p -> p.get_arrivalTime()));
-
-        int currentTime = 0;
-        int completedProcesses = 0;
-        int totalProcesses = processes.size();
-        int currentIdx = 0;
-
-        System.out.println("--- start ---");
-
-        while (completedProcesses < totalProcesses) {
-            Process current = null;
-
-
-            if (currentIdx < totalProcesses) {
-                Process p = processes.get(currentIdx);
-                if (p.get_arrivalTime() <= currentTime) {
-                    current = p;
+    public void schedule()
+    {
+        while (!this.readyQueue.isEmpty())
+        {
+            this.currentProcess = this.readyQueue.poll();
+            
+            try
+            {
+                for (int i = 0; i < this.currentProcess.get_initialBurstTime(); i++)
+                {
+                    Thread.sleep(1000);
+                    this.currentTime++;
                 }
             }
-
-            if (current != null) {
-
-                gantt.add("P" + current.getId());
-
-
-                int nextRemaining = current.get_remainingBurstTime() - 1;
-                current.set_remainingBurstTime(nextRemaining);
-
-                System.out.println("Time " + currentTime + ": Executing P" + current.getId() +
-                        " (Remaining: " + current.get_remainingBurstTime() + ")");
-
-
-                if (current.get_remainingBurstTime() <= 0) {
-                    completedProcesses++;
-                    currentIdx++;
-
-                    double finishTime = currentTime + 1;
-                    double taTime = finishTime - current.get_arrivalTime();
-                    double wTime = taTime - current.get_initialBurstTime();
-
-                    turnaround.add(taTime);
-                    waiting.add(wTime);
-                    System.out.println(">> [Done] P" + current.getId() + " finished at " + finishTime);
-                }
-            } else {
-
-                gantt.add("Idle");
-                System.out.println("Time " + currentTime + ": Idle...");
+            catch (InterruptedException ex)
+            {
+                System.out.println("Process Executing");
             }
-
-            currentTime++;
-
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                break;
-            }
+            
+            this.currentProcess.set_remainingBurstTime(0);
+            this.currentProcess.set_finishedTime(this.currentTime);
+            this.completedProcesses.add(this.currentProcess);
+            this.calculate_averageWaitingTime();
+            this.calculate_averageTurnAroundTime();
         }
-        System.out.println("--- done ---");
     }
-    public double avgwaitingtime(){
-        double sum=0;
-        for(double a:waiting){
-            sum+=a;
-        }
-        return sum/waiting.size();
-    } public double avgturnaroundtime(){
-        double sum=0;
-        for(double a:turnaround){
-            sum+=a;
-        }
-        return sum/turnaround.size();
-    }
-
 }
