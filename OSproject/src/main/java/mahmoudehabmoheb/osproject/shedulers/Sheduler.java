@@ -4,9 +4,10 @@
  */
 package mahmoudehabmoheb.osproject.shedulers;
 
-import mahmoudehabmoheb.osproject.Process;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
+import mahmoudehabmoheb.osproject.Process;
 
 /**
  *

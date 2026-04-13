@@ -7,6 +7,7 @@ public class Process {
     private int arrivalTime;
     private int remainingBurstTime;
     private int finishedTime;
+    private int priority;
     
     public Process(int initialBurstTime)
     {
@@ -66,4 +67,9 @@ public class Process {
     {
         return this.finishedTime;
     }
+    public int get_priority() {
+
+        return this.priority;
+    }
+    
 }
