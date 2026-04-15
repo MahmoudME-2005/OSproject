@@ -34,7 +34,7 @@ public class Landing_PageController extends SceneController
         switchToScene("/fxml/TeamInfo.fxml");
     }
 
-    @FXML
+   @FXML
     public void handleStartAction()
     {
         String algo = algorithmComboBox.getValue();

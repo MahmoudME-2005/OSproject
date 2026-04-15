@@ -16,7 +16,7 @@
    <children>
       <ImageView fx:id="centerImageView" fitHeight="303.0" fitWidth="343.0" layoutX="170.0" layoutY="-44.0" pickOnBounds="true" preserveRatio="true">
    <image>
-      <Image url="@../images/CPU%20Scheduling%20(2).png" />
+      <Image url="@../images/CPU%20Scheduling%20(4).png" />
    </image>
 </ImageView>
       <Button fx:id="teamInfoBtn" layoutX="14.0" layoutY="350.0" mnemonicParsing="false" onAction="#handleTeamInfoAction" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #5800ff; -fx-font-weight: bold; -fx-border-color: #ffffff; -fx-border-radius: 12; -fx-background-radius: 12;" text="Team Info" textFill="WHITE" />
