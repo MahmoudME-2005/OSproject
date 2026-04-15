@@ -1,3 +1,4 @@
+mahmoudehabmoheb\osprojectnew\StaticOutputController.class
 mahmoudehabmoheb\osprojectnew\RRController.class
 mahmoudehabmoheb\osprojectnew\SceneController.class
 mahmoudehabmoheb\osprojectnew\TeamInfoController.class
@@ -13,6 +14,7 @@ mahmoudehabmoheb\osprojectnew\SJFController.class
 mahmoudehabmoheb\osproject\OSproject.class
 mahmoudehabmoheb\osprojectnew\AddProcessPriorityController.class
 mahmoudehabmoheb\osprojectnew\PriorityController.class
+mahmoudehabmoheb\osprojectnew\ModesController.class
 mahmoudehabmoheb\osprojectnew\Landing_PageController.class
 mahmoudehabmoheb\osproject\Process.class
 mahmoudehabmoheb\osprojectnew\ProcessModel.class

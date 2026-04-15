@@ -178,5 +178,53 @@
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
+      <ProgressBar fx:id="p8Bar" layoutX="317.0" layoutY="329.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
+      <Text fill="#5800ff" layoutX="283.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fill="#5800ff" layoutX="586.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="p8Burst" fill="#5800ff" layoutX="483.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <ProgressBar fx:id="p9Bar" layoutX="317.0" layoutY="358.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
+      <Text fill="#5800ff" layoutX="283.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fill="#5800ff" layoutX="586.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="p9Burst" fill="#5800ff" layoutX="483.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <ProgressBar fx:id="p10Bar" layoutX="317.0" layoutY="387.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
+      <Text fill="#5800ff" layoutX="283.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fill="#5800ff" layoutX="586.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="p10Burst" fill="#5800ff" layoutX="483.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

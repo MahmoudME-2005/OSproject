@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osproject\OSproject.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osproject\shedulers\Scheduler.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\AddProcessPriorityController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\SceneController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osproject\shedulers\FCFS.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\Landing_PageController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\PriorityController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osproject\Process.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\ProcessModel.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\RRController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\SJFController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osproject\shedulers\RoundRobin.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osproject\shedulers\SJF.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\App.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\CPU_Scheduling_opController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\FCFSController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\TeamInfoController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\AddProcessStandardController.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\mahmoudehabmoheb\osproject\shedulers\Priority.java
-E:\ASU\Operating Systems ASU\Project\OSproject\src\main\java\module-info.java
-=======
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\CPU_Scheduling_opController.java
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osproject\Process.java
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osproject\shedulers\Scheduler.java
@@ -29,6 +7,8 @@ D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\ma
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\RRController.java
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\SJFController.java
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\SceneController.java
+D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\ModesController.java
+D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\StaticOutputController.java
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\App.java
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\PriorityController.java
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\ProcessModel.java
@@ -40,4 +20,3 @@ D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\ma
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\module-info.java
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osprojectnew\Landing_PageController.java
 D:\Spring 26\OS\mini project1\OSproject-main (2)\OSproject-main\OSproject\src\main\java\mahmoudehabmoheb\osproject\shedulers\FCFS.java
->>>>>>> f34957a0c61d98c0583aae1798987d426aab2073
