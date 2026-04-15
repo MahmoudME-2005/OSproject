@@ -62,26 +62,41 @@ public void handleTeamInfoAction(ActionEvent event) {
     }
 }
 
-    @FXML
-    public void handleStartAction() {
-        try {
-            String algo = algorithmComboBox.getValue();
-            String countStr = processCountField.getText();
-            
-            if (algo == null || countStr.isEmpty()) return;
-            
-            int count = Integer.parseInt(countStr);
+   @FXML
+public void handleStartAction() {
+    try {
+        String algo = algorithmComboBox.getValue();
+        String countStr = processCountField.getText();
+        
+        if (algo == null || countStr.isEmpty()) return;
+        
+        int count = Integer.parseInt(countStr);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CPU_Scheduling_op.fxml"));
-            Parent root = loader.load();
+        // Path must match your actual resource folder (/fxml/)
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CPU_Scheduling_op.fxml"));
+        Parent root = loader.load();
 
-            CPU_Scheduling_opController controller = loader.getController();
-            controller.setupSimulation(algo, count);
+        // Pass data to the simulation controller
+        CPU_Scheduling_opController controller = loader.getController();
+        
+        // Note: Earlier we called this initSimulationWithData, 
+        // ensure this matches the method name in your CPU_Scheduling_opController
+        controller.setupSimulation(algo, count); 
 
-            App.setRootNode(root);
+        // Call the static method we just added to App.java
+        App.setRootNode(root);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    } catch (Exception e) {
+        System.err.println("Navigation failed. Check if /fxml/CPU_Scheduling_op.fxml exists.");
+        e.printStackTrace();
     }
 }
+}
+
+
+
+
+
+
+
+
