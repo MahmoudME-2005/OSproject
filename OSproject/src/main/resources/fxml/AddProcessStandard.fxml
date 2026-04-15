@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="140.0" prefWidth="333.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mahmoudehabmoheb.osprojectnew.AddProcessStandardController">
+   <children>
+      <TextField fx:id="readyQueueTxt" layoutX="135.0" layoutY="47.0" prefHeight="28.0" prefWidth="173.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <Text fill="#5800ff" layoutX="14.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Brust Time" textAlignment="CENTER" wrappingWidth="98.8033676147461">
+         <font>
+            <Font name="Tahoma" size="16.0" />
+         </font>
+      </Text>
+      <Button fx:id="addProcessBtn" layoutX="14.0" layoutY="98.0" mnemonicParsing="false" onAction="#closeWindow" prefHeight="28.0" prefWidth="82.0" style="-fx-background-color: #5800ff; -fx-font-weight: bold; -fx-border-color: #ffffff; -fx-border-radius: 12; -fx-background-radius: 12;" text="Back" textFill="WHITE" />
+      <Button fx:id="addProcessBtn1" layoutX="239.0" layoutY="98.0" mnemonicParsing="false" onAction="#handleAdd" prefHeight="28.0" prefWidth="82.0" style="-fx-background-color: #5800ff; -fx-font-weight: bold; -fx-border-color: #ffffff; -fx-border-radius: 12; -fx-background-radius: 12;" text="Add" textFill="WHITE" />
+   </children>
+</AnchorPane>
