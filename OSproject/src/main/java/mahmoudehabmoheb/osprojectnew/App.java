@@ -16,6 +16,7 @@ public class App extends Application {
         SceneController.setStage(stage);
         scene = new Scene(loadFXML("/fxml/Landing_Page"), 640, 500);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

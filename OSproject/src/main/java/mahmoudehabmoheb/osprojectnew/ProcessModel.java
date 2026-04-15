@@ -2,7 +2,8 @@ package mahmoudehabmoheb.osprojectnew;
 
 import javafx.beans.property.*;
 
-public class ProcessModel {
+public class ProcessModel
+{
     private final String id;
     private final int burstTime;
     private final DoubleProperty remainingTime;

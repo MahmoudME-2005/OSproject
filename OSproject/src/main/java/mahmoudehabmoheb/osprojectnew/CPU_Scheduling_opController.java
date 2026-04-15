@@ -22,7 +22,7 @@ public class CPU_Scheduling_opController {
     @FXML private ProgressBar p1Bar, p2Bar, p3Bar, p4Bar, p5Bar, p6Bar, p7Bar;
     @FXML private Text p1Burst, p2Burst, p3Burst, p4Burst, p5Burst, p6Burst, p7Burst;
 
-    private Queue<ProcessModel> readyQueue = new LinkedList<>();
+    private Queue<ProcessModel> readyQueue = new LinkedList<>(); // I will remove this in a minute but reading the code
     private Timeline simulationTimeline;
     private boolean isRunning = false;
 
