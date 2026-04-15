@@ -13,15 +13,17 @@ import java.io.IOException;
  *
  * @author Mahmoud Ehab
  */
+/*
+ All controllers that involves scene switching functionality
+ should inherit from this controller and use the switchToScene
+ method
+*/
 public class SceneController {
     private static Stage stage;
     private Scene scene;
     private Parent root;
 
     public void switchToScene(String fxmlFilePath) {
-        // 1. Load the FXML file
-        // Note: The path must be relative to the classpath. 
-        // Based on your folder structure, it likely needs to start with "/view/"
         try
         {
             root = FXMLLoader.load(getClass().getResource(fxmlFilePath));
@@ -35,7 +37,6 @@ public class SceneController {
             System.out.println("The page doesn't exist");
         }
 
-        // 3. Create the new scene and set it on the stage
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
