@@ -9,18 +9,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class TeamInfoController {
-
+public class TeamInfoController extends SceneController
+{
     @FXML
-private void handleBackAction(ActionEvent event) {
-    try {
-        // Use the absolute path starting from the resources root
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Landing_Page.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
-    } catch (IOException e) {
-        e.printStackTrace();
+    private void handleBackAction(ActionEvent event)
+    {
+        switchToScene("/fxml/Landing_Page.fxml");
     }
-}
 }

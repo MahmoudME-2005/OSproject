@@ -14,13 +14,11 @@ import javafx.fxml.Initializable;
  * @author Salsbil
  */
 public class AddProcessPriorityController implements Initializable {
-
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
 }
