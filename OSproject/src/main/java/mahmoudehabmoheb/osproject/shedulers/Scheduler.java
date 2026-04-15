@@ -5,13 +5,14 @@
 package mahmoudehabmoheb.osproject.shedulers;
 
 import mahmoudehabmoheb.osproject.Process;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Mahmoud Ehab
  */
+
 public abstract class Scheduler {
     protected Process currentProcess;
     protected int currentTime;

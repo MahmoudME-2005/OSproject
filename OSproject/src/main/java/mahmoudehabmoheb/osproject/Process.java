@@ -7,6 +7,7 @@ public class Process {
     private int arrivalTime;
     private int remainingBurstTime;
     private int finishedTime;
+    private int priority;
     private static int counter = 0;
     
     public Process(int initialBurstTime)
@@ -17,6 +18,7 @@ public class Process {
         this.arrivalTime = 0;
         this.remainingBurstTime = this.initialBurstTime;
         this.finishedTime = 0;
+        this.priority = 0;
     }
     
     // This setter shouldn't be used unless necessary process id's will be set automatically inorder.
@@ -45,7 +47,7 @@ public class Process {
         this.finishedTime = finishedTime;
     }
 
-    public int getId()
+    public int get_id()
     {
         return this.id;
     }
@@ -68,5 +70,10 @@ public class Process {
     public int get_finishedTime()
     {
         return this.finishedTime;
+    }
+    
+    public int get_priority() {
+
+        return this.priority;
     }
 }

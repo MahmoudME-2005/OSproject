@@ -13,7 +13,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
         
+
+        SceneController.setStage(stage);
+
         scene = new Scene(loadFXML("/fxml/Landing_Page"), 640, 500);
         stage.setScene(scene);
         stage.show();

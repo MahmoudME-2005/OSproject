@@ -12,13 +12,15 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class Landing_PageController {
+public class Landing_PageController extends SceneController
+{
 
     @FXML private TextField processCountField;
     @FXML private ComboBox<String> algorithmComboBox;
 
     @FXML
-    public void initialize() {
+    public void initialize()
+    {
         if (algorithmComboBox != null && algorithmComboBox.getItems().isEmpty()) {
             algorithmComboBox.getItems().addAll("FCFS", "SJF", "Round Robin", "Priority");
         }
@@ -27,70 +29,24 @@ public class Landing_PageController {
     // THIS IS THE METHOD CAUSING THE ERROR
     // Make sure it is exactly 'handleTeamInfoAction' and has @FXML
     @FXML
-public void handleTeamInfoAction(ActionEvent event) {
-//    try {
-//        // Use the absolute path starting from the resources root
-//        Parent root = FXMLLoader.load(getClass().getResource("/fxml/TeamInfo.fxml"));
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        stage.setScene(new Scene(root));
-//        stage.show();
-//    } catch (IOException e) {
-//        e.printStackTrace();
-//    }
-    try {
-      
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/TeamInfo.fxml"));
-        Parent root = loader.load();
-
-        
-        Scene scene = new Scene(root);
-        
-        
-        Stage stage = new Stage();
-        stage.setTitle("Team Information");
-        
-       
-        stage.initModality(Modality.APPLICATION_MODAL); 
-        
-        stage.setScene(scene);
-        stage.setResizable(false); 
-        stage.show(); 
-
-    } catch (IOException e) {
-        System.err.println("Error: Could not load TeamInfo.fxml. Check the file path.");
-        e.printStackTrace();
+    public void handleTeamInfoAction(ActionEvent event)
+    {
+        switchToScene("/fxml/TeamInfo.fxml");
     }
-}
+
 
    @FXML
-public void handleStartAction() {
-    try {
+    public void handleStartAction()
+    {
         String algo = algorithmComboBox.getValue();
         String countStr = processCountField.getText();
         
         if (algo == null || countStr.isEmpty()) return;
         
         int count = Integer.parseInt(countStr);
-
-        // Path must match your actual resource folder (/fxml/)
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CPU_Scheduling_op.fxml"));
-        Parent root = loader.load();
-
-        // Pass data to the simulation controller
-        CPU_Scheduling_opController controller = loader.getController();
         
-        // Note: Earlier we called this initSimulationWithData, 
-        // ensure this matches the method name in your CPU_Scheduling_opController
-        controller.setupSimulation(algo, count); 
-
-        // Call the static method we just added to App.java
-        App.setRootNode(root);
-
-    } catch (Exception e) {
-        System.err.println("Navigation failed. Check if /fxml/CPU_Scheduling_op.fxml exists.");
-        e.printStackTrace();
+        switchToScene("/fxml/CPU_Scheduling_op.fxml");
     }
-}
 }
 
 
