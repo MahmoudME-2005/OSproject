@@ -1,205 +1,144 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mahmoudehabmoheb.osproject.shedulers;
 
-import java.util.ArrayList;
-import java.util.List;
-import javafx.application.Platform;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
+import javafx.application.Platform;
 import mahmoudehabmoheb.osproject.Process;
 
 /**
- *
- * @author Mahmoud Ehab
+ * Priority scheduler implementation.
+ * Lower integer priority means higher scheduling priority.
  */
-
-public class Priority extends Scheduler<List<Process>>
-{
+public class Priority extends Scheduler<PriorityQueue<Process>> {
     private boolean isPreemptive;
 
-    public Priority()
-    {
+    public Priority() {
         this(false); // Default to non-preemptive
     }
 
-    public Priority(boolean isPreemptive)
-    {
+    public Priority(boolean isPreemptive) {
         super();
-        this.readyQueue = new ArrayList<>();
         this.isPreemptive = isPreemptive;
+        this.readyQueue = new PriorityQueue<>(
+                Comparator.comparingInt(Process::get_priority)
+                        .thenComparingInt(Process::get_arrivalTime)
+                        .thenComparingInt(Process::get_id));
     }
 
-    public List<Process> get_readyQueue()
-    {
+    public PriorityQueue<Process> get_readyQueue() {
         return this.readyQueue;
     }
-    
+
     @Override
-    public void add_Process(Process p)
-    {
+    public void add_Process(Process p) {
         p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
         set_observableReadyQueue();
     }
 
     @Override
-    public void schedule()
-    {
-        if (isPreemptive)
-        {
-            // Preemptive priority scheduling (lower number = higher priority)
-            while (completedProcesses.size() < readyQueue.size())
-            {
-                Process highestPriorityProcess = null;
+    public void schedule() {
+        if (isPreemptive) {
+            // Preemptive priority scheduling
+            while (!readyQueue.isEmpty() || this.currentProcess.get() != null) {
+                while (!readyQueue.isEmpty() && completedProcesses.contains(readyQueue.peek())) {
+                    readyQueue.poll();
+                }
 
-                for (Process p : this.readyQueue) {
-                    if (!completedProcesses.contains(p))
-                    {
-                        if (highestPriorityProcess == null || p.get_priority() < highestPriorityProcess.get_priority())
-                        {
-                            highestPriorityProcess = p;
+                if (this.currentProcess.get() != null && readyQueue.peek() != null
+                        && readyQueue.peek().get_priority() < this.currentProcess.get().get_priority()) {
+                    readyQueue.add(this.currentProcess.get());
+                    this.currentProcess.set(readyQueue.peek());
+                    readyQueue.poll();
+                } else if (this.currentProcess.get() == null && readyQueue.peek() != null) {
+                    this.currentProcess.set(readyQueue.peek());
+                    readyQueue.poll();
+                }
+
+                if (this.currentProcess.get() != null) {
+                    this.currentProcess.get()
+                            .set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
+
+                    try {
+                        if (this.isDynamic) {
+                            Thread.sleep(1000);
                         }
-                    }
-                }
-
-                if (this.currentProcess != null && highestPriorityProcess != null && highestPriorityProcess.get_priority() < this.currentProcess.get().get_priority())
-                {
-                    this.currentProcess.set(highestPriorityProcess);
-                }
-                else if (currentProcess == null && highestPriorityProcess != null)
-                {
-                    this.currentProcess.set(highestPriorityProcess);
-                }
-
-                if (this.currentProcess != null)
-                {
-                    this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
-
-                    try
-                    {
-                        if (this.isDynamic)
-                        {
-                            Thread.sleep(1000); // 1 second per time unit
-                        }
-                    }
-                    catch (InterruptedException e)
-                    {
+                    } catch (InterruptedException e) {
                         Thread.currentThread().interrupt();
                         break;
                     }
 
                     increment_currentTime();
 
-                    if (this.currentProcess.get().get_remainingBurstTime() == 0)
-                    {
+                    if (this.currentProcess.get().get_remainingBurstTime() == 0) {
                         this.currentProcess.get().set_finishedTime(this.currentTime.get());
                         this.completedProcesses.add(this.currentProcess.get());
-                        this.currentProcess = null;
+                        this.currentProcess.set(null);
                     }
-                }
-                else
-                {
-                    if (this.isDynamic)
-                    {
-                        try
-                        {
+                } else {
+                    if (this.isDynamic) {
+                        try {
                             Thread.sleep(1000);
                             increment_currentTime();
-                        }
-                        catch (InterruptedException e)
-                        {
+                        } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                             break;
                         }
-                    }
-                    else
-                    {
-                        continue;
                     }
                 }
             }
-        } // Non-preemptive priority scheduling
-        else
-        {
-            while (this.completedProcesses.size() < this.readyQueue.size())
-            {
-                Process highestPriorityProcess = null;
-
-                for (Process p : this.readyQueue)
-                {
-                    if (!this.completedProcesses.contains(p))
-                    {
-                        if (highestPriorityProcess == null || p.get_priority() < highestPriorityProcess.get_priority())
-                        {
-                            highestPriorityProcess = p;
-                        }
-                    }
+        } else {
+            // Non-preemptive priority scheduling
+            while (!this.readyQueue.isEmpty() || this.currentProcess.get() != null) {
+                // Skip completed processes
+                while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek())) {
+                    this.readyQueue.poll();
                 }
 
-                if (highestPriorityProcess != null)
-                {
-                    this.currentProcess.set(highestPriorityProcess);
+                if (!this.readyQueue.isEmpty()) {
+                    Process p = this.readyQueue.poll();
+                    this.currentProcess.set(p);
 
-                    // Execute the process for its full burst time, sleeping 1 second per time unit
-                    for (int i = 0; i < highestPriorityProcess.get_initialBurstTime(); i++)
-                    {
-                        try
-                        {
-                            if (this.isDynamic)
-                            {
-                                Thread.sleep(1000);                     
+                    for (int i = 0; i < p.get_initialBurstTime(); i++) {
+                        try {
+                            if (this.isDynamic) {
+                                Thread.sleep(1000);
                             }
-                        }
-                        catch (InterruptedException e)
-                        {
+                        } catch (InterruptedException e) {
                             Thread.currentThread().interrupt();
                             break;
                         }
                         increment_currentTime();
                     }
 
-                    highestPriorityProcess.set_finishedTime(this.currentTime.get());
-                    this.completedProcesses.add(highestPriorityProcess);
-                }
-                else
-                {
-                if (this.isDynamic)
-                {
-                    try
-                    {
-                        Thread.sleep(1000);
-                        increment_currentTime();
+                    p.set_finishedTime(this.currentTime.get());
+                    this.completedProcesses.add(p);
+                } else {
+                    if (this.isDynamic) {
+                        try {
+                            Thread.sleep(1000);
+                            increment_currentTime();
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            break;
+                        }
                     }
-                    catch (InterruptedException e)
-                    {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
-                }
-                else
-                {
-                    continue;
-                }
                 }
             }
         }
     }
-    
-    public void set_preemptive(boolean p)
-    {
+
+    public void set_preemptive(boolean p) {
         this.isPreemptive = p;
     }
-    
-    public boolean is_preemptive()
-    {
+
+    public boolean is_preemptive() {
         return this.isPreemptive;
     }
-    
+
     @Override
-    public void set_observableReadyQueue()
-    {
-        Platform.runLater(() -> this.observableReadyQueue.setAll(this.readyQueue));
+    public void set_observableReadyQueue() {
+        Platform.runLater(() -> this.observableReadyQueue.setAll(readyQueue));
     }
 }
