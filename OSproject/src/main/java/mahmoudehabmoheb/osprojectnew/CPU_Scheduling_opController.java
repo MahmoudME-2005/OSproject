@@ -124,45 +124,6 @@ public class CPU_Scheduling_opController extends SceneController
         
         CPU_Scheduling_opController.scheduler.get_currentTimeProperty().addListener((obs, oldValue, newValue) -> {
             this.totalExecTxt.setText("" + newValue);
-            
-            if (CPU_Scheduling_opController.scheduler.get_currentProcess() != null)
-            {
-//                CPU_Scheduling_opController.scheduler.get_currentProcess().get_remainingBurstTimeProperty().addListener((burstObs, burstOldValue, burstNewValue) -> {
-//                    switch (CPU_Scheduling_opController.scheduler.get_currentProcess().get_id())
-//                    {
-//                        case 1:
-//                            this.p1RemainingBurst.setText("" + burstNewValue);
-//                            break;
-//                        case 2:
-//                            this.p2RemainingBurst.setText("" + burstNewValue);
-//                            break;
-//                        case 3:
-//                            this.p3RemainingBurst.setText("" + burstNewValue);
-//                            break;
-//                        case 4:
-//                            this.p4RemainingBurst.setText("" + burstNewValue);
-//                            break;
-//                        case 5:
-//                            this.p5RemainingBurst.setText("" + burstNewValue);
-//                            break;
-//                        case 6:
-//                            this.p6RemainingBurst.setText("" + burstNewValue);
-//                            break;
-//                        case 7:
-//                            this.p7RemainingBurst.setText("" + burstNewValue);
-//                            break;
-//                        case 8:
-//                            this.p8RemainingBurst.setText("" + burstNewValue);
-//                            break;
-//                        case 9:
-//                            this.p9RemainingBurst.setText("" + burstNewValue);
-//                            break;
-//                        case 10:
-//                            this.p10RemainingBurst.setText("" + burstNewValue);
-//                            break;      
-//                    }
-//                });
-            }
         });
         
         CPU_Scheduling_opController.scheduler.get_currentProcessProperty().addListener((obs, oldValue, newValue) -> {
@@ -257,27 +218,6 @@ public class CPU_Scheduling_opController extends SceneController
         catch (IOException e)
         {
             e.printStackTrace();
-        }
-    }
-
-    private ProgressBar getBarForProcess(String id)
-    {
-        switch(id)
-        {
-            case "P1": return p1Bar; case "P2": return p2Bar;
-            case "P3": return p3Bar; case "P4": return p4Bar;
-            case "P5": return p5Bar; case "P6": return p6Bar;
-            case "P7": return p7Bar; default: return null;
-        }
-    }
-
-    private Text getTextForProcess(String id)
-    {
-        switch(id) {
-            case "P1": return p1Burst; case "P2": return p2Burst;
-            case "P3": return p3Burst; case "P4": return p4Burst;
-            case "P5": return p5Burst; case "P6": return p6Burst;
-            case "P7": return p7Burst; default: return null;
         }
     }
 }
