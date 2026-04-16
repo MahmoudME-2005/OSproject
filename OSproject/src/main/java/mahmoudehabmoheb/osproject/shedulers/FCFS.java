@@ -53,9 +53,10 @@ public class FCFS extends Scheduler<Queue<Process>>
                     {
                         System.out.println("Process Executing");
                     }
+                    
+                    this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
                 }
                 
-                this.currentProcess.get().set_remainingBurstTime(0);
                 this.currentProcess.get().set_finishedTime(this.currentTime.get());
                 this.completedProcesses.add(this.currentProcess.get());
                 this.calculate_averageWaitingTime();

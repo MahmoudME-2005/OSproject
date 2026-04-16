@@ -252,4 +252,9 @@ public abstract class Scheduler<T>
             e.printStackTrace();
         }
     }
+    
+    public T get_readyQueue()
+    {
+        return this.readyQueue;
+    }
 }

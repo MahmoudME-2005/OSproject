@@ -157,6 +157,7 @@ public class Priority extends Scheduler<List<Process>>
                             Thread.currentThread().interrupt();
                             break;
                         }
+                        
                         increment_currentTime();
                     }
 

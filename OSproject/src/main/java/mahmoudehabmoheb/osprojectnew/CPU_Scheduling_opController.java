@@ -9,20 +9,26 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.geometry.Orientation;
 import mahmoudehabmoheb.osproject.shedulers.Priority;
 import mahmoudehabmoheb.osproject.shedulers.SJF;
+import mahmoudehabmoheb.osproject.Process;
 
 public class CPU_Scheduling_opController extends SceneController
 {
-    @FXML private TextField algorithmTxt, cpuTxt, readyQueueTxt;
+    @FXML private TextField algorithmTxt, cpuTxt;
+    @FXML private ListView readyQueueTxt;
     @FXML private TextField avgWaitTxt, avgTurnTxt, totalExecTxt;
-    @FXML private ProgressBar p1Bar, p2Bar, p3Bar, p4Bar, p5Bar, p6Bar, p7Bar;
-    @FXML private Text p1Burst, p2Burst, p3Burst, p4Burst, p5Burst, p6Burst, p7Burst;
+    @FXML private ProgressBar p1Bar, p2Bar, p3Bar, p4Bar, p5Bar, p6Bar, p7Bar, p8Bar, p9Bar, p10Bar;
+    @FXML private Text p1Burst, p2Burst, p3Burst, p4Burst, p5Burst, p6Burst, p7Burst, p8Burst, p9Burst, p10Burst;
+    @FXML private Text p1RemainingBurst, p2RemainingBurst, p3RemainingBurst, p4RemainingBurst, p5RemainingBurst, p6RemainingBurst, p7RemainingBurst, p8RemainingBurst, p9RemainingBurst, p10RemainingBurst;
+    @FXML private Text p1Priority, p2Priority, p3Priority, p4Priority, p5Priority, p6Priority, p7Priority, p8Priority, p9Priority, p10Priority;
     
     @FXML
     private void initialize()
     {
-        switch (CPU_Scheduling_opController.algo) {
+        switch (CPU_Scheduling_opController.algo)
+        {
             case 0:
                 algorithmTxt.setPromptText("FCFS");
                 break;
@@ -50,6 +56,65 @@ public class CPU_Scheduling_opController extends SceneController
                 this.algorithmTxt.setPromptText("Round Robin");
                 break;
         }
+
+        for (Process P : (Iterable<Process>) (CPU_Scheduling_opController.scheduler.get_readyQueue()))
+        {
+            switch (P.get_id())
+            {
+                case 1:
+                    this.p1RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p1Burst.setText("" + P.get_initialBurstTime());
+                    this.p1Priority.setText("" + P.get_priority());
+                    break;
+                case 2:
+                    this.p2RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p2Burst.setText("" + P.get_initialBurstTime());
+                    this.p2Priority.setText("" + P.get_priority());
+                    break;
+                case 3:
+                    this.p3RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p3Burst.setText("" + P.get_initialBurstTime());
+                    this.p3Priority.setText("" + P.get_priority());
+                    break;
+                case 4:
+                    this.p4RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p4Burst.setText("" + P.get_initialBurstTime());
+                    this.p4Priority.setText("" + P.get_priority());
+                    break;
+                case 5:
+                    this.p5RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p5Burst.setText("" + P.get_initialBurstTime());
+                    this.p5Priority.setText("" + P.get_priority());
+                    break;
+                case 6:
+                    this.p6RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p6Burst.setText("" + P.get_initialBurstTime());
+                    this.p6Priority.setText("" + P.get_priority());
+                    break;
+                case 7:
+                    this.p7RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p7Burst.setText("" + P.get_initialBurstTime());
+                    this.p7Priority.setText("" + P.get_priority());
+                    break;
+                case 8:
+                    this.p8RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p8Burst.setText("" + P.get_initialBurstTime());
+                    this.p8Priority.setText("" + P.get_priority());
+                    break;
+                case 9:
+                    this.p9RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p9Burst.setText("" + P.get_initialBurstTime());
+                    this.p9Priority.setText("" + P.get_priority());
+                    break;
+                case 10:
+                    this.p10RemainingBurst.setText("" + P.get_initialBurstTime());
+                    this.p10Burst.setText("" + P.get_initialBurstTime());
+                    this.p10Priority.setText("" + P.get_priority());
+                    break;      
+            }
+        }
+
+        this.readyQueueTxt.setItems(CPU_Scheduling_opController.scheduler.get_observableReadyQueue());
         
         this.avgWaitTxt.setText("" + 0);
         
@@ -59,16 +124,91 @@ public class CPU_Scheduling_opController extends SceneController
         
         CPU_Scheduling_opController.scheduler.get_currentTimeProperty().addListener((obs, oldValue, newValue) -> {
             this.totalExecTxt.setText("" + newValue);
+            
+            if (CPU_Scheduling_opController.scheduler.get_currentProcess() != null)
+            {
+//                CPU_Scheduling_opController.scheduler.get_currentProcess().get_remainingBurstTimeProperty().addListener((burstObs, burstOldValue, burstNewValue) -> {
+//                    switch (CPU_Scheduling_opController.scheduler.get_currentProcess().get_id())
+//                    {
+//                        case 1:
+//                            this.p1RemainingBurst.setText("" + burstNewValue);
+//                            break;
+//                        case 2:
+//                            this.p2RemainingBurst.setText("" + burstNewValue);
+//                            break;
+//                        case 3:
+//                            this.p3RemainingBurst.setText("" + burstNewValue);
+//                            break;
+//                        case 4:
+//                            this.p4RemainingBurst.setText("" + burstNewValue);
+//                            break;
+//                        case 5:
+//                            this.p5RemainingBurst.setText("" + burstNewValue);
+//                            break;
+//                        case 6:
+//                            this.p6RemainingBurst.setText("" + burstNewValue);
+//                            break;
+//                        case 7:
+//                            this.p7RemainingBurst.setText("" + burstNewValue);
+//                            break;
+//                        case 8:
+//                            this.p8RemainingBurst.setText("" + burstNewValue);
+//                            break;
+//                        case 9:
+//                            this.p9RemainingBurst.setText("" + burstNewValue);
+//                            break;
+//                        case 10:
+//                            this.p10RemainingBurst.setText("" + burstNewValue);
+//                            break;      
+//                    }
+//                });
+            }
         });
         
         CPU_Scheduling_opController.scheduler.get_currentProcessProperty().addListener((obs, oldValue, newValue) -> {
-            if (newValue == null || newValue.get_id() == 0)
+            if (newValue == null)
             {
                 this.cpuTxt.setText("Idle");
             }
             else
             {
                 this.cpuTxt.setText("P" + newValue.get_id());
+                
+                newValue.get_remainingBurstTimeProperty().addListener((burstObs, burstOldValue, burstNewValue) -> {
+                    switch (CPU_Scheduling_opController.scheduler.get_currentProcess().get_id())
+                    {
+                        case 1:
+                            this.p1RemainingBurst.setText("" + burstNewValue);
+                            break;
+                        case 2:
+                            this.p2RemainingBurst.setText("" + burstNewValue);
+                            break;
+                        case 3:
+                            this.p3RemainingBurst.setText("" + burstNewValue);
+                            break;
+                        case 4:
+                            this.p4RemainingBurst.setText("" + burstNewValue);
+                            break;
+                        case 5:
+                            this.p5RemainingBurst.setText("" + burstNewValue);
+                            break;
+                        case 6:
+                            this.p6RemainingBurst.setText("" + burstNewValue);
+                            break;
+                        case 7:
+                            this.p7RemainingBurst.setText("" + burstNewValue);
+                            break;
+                        case 8:
+                            this.p8RemainingBurst.setText("" + burstNewValue);
+                            break;
+                        case 9:
+                            this.p9RemainingBurst.setText("" + burstNewValue);
+                            break;
+                        case 10:
+                            this.p10RemainingBurst.setText("" + burstNewValue);
+                            break;      
+                    }
+                });
             }
         });
         

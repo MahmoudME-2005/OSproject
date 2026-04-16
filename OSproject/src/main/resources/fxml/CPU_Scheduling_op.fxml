@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -39,7 +40,6 @@
             <Font name="Tahoma" size="11.0" />
          </font>
       </Text>
-      <TextField fx:id="readyQueueTxt" layoutX="16.0" layoutY="382.0" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-6.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready Queue" textAlignment="CENTER" wrappingWidth="105.33333333333337">
          <font>
             <Font name="Tahoma" size="11.0" />
@@ -73,110 +73,159 @@
       <ProgressBar fx:id="p5Bar" layoutX="317.0" layoutY="239.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
       <ProgressBar fx:id="p6Bar" layoutX="317.0" layoutY="272.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
       <ProgressBar fx:id="p7Bar" layoutX="317.0" layoutY="299.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
-      <Text fill="#5800ff" layoutX="283.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+      <Text fx:id="p1Priority" fill="#5800ff" layoutX="283.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="283.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+      <Text fx:id="p2Priority" fill="#5800ff" layoutX="283.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="283.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+      <Text fx:id="p3Priority" fill="#5800ff" layoutX="283.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="283.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+      <Text fx:id="p4Priority" fill="#5800ff" layoutX="283.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="283.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+      <Text fx:id="p5Priority" fill="#5800ff" layoutX="283.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="283.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+      <Text fx:id="p6Priority" fill="#5800ff" layoutX="283.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="283.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+      <Text fx:id="p7Priority" fill="#5800ff" layoutX="283.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p1Burst" fill="#5800ff" layoutX="586.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p2Burst" fill="#5800ff" layoutX="586.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p3Burst" fill="#5800ff" layoutX="586.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p4Burst" fill="#5800ff" layoutX="586.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p5Burst" fill="#5800ff" layoutX="586.0" layoutY="253.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p6Burst" fill="#5800ff" layoutX="586.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p7Burst" fill="#5800ff" layoutX="586.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fx:id="p1Burst" fill="#5800ff" layoutX="483.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p1RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fx:id="p2Burst" fill="#5800ff" layoutX="483.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p2RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fx:id="p3Burst" fill="#5800ff" layoutX="483.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p3RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="193.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fx:id="p4Burst" fill="#5800ff" layoutX="483.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p4RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="224.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fx:id="p5Burst" fill="#5800ff" layoutX="483.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p5RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fx:id="p6Burst" fill="#5800ff" layoutX="483.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p6RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fx:id="p7Burst" fill="#5800ff" layoutX="483.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+      <Text fx:id="p7RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
+      <ProgressBar fx:id="p8Bar" layoutX="317.0" layoutY="329.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
+      <Text fx:id="p8Priority" fill="#5800ff" layoutX="283.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="p8Burst" fill="#5800ff" layoutX="586.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="p8RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <ProgressBar fx:id="p9Bar" layoutX="317.0" layoutY="358.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
+      <Text fx:id="p9Priority" fill="#5800ff" layoutX="283.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="p9Burst" fill="#5800ff" layoutX="586.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="p9RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <ProgressBar fx:id="p10Bar" layoutX="317.0" layoutY="387.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
+      <Text fx:id="p10Priority" fill="#5800ff" layoutX="283.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="p10Burst" fill="#5800ff" layoutX="586.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <Text fx:id="p10RemainingBurst" fill="#5800ff" layoutX="483.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
+         <font>
+            <Font name="Tahoma" size="13.0" />
+         </font>
+      </Text>
+      <ListView fx:id="readyQueueTxt" layoutX="16.0" layoutY="382.0" orientation="HORIZONTAL" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
    </children>
 </AnchorPane>
