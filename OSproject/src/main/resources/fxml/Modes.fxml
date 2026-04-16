@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="mahmoudehabmoheb.osprojectnew.ModesController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mahmoudehabmoheb.osprojectnew.ModesController">
    <children>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="610.0" spacing="15.0">
          <children>
@@ -18,13 +17,13 @@
                   <Image url="@../images/CPU%20Scheduling%20(4).png" />
                </image>
             </ImageView>
-            <TextField fx:id="ModeField" alignment="CENTER" maxWidth="312.0" minWidth="311.0" prefHeight="37.0" prefWidth="311.0" promptText="Choose A mode" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
-            <Button fx:id="staticmode" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #5800ff; -fx-font-weight: bold; -fx-border-color: #ffffff; -fx-border-radius: 12; -fx-background-radius: 12;" text="Static Mode" textFill="WHITE">
+            <TextField fx:id="ModeField" alignment="CENTER" editable="false" maxWidth="312.0" minWidth="311.0" prefHeight="37.0" prefWidth="311.0" promptText="Choose A mode" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9; -fx-prompt-text-fill: #5800ff;" />
+            <Button fx:id="staticModeBtn" mnemonicParsing="false" onAction="#handleStaticMode" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #5800ff; -fx-font-weight: bold; -fx-border-color: #ffffff; -fx-border-radius: 12; -fx-background-radius: 12;" text="Static Mode" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="dynamicmode" layoutX="235.0" layoutY="269.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #5800ff; -fx-font-weight: bold; -fx-border-color: #ffffff; -fx-border-radius: 12; -fx-background-radius: 12;" text="Dynamic Mode" textFill="WHITE">
+            <Button fx:id="dynamicModeBtn" layoutX="235.0" layoutY="269.0" mnemonicParsing="false" onAction="#handleDynamicMode" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #5800ff; -fx-font-weight: bold; -fx-border-color: #ffffff; -fx-border-radius: 12; -fx-background-radius: 12;" text="Dynamic Mode" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

@@ -4,23 +4,51 @@
  */
 package mahmoudehabmoheb.osprojectnew;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+
+
 
 /**
  * FXML Controller class
  *
  * @author Salsbil
  */
-public class ModesController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+public class ModesController extends SceneController
+{
+    @FXML private Button staticModeBtn, dynamicModeBtn, backBtn;
     
+    @FXML
+    private void handleStaticMode()
+    {
+        ModesController.scheduler.set_dynamic(false);
+        switchToScene("/fxml/StaticOutput.fxml");
+    }
+    
+    @FXML
+    private void handleDynamicMode()
+    {
+        ModesController.scheduler.set_dynamic(true);
+        switchToScene("/fxml/CPU_Scheduling_op.fxml");
+    }
+    
+//    @FXML
+//    private void handleBack()
+//    {
+//        switch (ModesController.algo)
+//        {
+//            case 0:
+//                switchToScene("/fxml/FCFS.fxml");
+//                break;
+//            case 1:
+//                switchToScene("/fxml/SJF.fxml");
+//                break;
+//            case 2:
+//                switchToScene("/fxml/priority.fxml");
+//                break;
+//            default:
+//                switchToScene("/fxml/RR.fxml");
+//                break;
+//        }
+//    }
 }

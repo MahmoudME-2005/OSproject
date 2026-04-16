@@ -1,7 +1,8 @@
 package mahmoudehabmoheb.osproject;
 
 // You can edit this class to your liking I'll handle it's final form in the end.
-public class Process {
+public class Process
+{
     private int id;
     private int initialBurstTime;
     private int arrivalTime;
@@ -13,7 +14,7 @@ public class Process {
     public Process(int initialBurstTime)
     {
         Process.counter++;
-        this.id = Process.counter;
+        this.id = Process.counter + 1;
         this.initialBurstTime = initialBurstTime;
         this.arrivalTime = 0;
         this.remainingBurstTime = this.initialBurstTime;
@@ -46,6 +47,11 @@ public class Process {
     {
         this.finishedTime = finishedTime;
     }
+    
+    public static void set_counter(int count)
+    {
+        Process.counter = count;
+    }
 
     public int get_id()
     {
@@ -72,8 +78,14 @@ public class Process {
         return this.finishedTime;
     }
     
-    public int get_priority() {
+    public int get_priority()
+    {
 
         return this.priority;
+    }
+    
+    public static int get_counter()
+    {
+        return Process.counter;
     }
 }

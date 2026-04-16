@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
+import mahmoudehabmoheb.osproject.shedulers.Scheduler;
+
 /**
  *
  * @author Mahmoud Ehab
@@ -18,12 +20,16 @@ import java.io.IOException;
  should inherit from this controller and use the switchToScene
  method
 */
-public class SceneController {
+public class SceneController
+{
     private static Stage stage;
     private Scene scene;
     private Parent root;
+    protected static Scheduler<?> scheduler;
+    protected static char algo;
 
-    public void switchToScene(String fxmlFilePath) {
+    public void switchToScene(String fxmlFilePath)
+    {
         try
         {
             root = FXMLLoader.load(getClass().getResource(fxmlFilePath));

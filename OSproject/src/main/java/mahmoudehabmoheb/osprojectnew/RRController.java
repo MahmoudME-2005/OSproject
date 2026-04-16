@@ -4,23 +4,97 @@
  */
 package mahmoudehabmoheb.osprojectnew;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import mahmoudehabmoheb.osproject.Process;
+import mahmoudehabmoheb.osproject.shedulers.RoundRobin;
 
 /**
  * FXML Controller class
  *
  * @author Salsbil
  */
-public class RRController implements Initializable {
+public class RRController extends SceneController
+{
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+    @FXML private TextField burstField, quantumField;
+    @FXML private Label errorLabel;
+    @FXML private GridPane GridBrstPri;
+    @FXML private Button addBtn, startBtn;
+
+    private int currentRow = 1; // Row 0 is the header
+
+    // 1. Back to Landing Page
+    @FXML
+    private void handleBackToLanding()
+    {
+        Process.set_counter(0);
+        this.switchToScene("/fxml/Landing_Page.fxml");
+    }
+
+    // 2. Add Data to Table (GridPane)
+    @FXML
+    private void handleAdd()
+    {
+        String burst = this.burstField.getText();
+
+        if (!burst.isEmpty())
+        {
+            // Add to internal list for the next scene
+            this.scheduler.add_Process(new Process(
+                Integer.parseInt(burst)
+            ));
+
+            // Add UI Labels to the GridPane
+            addLabelToGrid("P" + Process.get_counter(), 0, this.currentRow);
+            addLabelToGrid(burst, 1, this.currentRow);
+
+            this.currentRow++;
+            clearInputs();
+        }
+    }
+
+    private void addLabelToGrid(String text, int col, int row)
+    {
+        Label label = new Label(text);
+        label.setFont(new Font("Tahoma", 14));
+        VBox container = new VBox(label);
+        container.setAlignment(Pos.CENTER);
+        GridBrstPri.add(container, col, row);
+    }
+
+    // 3. Start Simulation and Pass Data
+    @FXML
+    private void handleStartAction()
+    {
+        String quantum = this.quantumField.getText();
+        
+        if (!quantum.isEmpty() && Integer.parseInt(quantum) > 0)
+        {
+            ((RoundRobin)this.scheduler).set_quantum(Integer.parseInt(quantum));
+        }
+        else
+        {
+            errorLabel.setVisible(true);
+            return;
+        }
+
+        errorLabel.setVisible(false);
+        
+        RRController.algo = 3;
+        
+        switchToScene("/fxml/Modes.fxml");
+    }
+
+    private void clearInputs()
+    {
+        this.burstField.clear();
+    }
 }

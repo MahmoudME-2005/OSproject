@@ -8,10 +8,9 @@ import java.util.PriorityQueue;
  * SJF Scheduler
  * Supports Preemptive (SRTF) and Non-Preemptive scheduling without modifying the original Process class.
  */
-public class SJF extends Scheduler
+public class SJF extends Scheduler<PriorityQueue<Process>>
 {
     private boolean isPreemptive;
-    private PriorityQueue<Process> readyQueue;
 
     public SJF() // Defaults to non-preemptive scheduling.
     {
@@ -29,6 +28,7 @@ public class SJF extends Scheduler
         );
     }
 
+    @Override
     public void add_Process(Process p)
     {
         p.set_arrivalTime(this.currentTime);
@@ -61,12 +61,12 @@ public class SJF extends Scheduler
         // 1. Execute current process
         if (this.currentProcess != null)
         {
-            this.currentProcess.set_remainingBurstTime(this.currentProcess.get_remainingBurstTime() - 1);
+            this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
 
-            if (this.currentProcess.get_remainingBurstTime() == 0) 
+            if (this.currentProcess.get().get_remainingBurstTime() == 0) 
             {
-                this.currentProcess.set_finishedTime(this.currentTime + 1);
-                this.completedProcesses.add(this.currentProcess);
+                this.currentProcess.get().set_finishedTime(this.currentTime + 1);
+                this.completedProcesses.add(this.currentProcess.get());
                 this.calculate_averageWaitingTime();
                 this.calculate_averageTurnAroundTime();
                 this.currentProcess = null; // Free CPU
@@ -76,9 +76,9 @@ public class SJF extends Scheduler
         // 2. Preemption Check
         if (this.isPreemptive && this.currentProcess != null && !this.readyQueue.isEmpty())
         {
-            if (this.readyQueue.peek().get_remainingBurstTime() < this.currentProcess.get_remainingBurstTime())
+            if (this.readyQueue.peek().get_remainingBurstTime() < this.currentProcess.get().get_remainingBurstTime())
             {
-                this.readyQueue.add(this.currentProcess);
+                this.readyQueue.add(this.currentProcess.get());
                 this.currentProcess = null;
             }
         }
@@ -86,9 +86,19 @@ public class SJF extends Scheduler
         // 3. Load next shortest process
         if (this.currentProcess == null && !this.readyQueue.isEmpty())
         {
-            this.currentProcess = this.readyQueue.poll();
+            this.currentProcess.set(this.readyQueue.poll());
         }
 
-        return this.currentProcess;
+        return this.currentProcess.get();
+    }
+    
+    public void set_preemptive(boolean p)
+    {
+        this.isPreemptive = p;
+    }
+    
+    public boolean is_preemptive()
+    {
+        return this.isPreemptive;
     }
 }

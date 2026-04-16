@@ -7,27 +7,35 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 
 /**
  *
  * @author Mahmoud Ehab
  */
 
-public abstract class Scheduler {
-    protected Process currentProcess;
+public abstract class Scheduler<T>
+{
+    protected ObjectProperty<Process> currentProcess;
     protected int currentTime;
     protected List<Process> completedProcesses;
+    protected T readyQueue;
     protected int averageWaitingTime;
     protected int averageTurnAroundTime;
+    protected boolean dynamic;
     
     public Scheduler()
     {
-        this.currentProcess = null;
+        this.currentProcess = new SimpleObjectProperty<>();
         this.currentTime = 0;
         this.completedProcesses = new ArrayList<>();
         this.averageWaitingTime = 0;
         this.averageTurnAroundTime = 0;
+        this.dynamic = false;
     }
+    
+    public abstract void add_Process(Process P);
     
     public abstract void schedule();
     
@@ -64,5 +72,30 @@ public abstract class Scheduler {
     public List<Process> get_completedProcesses()
     {
         return this.completedProcesses;
+    }
+    
+    public Process get_currentProcess()
+    {
+        return this.currentProcess.get();
+    }
+    
+    public void set_currentProcess(Process P)
+    {
+        this.currentProcess.set(P);
+    }
+    
+    public ObjectProperty<Process> get_currentProcessProperty()
+    {
+        return this.currentProcess;
+    }
+    
+    public void set_dynamic(boolean dynamic)
+    {
+        this.dynamic = dynamic;
+    }
+    
+    public boolean get_dynamic()
+    {
+        return this.dynamic;
     }
 }

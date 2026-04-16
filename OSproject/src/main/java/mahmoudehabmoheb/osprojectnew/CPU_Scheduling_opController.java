@@ -14,8 +14,10 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+import javafx.application.Platform;
 
-public class CPU_Scheduling_opController {
+public class CPU_Scheduling_opController
+{
 
     @FXML private TextField algorithmTxt, cpuTxt, readyQueueTxt;
     @FXML private TextField avgWaitTxt, avgTurnTxt, totalExecTxt;
@@ -26,11 +28,12 @@ public class CPU_Scheduling_opController {
     private Timeline simulationTimeline;
     private boolean isRunning = false;
 
-    public void setupSimulation(String algo, int count) {
+    public void setupSimulation(String algo)
+    {
         algorithmTxt.setText(algo);
-        for (int i = 1; i <= count; i++) {
-            readyQueue.add(new ProcessModel("P" + i, (int)(Math.random() * 8 + 3))); 
-        }
+//        for (int i = 1; i <= count; i++) {
+//            readyQueue.add(new ProcessModel("P" + i, (int)(Math.random() * 8 + 3))); 
+//        }
         updateReadyQueueUI();
         startSimulation();
     }
@@ -74,6 +77,8 @@ public class CPU_Scheduling_opController {
         simulationTimeline.play();
     }
 
+    
+    
     // THIS IS THE BUTTON METHOD
     @FXML
     private void handleAddProcess() {
@@ -121,7 +126,8 @@ public class CPU_Scheduling_opController {
     private void calculateAverages() { /* ... unchanged ... */ }
 
     private ProgressBar getBarForProcess(String id) {
-        switch(id) {
+        switch(id)
+        {
             case "P1": return p1Bar; case "P2": return p2Bar;
             case "P3": return p3Bar; case "P4": return p4Bar;
             case "P5": return p5Bar; case "P6": return p6Bar;

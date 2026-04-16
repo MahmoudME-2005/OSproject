@@ -14,10 +14,9 @@ import mahmoudehabmoheb.osproject.Process;
  * @author Mahmoud Ehab
  */
 
-public class Priority extends Scheduler
+public class Priority extends Scheduler<List<Process>>
 {
     private boolean isPreemptive;
-    private List<Process> processes;
 
     public Priority()
     {
@@ -27,19 +26,20 @@ public class Priority extends Scheduler
     public Priority(boolean isPreemptive)
     {
         super();
-        this.processes = new ArrayList<>();
+        this.readyQueue = new ArrayList<>();
         this.isPreemptive = isPreemptive;
     }
 
-    public List<Process> getprocesses()
+    public List<Process> get_readyQueue()
     {
-        return this.processes;
+        return this.readyQueue;
     }
-
+    
+    @Override
     public void add_Process(Process p)
     {
         p.set_arrivalTime(this.currentTime);
-        this.processes.add(p);
+        this.readyQueue.add(p);
     }
 
     @Override
@@ -48,11 +48,11 @@ public class Priority extends Scheduler
         if (isPreemptive)
         {
             // Preemptive priority scheduling (lower number = higher priority)
-            while (completedProcesses.size() < processes.size())
+            while (completedProcesses.size() < readyQueue.size())
             {
                 Process highestPriorityProcess = null;
 
-                for (Process p : processes) {
+                for (Process p : this.readyQueue) {
                     if (!completedProcesses.contains(p))
                     {
                         if (highestPriorityProcess == null || p.get_priority() < highestPriorityProcess.get_priority())
@@ -62,18 +62,18 @@ public class Priority extends Scheduler
                     }
                 }
 
-                if (currentProcess != null && highestPriorityProcess != null && highestPriorityProcess.get_priority() < currentProcess.get_priority())
+                if (this.currentProcess != null && highestPriorityProcess != null && highestPriorityProcess.get_priority() < this.currentProcess.get().get_priority())
                 {
-                    currentProcess = highestPriorityProcess;
+                    this.currentProcess.set(highestPriorityProcess);
                 }
                 else if (currentProcess == null && highestPriorityProcess != null)
                 {
-                    currentProcess = highestPriorityProcess;
+                    this.currentProcess.set(highestPriorityProcess);
                 }
 
-                if (currentProcess != null)
+                if (this.currentProcess != null)
                 {
-                    currentProcess.set_remainingBurstTime(currentProcess.get_remainingBurstTime() - 1);
+                    this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
 
                     try
                     {
@@ -85,13 +85,13 @@ public class Priority extends Scheduler
                         break;
                     }
 
-                    currentTime++;
+                    this.currentTime++;
 
-                    if (currentProcess.get_remainingBurstTime() == 0)
+                    if (this.currentProcess.get().get_remainingBurstTime() == 0)
                     {
-                        currentProcess.set_finishedTime(currentTime);
-                        completedProcesses.add(currentProcess);
-                        currentProcess = null;
+                        this.currentProcess.get().set_finishedTime(this.currentTime);
+                        this.completedProcesses.add(this.currentProcess.get());
+                        this.currentProcess = null;
                     }
                 }
                 else
@@ -106,19 +106,19 @@ public class Priority extends Scheduler
                         Thread.currentThread().interrupt();
                         break;
                     }
-                    currentTime++;
+                    this.currentTime++;
                 }
             }
         } // Non-preemptive priority scheduling
         else
         {
-            while (completedProcesses.size() < processes.size())
+            while (this.completedProcesses.size() < this.readyQueue.size())
             {
                 Process highestPriorityProcess = null;
 
-                for (Process p : processes)
+                for (Process p : this.readyQueue)
                 {
-                    if (!completedProcesses.contains(p))
+                    if (!this.completedProcesses.contains(p))
                     {
                         if (highestPriorityProcess == null || p.get_priority() < highestPriorityProcess.get_priority())
                         {
@@ -129,7 +129,7 @@ public class Priority extends Scheduler
 
                 if (highestPriorityProcess != null)
                 {
-                    currentProcess = highestPriorityProcess;
+                    this.currentProcess.set(highestPriorityProcess);
 
                     // Execute the process for its full burst time, sleeping 1 second per time unit
                     for (int i = 0; i < highestPriorityProcess.get_initialBurstTime(); i++)
@@ -143,11 +143,11 @@ public class Priority extends Scheduler
                             Thread.currentThread().interrupt();
                             break;
                         }
-                        currentTime++;
+                        this.currentTime++;
                     }
 
-                    highestPriorityProcess.set_finishedTime(currentTime);
-                    completedProcesses.add(highestPriorityProcess);
+                    highestPriorityProcess.set_finishedTime(this.currentTime);
+                    this.completedProcesses.add(highestPriorityProcess);
                 }
                 else
                 {
@@ -162,9 +162,19 @@ public class Priority extends Scheduler
                         break;
                     }
                     
-                    currentTime++;
+                    this.currentTime++;
                 }
             }
         }
+    }
+    
+    public void set_preemptive(boolean p)
+    {
+        this.isPreemptive = p;
+    }
+    
+    public boolean is_preemptive()
+    {
+        return this.isPreemptive;
     }
 }

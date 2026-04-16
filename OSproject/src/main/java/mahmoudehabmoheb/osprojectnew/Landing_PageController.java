@@ -1,49 +1,77 @@
 package mahmoudehabmoheb.osprojectnew;
 
-import java.io.IOException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import mahmoudehabmoheb.osproject.shedulers.FCFS;
+import mahmoudehabmoheb.osproject.shedulers.SJF;
+import mahmoudehabmoheb.osproject.shedulers.RoundRobin;
+import mahmoudehabmoheb.osproject.shedulers.Priority;
 
 public class Landing_PageController extends SceneController
 {
 
     @FXML private TextField processCountField;
     @FXML private ComboBox<String> algorithmComboBox;
+    @FXML private Label errorLabel;
 
     @FXML
     public void initialize()
     {
-        if (algorithmComboBox != null && algorithmComboBox.getItems().isEmpty()) {
-            algorithmComboBox.getItems().addAll("FCFS", "SJF", "Round Robin", "Priority");
+        this.errorLabel.setVisible(false);
+        
+        if (this.algorithmComboBox != null && this.algorithmComboBox.getItems().isEmpty())
+        {
+            this.algorithmComboBox.getItems().addAll("FCFS", "SJF", "Priority", "Round Robin");
         }
     }
 
     // THIS IS THE METHOD CAUSING THE ERROR
     // Make sure it is exactly 'handleTeamInfoAction' and has @FXML
     @FXML
-    public void handleTeamInfoAction(ActionEvent event)
+    public void handleTeamInfoAction()
     {
-        switchToScene("/fxml/TeamInfo.fxml");
+        this.switchToScene("/fxml/TeamInfo.fxml");
     }
 
    @FXML
     public void handleStartAction()
     {
-        String algo = algorithmComboBox.getValue();
-        String countStr = processCountField.getText();
+        String algo = this.algorithmComboBox.getValue();
+        String countStr = this.processCountField.getText();
         
         if (algo == null || countStr.isEmpty()) return;
         
         int count = Integer.parseInt(countStr);
         
-        switchToScene("/fxml/CPU_Scheduling_op.fxml");
+        if (count <= 0 || count > 10)
+        {
+            this.errorLabel.setVisible(true);
+            return;
+        }
+        
+        this.errorLabel.setVisible(false);
+        
+        if (algo.equals("FCFS"))
+        {
+            Landing_PageController.scheduler = new FCFS();
+            switchToScene("/fxml/FCFS.fxml");
+        }
+        else if (algo.equals("Round Robin"))
+        {
+            Landing_PageController.scheduler = new RoundRobin();
+            switchToScene("/fxml/RR.fxml");
+        }
+        else if (algo.equals("SJF"))
+        {
+            Landing_PageController.scheduler = new SJF();
+            switchToScene("/fxml/SJF.fxml");
+        }
+        else
+        {
+            Landing_PageController.scheduler = new Priority();
+            switchToScene("/fxml/priority.fxml");
+        }
     }
 }

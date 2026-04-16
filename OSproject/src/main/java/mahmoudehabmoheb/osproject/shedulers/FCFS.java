@@ -12,19 +12,19 @@ import java.util.ArrayDeque;
  *
  * @author Mahmoud Ehab
  */
-public class FCFS extends Scheduler {
-    private Queue<Process> readyQueue;
-
+public class FCFS extends Scheduler<Queue<Process>>
+{
     public FCFS()
     {
         super();
-        readyQueue = new ArrayDeque<>();
+        this.readyQueue = new ArrayDeque<>();
     }
     
+    @Override
     public void add_Process(Process p)
     {
         p.set_arrivalTime(this.currentTime);
-        readyQueue.add(p);
+        this.readyQueue.add(p);
     }
     
     @Override
@@ -32,11 +32,11 @@ public class FCFS extends Scheduler {
     {
         while (!this.readyQueue.isEmpty())
         {
-            this.currentProcess = this.readyQueue.poll();
+            this.currentProcess.set(this.readyQueue.poll());
             
             try
             {
-                for (int i = 0; i < this.currentProcess.get_initialBurstTime(); i++)
+                for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
                 {
                     Thread.sleep(1000);
                     this.currentTime++;
@@ -47,9 +47,9 @@ public class FCFS extends Scheduler {
                 System.out.println("Process Executing");
             }
             
-            this.currentProcess.set_remainingBurstTime(0);
-            this.currentProcess.set_finishedTime(this.currentTime);
-            this.completedProcesses.add(this.currentProcess);
+            this.currentProcess.get().set_remainingBurstTime(0);
+            this.currentProcess.get().set_finishedTime(this.currentTime);
+            this.completedProcesses.add(this.currentProcess.get());
             this.calculate_averageWaitingTime();
             this.calculate_averageTurnAroundTime();
         }
