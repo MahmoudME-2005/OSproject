@@ -36,11 +36,11 @@ public class FCFS extends Scheduler<Queue<Process>>
         {
             if (!this.readyQueue.isEmpty())
             {
-                this.currentProcess.set(this.readyQueue.poll());
-
-                try
+                set_currentProcess(this.readyQueue.poll());
+                
+                for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
                 {
-                    for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
+                    try
                     {
                         if (this.isDynamic)
                         {
@@ -49,12 +49,12 @@ public class FCFS extends Scheduler<Queue<Process>>
                         
                         increment_currentTime();
                     }
+                    catch (InterruptedException ex)
+                    {
+                        System.out.println("Process Executing");
+                    }
                 }
-                catch (InterruptedException ex)
-                {
-                    System.out.println("Process Executing");
-                }
-
+                
                 this.currentProcess.get().set_remainingBurstTime(0);
                 this.currentProcess.get().set_finishedTime(this.currentTime.get());
                 this.completedProcesses.add(this.currentProcess.get());
@@ -63,7 +63,7 @@ public class FCFS extends Scheduler<Queue<Process>>
             }
             else
             {
-                Platform.runLater(() -> this.currentProcess.set(null));
+                set_currentProcess(null);
                 
                 if (this.isDynamic)
                 {

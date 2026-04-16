@@ -14,7 +14,6 @@ import mahmoudehabmoheb.osproject.shedulers.SJF;
 
 public class CPU_Scheduling_opController extends SceneController
 {
-
     @FXML private TextField algorithmTxt, cpuTxt, readyQueueTxt;
     @FXML private TextField avgWaitTxt, avgTurnTxt, totalExecTxt;
     @FXML private ProgressBar p1Bar, p2Bar, p3Bar, p4Bar, p5Bar, p6Bar, p7Bar;
@@ -52,6 +51,12 @@ public class CPU_Scheduling_opController extends SceneController
                 break;
         }
         
+        this.avgWaitTxt.setText("" + 0);
+        
+        this.avgTurnTxt.setText("" + 0);
+        
+        this.totalExecTxt.setText("" + 0);
+        
         CPU_Scheduling_opController.scheduler.get_currentTimeProperty().addListener((obs, oldValue, newValue) -> {
             this.totalExecTxt.setText("" + newValue);
         });
@@ -65,6 +70,14 @@ public class CPU_Scheduling_opController extends SceneController
             {
                 this.cpuTxt.setText("P" + newValue.get_id());
             }
+        });
+        
+        CPU_Scheduling_opController.scheduler.get_averageWaitingTimeProperty().addListener((obs, oldValue, newValue) -> {
+            this.avgWaitTxt.setText("" + newValue);
+        });
+        
+        CPU_Scheduling_opController.scheduler.get_averageTurnAroundTimeProperty().addListener((obs, oldValue, newValue) -> {
+            this.avgTurnTxt.setText("" + newValue);
         });
         
         Thread thread = new Thread(() -> {

@@ -20,26 +20,26 @@
          </font>
       </Text>
       <TextField fx:id="algorithmTxt" alignment="CENTER" editable="false" layoutX="79.0" layoutY="20.0" prefHeight="28.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9; -fx-prompt-text-fill: #5800ff;" />
-      <TextField fx:id="cpuTxt" alignment="CENTER" editable="false" layoutX="79.0" layoutY="56.0" prefHeight="16.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="cpuTxt" alignment="CENTER" layoutX="79.0" layoutY="56.0" prefHeight="16.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-5.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average Waiting time" textAlignment="CENTER" wrappingWidth="130.13671875">
          <font>
             <Font name="Tahoma" size="11.0" />
          </font>
       </Text>
-      <TextField fx:id="avgWaitTxt" alignment="CENTER" editable="false" layoutX="141.0" layoutY="136.0" prefHeight="13.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
-      <TextField fx:id="avgTurnTxt" alignment="CENTER" editable="false" layoutX="141.0" layoutY="173.0" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="avgWaitTxt" layoutX="141.0" layoutY="136.0" prefHeight="13.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="avgTurnTxt" layoutX="141.0" layoutY="173.0" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-5.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average Turnaround time" textAlignment="CENTER" wrappingWidth="147.47006225585938">
          <font>
             <Font name="Tahoma" size="11.0" />
          </font>
       </Text>
-      <TextField fx:id="totalExecTxt" alignment="CENTER" editable="false" layoutX="141.0" layoutY="211.0" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="totalExecTxt" alignment="CENTER" layoutX="141.0" layoutY="211.0" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-14.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Execution time" textAlignment="CENTER" wrappingWidth="147.47006225585938">
          <font>
             <Font name="Tahoma" size="11.0" />
          </font>
       </Text>
-      <TextField fx:id="readyQueueTxt" alignment="CENTER" editable="false" layoutX="16.0" layoutY="382.0" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="readyQueueTxt" layoutX="16.0" layoutY="382.0" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-6.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready Queue" textAlignment="CENTER" wrappingWidth="105.33333333333337">
          <font>
             <Font name="Tahoma" size="11.0" />
@@ -174,54 +174,6 @@
          </font>
       </Text>
       <Text fx:id="p7Burst" fill="#5800ff" layoutX="483.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
-         <font>
-            <Font name="Tahoma" size="13.0" />
-         </font>
-      </Text>
-      <ProgressBar fx:id="p8Bar" layoutX="317.0" layoutY="329.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
-      <Text fill="#5800ff" layoutX="283.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
-         <font>
-            <Font name="Tahoma" size="13.0" />
-         </font>
-      </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
-         <font>
-            <Font name="Tahoma" size="13.0" />
-         </font>
-      </Text>
-      <Text fx:id="p8Burst" fill="#5800ff" layoutX="483.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
-         <font>
-            <Font name="Tahoma" size="13.0" />
-         </font>
-      </Text>
-      <ProgressBar fx:id="p9Bar" layoutX="317.0" layoutY="358.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
-      <Text fill="#5800ff" layoutX="283.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
-         <font>
-            <Font name="Tahoma" size="13.0" />
-         </font>
-      </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
-         <font>
-            <Font name="Tahoma" size="13.0" />
-         </font>
-      </Text>
-      <Text fx:id="p9Burst" fill="#5800ff" layoutX="483.0" layoutY="373.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
-         <font>
-            <Font name="Tahoma" size="13.0" />
-         </font>
-      </Text>
-      <ProgressBar fx:id="p10Bar" layoutX="317.0" layoutY="387.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" style="-fx-accent: #5800ff; -fx-border-color: #5800ff; -fx-background-color: #5800ff; -fx-background-radius: 5; -fx-border-radius: 5;" />
-      <Text fill="#5800ff" layoutX="283.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="13.470046997070312">
-         <font>
-            <Font name="Tahoma" size="13.0" />
-         </font>
-      </Text>
-      <Text fill="#5800ff" layoutX="586.0" layoutY="401.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
-         <font>
-            <Font name="Tahoma" size="13.0" />
-         </font>
-      </Text>
-      <Text fx:id="p10Burst" fill="#5800ff" layoutX="483.0" layoutY="402.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="55.47006225585926">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>

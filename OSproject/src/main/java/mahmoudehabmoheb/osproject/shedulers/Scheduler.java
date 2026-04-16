@@ -7,6 +7,7 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
@@ -56,12 +57,12 @@ public abstract class Scheduler<T>
         for (int i = 0; i < this.completedProcesses.size(); i++)
         {
             tempProcess = this.completedProcesses.get(i);
-            result += tempProcess.get_finishedTime() - tempProcess.get_arrivalTime() - tempProcess.get_initialBurstTime();
+            result += (tempProcess.get_finishedTime() - tempProcess.get_arrivalTime() - tempProcess.get_initialBurstTime());
         }
         
         final double calculatedResult = (double) result/this.completedProcesses.size();
         
-        Platform.runLater(() -> this.averageWaitingTime.set(calculatedResult));
+        set_averagetWaitingTime(calculatedResult);
         return this.averageWaitingTime.get();
     }
     
@@ -73,12 +74,12 @@ public abstract class Scheduler<T>
         for (int i = 0; i < this.completedProcesses.size(); i++)
         {
             tempProcess = this.completedProcesses.get(i);
-            result += tempProcess.get_finishedTime() - tempProcess.get_arrivalTime();
+            result += (tempProcess.get_finishedTime() - tempProcess.get_arrivalTime());
         }
         
         final double calculatedResult = (double) result/this.completedProcesses.size();
         
-        Platform.runLater(() -> this.averageTurnAroundTime.set(calculatedResult));
+        set_averageTurnAroundTime(calculatedResult);
         return this.averageTurnAroundTime.get();
     }
     
@@ -94,7 +95,30 @@ public abstract class Scheduler<T>
     
     public void set_currentProcess(Process P)
     {
-        Platform.runLater(() -> this.currentProcess.set(P));
+        // 1. Create a latch with a count of 1
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Platform.runLater(() -> {
+            try
+            {
+                this.currentProcess.set(P);
+            }
+            finally
+            {
+                // 2. This runs AFTER the UI is updated
+                latch.countDown(); 
+            }
+        });
+
+        try
+        {
+            // 3. The background thread STOPS here until countDown() is called
+            latch.await(); 
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
     }
     
     public ObjectProperty<Process> get_currentProcessProperty()
@@ -136,7 +160,96 @@ public abstract class Scheduler<T>
     
     public void increment_currentTime()
     {
-        final int nextTime = this.currentTime.get() + 1;
-        Platform.runLater(() -> this.currentTime.set(nextTime));
+        // 1. Create a latch with a count of 1
+        CountDownLatch latch = new CountDownLatch(1);
+        int nextTime = this.currentTime.get() + 1;
+
+        Platform.runLater(() -> {
+            try
+            {
+                this.currentTime.set(nextTime);
+            }
+            finally
+            {
+                // 2. This runs AFTER the UI is updated
+                latch.countDown(); 
+            }
+        });
+
+        try
+        {
+            // 3. The background thread STOPS here until countDown() is called
+            latch.await(); 
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public DoubleProperty get_averageWaitingTimeProperty()
+    {
+        return this.averageWaitingTime;
+    }
+    
+    public DoubleProperty get_averageTurnAroundTimeProperty()
+    {
+        return this.averageTurnAroundTime;
+    }
+    
+    public void set_averagetWaitingTime(double averageWaitingTime)
+    {
+        // 1. Create a latch with a count of 1
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Platform.runLater(() -> {
+            try
+            {
+                this.averageWaitingTime.set(averageWaitingTime);
+            }
+            finally
+            {
+                // 2. This runs AFTER the UI is updated
+                latch.countDown(); 
+            }
+        });
+
+        try
+        {
+            // 3. The background thread STOPS here until countDown() is called
+            latch.await(); 
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void set_averageTurnAroundTime(double averageTurnAroundTime)
+    {
+        // 1. Create a latch with a count of 1
+        CountDownLatch latch = new CountDownLatch(1);
+
+        Platform.runLater(() -> {
+            try
+            {
+                this.averageTurnAroundTime.set(averageTurnAroundTime);
+            }
+            finally
+            {
+                // 2. This runs AFTER the UI is updated
+                latch.countDown(); 
+            }
+        });
+
+        try
+        {
+            // 3. The background thread STOPS here until countDown() is called
+            latch.await(); 
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

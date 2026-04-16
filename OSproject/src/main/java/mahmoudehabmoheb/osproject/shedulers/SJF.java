@@ -48,7 +48,7 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
             {
                 try 
                 {
-                    tick(this.currentTime.get());
+                    tick();
 
                     if (this.isDynamic)
                     {
@@ -85,12 +85,10 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
         }
     }
 
-    public Process tick(int time)
+    public Process tick()
     {
-        Platform.runLater(() -> this.currentTime.set(time));
-
         // 1. Execute current process
-        if (this.currentProcess != null)
+        if (this.currentProcess.get() != null)
         {
             this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
 
@@ -100,24 +98,24 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
                 this.completedProcesses.add(this.currentProcess.get());
                 this.calculate_averageWaitingTime();
                 this.calculate_averageTurnAroundTime();
-                this.currentProcess = null; // Free CPU
+                set_currentProcess(null); // Free CPU
             }
         }
 
         // 2. Preemption Check
-        if (this.isPreemptive && this.currentProcess != null && !this.readyQueue.isEmpty())
+        if (this.isPreemptive && this.currentProcess.get() != null && !this.readyQueue.isEmpty())
         {
             if (this.readyQueue.peek().get_remainingBurstTime() < this.currentProcess.get().get_remainingBurstTime())
             {
                 this.readyQueue.add(this.currentProcess.get());
-                this.currentProcess = null;
+                set_currentProcess(null);
             }
         }
 
         // 3. Load next shortest process
-        if (this.currentProcess == null && !this.readyQueue.isEmpty())
+        if (this.currentProcess.get() == null && !this.readyQueue.isEmpty())
         {
-            this.currentProcess.set(this.readyQueue.poll());
+            set_currentProcess(this.readyQueue.poll());
         }
 
         return this.currentProcess.get();

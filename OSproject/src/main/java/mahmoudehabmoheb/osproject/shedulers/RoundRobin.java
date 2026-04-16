@@ -69,14 +69,23 @@ public class RoundRobin extends Scheduler<Queue<Process>>
                         this.completedProcesses.add(this.currentProcess.get());
                         this.calculate_averageWaitingTime();
                         this.calculate_averageTurnAroundTime();
-                        continue;
+                        break;
                     }
                 }
 
-                this.readyQueue.add(this.currentProcess.get());
+                if (this.currentProcess.get().get_remainingBurstTime() != 0)
+                {
+                    this.readyQueue.add(this.currentProcess.get());  
+                }
+                else
+                {
+                    continue;
+                }
             }
             else
             {
+                this.set_currentProcess(null);
+                
                 if (this.isDynamic)
                 {
                     try
