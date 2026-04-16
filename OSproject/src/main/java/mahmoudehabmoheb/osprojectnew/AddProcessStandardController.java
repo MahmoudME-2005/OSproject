@@ -4,31 +4,24 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import mahmoudehabmoheb.osproject.Process;
 
-public class AddProcessStandardController {
+public class AddProcessStandardController extends SceneController
+{
+    @FXML private TextField burstTimeField;
+    @FXML private Button addProcessBtn, backBtn;
 
-    @FXML private TextField readyQueueTxt;  // Burst Time
-    @FXML private TextField readyQueueTxt1; // Priority
-    @FXML private Button addProcessBtn;     // Back
-    @FXML private Button addProcessBtn1;    // Add
-
-    private CPU_Scheduling_opController mainController;
-
-    public void setMainController(CPU_Scheduling_opController main) {
-        this.mainController = main;
+    @FXML
+    private void handleAdd()
+    {
+        AddProcessStandardController.scheduler.add_Process(new Process(
+            Integer.parseInt(this.burstTimeField.getText())
+        ));
     }
 
     @FXML
-    private void handleAdd() {
-        if (mainController != null) {
-            mainController.addNewProcessFromPopup(readyQueueTxt.getText());
-        }
-        closeWindow();
-    }
-
-    @FXML
-    private void closeWindow() {
-        Stage stage = (Stage) addProcessBtn.getScene().getWindow();
-        stage.close();
+    private void handleBack()
+    {
+        ((Stage) this.addProcessBtn.getScene().getWindow()).close();
     }
 }

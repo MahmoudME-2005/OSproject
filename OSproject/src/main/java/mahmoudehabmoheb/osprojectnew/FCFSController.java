@@ -4,11 +4,7 @@
  */
 package mahmoudehabmoheb.osprojectnew;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,7 +21,6 @@ import mahmoudehabmoheb.osproject.Process;
  */
 public class FCFSController extends SceneController
 {
-
     @FXML private TextField burstField;
     @FXML private GridPane GridBrstPri;
     @FXML private Button addBtn, startBtn;
@@ -49,7 +44,7 @@ public class FCFSController extends SceneController
         if (!burst.isEmpty())
         {
             // Add to internal list for the next scene
-            this.scheduler.add_Process(new Process(
+            FCFSController.scheduler.add_Process(new Process(
                 Integer.parseInt(burst)
             ));
 

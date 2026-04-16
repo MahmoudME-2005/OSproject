@@ -1,7 +1,6 @@
 package mahmoudehabmoheb.osprojectnew;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -52,7 +51,8 @@ public class PriorityController extends SceneController
         {
             // Add to internal list for the next scene
             PriorityController.scheduler.add_Process(new Process(
-                Integer.parseInt(burst)
+                Integer.parseInt(burst),
+                Integer.parseInt(priority)
             ));
 
             // Add UI Labels to the GridPane

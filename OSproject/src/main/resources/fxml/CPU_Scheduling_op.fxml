@@ -19,27 +19,27 @@
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <TextField fx:id="algorithmTxt" layoutX="79.0" layoutY="20.0" prefHeight="28.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
-      <TextField fx:id="cpuTxt" layoutX="79.0" layoutY="56.0" prefHeight="16.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="algorithmTxt" alignment="CENTER" editable="false" layoutX="79.0" layoutY="20.0" prefHeight="28.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9; -fx-prompt-text-fill: #5800ff;" />
+      <TextField fx:id="cpuTxt" alignment="CENTER" editable="false" layoutX="79.0" layoutY="56.0" prefHeight="16.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-5.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average Waiting time" textAlignment="CENTER" wrappingWidth="130.13671875">
          <font>
             <Font name="Tahoma" size="11.0" />
          </font>
       </Text>
-      <TextField fx:id="avgWaitTxt" layoutX="141.0" layoutY="136.0" prefHeight="13.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
-      <TextField fx:id="avgTurnTxt" layoutX="141.0" layoutY="173.0" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="avgWaitTxt" alignment="CENTER" editable="false" layoutX="141.0" layoutY="136.0" prefHeight="13.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="avgTurnTxt" alignment="CENTER" editable="false" layoutX="141.0" layoutY="173.0" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-5.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average Turnaround time" textAlignment="CENTER" wrappingWidth="147.47006225585938">
          <font>
             <Font name="Tahoma" size="11.0" />
          </font>
       </Text>
-      <TextField fx:id="totalExecTxt" layoutX="141.0" layoutY="211.0" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="totalExecTxt" alignment="CENTER" editable="false" layoutX="141.0" layoutY="211.0" prefHeight="16.0" prefWidth="105.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-14.0" layoutY="229.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Execution time" textAlignment="CENTER" wrappingWidth="147.47006225585938">
          <font>
             <Font name="Tahoma" size="11.0" />
          </font>
       </Text>
-      <TextField fx:id="readyQueueTxt" layoutX="16.0" layoutY="382.0" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="readyQueueTxt" alignment="CENTER" editable="false" layoutX="16.0" layoutY="382.0" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-6.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ready Queue" textAlignment="CENTER" wrappingWidth="105.33333333333337">
          <font>
             <Font name="Tahoma" size="11.0" />

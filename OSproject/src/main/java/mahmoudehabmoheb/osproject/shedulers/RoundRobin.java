@@ -7,6 +7,7 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.Queue;
 import java.util.ArrayDeque;
+import javafx.application.Platform;
 
 /**
  *
@@ -31,42 +32,69 @@ public class RoundRobin extends Scheduler<Queue<Process>>
     @Override
     public void add_Process(Process p)
     {
-        p.set_arrivalTime(this.currentTime);
+        p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
+        set_observableReadyQueue();
     }
     
     @Override
     public void schedule()
     {
-        while (!this.readyQueue.isEmpty())
+        while (this.isRunning)
         {
-            this.currentProcess.set(this.readyQueue.poll());
-            
-            for (int i = 0; i < this.quantum; i++)
+            if (!this.readyQueue.isEmpty())
             {
-                try
+                this.currentProcess.set(this.readyQueue.poll());
+
+                for (int i = 0; i < this.quantum; i++)
                 {
-                    Thread.sleep(1000);
-                }
-                catch (InterruptedException ex)
-                {
-                    System.out.println("Process Executing");
+                    try
+                    {
+                        if (this.isDynamic)
+                        {
+                            Thread.sleep(1000);
+                        }
+                    }
+                    catch (InterruptedException ex)
+                    {
+                        System.out.println("Process Executing");
+                    }
+
+                    increment_currentTime();
+                    this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
+
+                    if (this.currentProcess.get().get_remainingBurstTime() == 0)
+                    {
+                        this.currentProcess.get().set_finishedTime(this.currentTime.get());
+                        this.completedProcesses.add(this.currentProcess.get());
+                        this.calculate_averageWaitingTime();
+                        this.calculate_averageTurnAroundTime();
+                        continue;
+                    }
                 }
 
-                this.currentTime++;
-                this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
-
-                if (this.currentProcess.get().get_remainingBurstTime() == 0)
+                this.readyQueue.add(this.currentProcess.get());
+            }
+            else
+            {
+                if (this.isDynamic)
                 {
-                    this.currentProcess.get().set_finishedTime(this.currentTime);
-                    this.completedProcesses.add(this.currentProcess.get());
-                    this.calculate_averageWaitingTime();
-                    this.calculate_averageTurnAroundTime();
+                    try
+                    {
+                        Thread.sleep(1000);
+                        increment_currentTime();
+                    }
+                    catch (InterruptedException e)
+                    {
+                        Thread.currentThread().interrupt();
+                        break;
+                    }
+                }
+                else
+                {
                     continue;
                 }
             }
-            
-            this.readyQueue.add(this.currentProcess.get());
         }
     }
     
@@ -78,5 +106,11 @@ public class RoundRobin extends Scheduler<Queue<Process>>
     public int get_quantum()
     {
         return this.quantum;
+    }
+    
+    @Override
+    public void set_observableReadyQueue()
+    {
+        Platform.runLater(() -> this.observableReadyQueue.setAll(this.readyQueue));
     }
 }

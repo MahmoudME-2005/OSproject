@@ -7,8 +7,14 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -18,28 +24,31 @@ import javafx.beans.property.SimpleObjectProperty;
 public abstract class Scheduler<T>
 {
     protected ObjectProperty<Process> currentProcess;
-    protected int currentTime;
+    protected IntegerProperty currentTime;
     protected List<Process> completedProcesses;
     protected T readyQueue;
-    protected int averageWaitingTime;
-    protected int averageTurnAroundTime;
-    protected boolean dynamic;
+    protected ObservableList<Process> observableReadyQueue;
+    protected DoubleProperty averageWaitingTime;
+    protected DoubleProperty averageTurnAroundTime;
+    protected boolean isDynamic;
+    protected boolean isRunning;
     
     public Scheduler()
     {
         this.currentProcess = new SimpleObjectProperty<>();
-        this.currentTime = 0;
+        this.currentTime = new SimpleIntegerProperty(0);
         this.completedProcesses = new ArrayList<>();
-        this.averageWaitingTime = 0;
-        this.averageTurnAroundTime = 0;
-        this.dynamic = false;
+        this.averageWaitingTime = new SimpleDoubleProperty(0.0);
+        this.averageTurnAroundTime = new SimpleDoubleProperty(0.0);
+        this.isDynamic = false;
+        this.isRunning = false;
     }
     
     public abstract void add_Process(Process P);
     
     public abstract void schedule();
     
-    public int calculate_averageWaitingTime()
+    public double calculate_averageWaitingTime()
     {
         int result = 0;
         Process tempProcess;
@@ -50,11 +59,13 @@ public abstract class Scheduler<T>
             result += tempProcess.get_finishedTime() - tempProcess.get_arrivalTime() - tempProcess.get_initialBurstTime();
         }
         
-        this.averageWaitingTime = result/this.completedProcesses.size();
-        return this.averageWaitingTime;
+        final double calculatedResult = (double) result/this.completedProcesses.size();
+        
+        Platform.runLater(() -> this.averageWaitingTime.set(calculatedResult));
+        return this.averageWaitingTime.get();
     }
     
-    public int calculate_averageTurnAroundTime()
+    public double calculate_averageTurnAroundTime()
     {
         int result = 0;
         Process tempProcess;
@@ -65,8 +76,10 @@ public abstract class Scheduler<T>
             result += tempProcess.get_finishedTime() - tempProcess.get_arrivalTime();
         }
         
-        this.averageTurnAroundTime = result/this.completedProcesses.size();
-        return this.averageTurnAroundTime;
+        final double calculatedResult = (double) result/this.completedProcesses.size();
+        
+        Platform.runLater(() -> this.averageTurnAroundTime.set(calculatedResult));
+        return this.averageTurnAroundTime.get();
     }
     
     public List<Process> get_completedProcesses()
@@ -81,7 +94,7 @@ public abstract class Scheduler<T>
     
     public void set_currentProcess(Process P)
     {
-        this.currentProcess.set(P);
+        Platform.runLater(() -> this.currentProcess.set(P));
     }
     
     public ObjectProperty<Process> get_currentProcessProperty()
@@ -91,11 +104,39 @@ public abstract class Scheduler<T>
     
     public void set_dynamic(boolean dynamic)
     {
-        this.dynamic = dynamic;
+        this.isDynamic = dynamic;
     }
     
     public boolean get_dynamic()
     {
-        return this.dynamic;
+        return this.isDynamic;
+    }
+    
+    public void set_isRunning(boolean running)
+    {
+        this.isRunning = running;
+    }
+    
+    public boolean get_isRunning()
+    {
+        return this.isRunning;
+    }
+    
+    public abstract void set_observableReadyQueue();
+    
+    public ObservableList<Process> get_observableReadyQueue()
+    {
+        return this.observableReadyQueue;
+    }
+    
+    public IntegerProperty get_currentTimeProperty()
+    {
+        return this.currentTime;
+    }
+    
+    public void increment_currentTime()
+    {
+        final int nextTime = this.currentTime.get() + 1;
+        Platform.runLater(() -> this.currentTime.set(nextTime));
     }
 }

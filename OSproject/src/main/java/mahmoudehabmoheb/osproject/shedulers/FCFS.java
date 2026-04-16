@@ -7,6 +7,7 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.Queue;
 import java.util.ArrayDeque;
+import javafx.application.Platform;
 
 /**
  *
@@ -23,35 +24,70 @@ public class FCFS extends Scheduler<Queue<Process>>
     @Override
     public void add_Process(Process p)
     {
-        p.set_arrivalTime(this.currentTime);
+        p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
+        set_observableReadyQueue();
     }
     
     @Override
     public void schedule()
-    {
-        while (!this.readyQueue.isEmpty())
+    {   
+        while (this.isRunning)
         {
-            this.currentProcess.set(this.readyQueue.poll());
-            
-            try
+            if (!this.readyQueue.isEmpty())
             {
-                for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
+                this.currentProcess.set(this.readyQueue.poll());
+
+                try
                 {
-                    Thread.sleep(1000);
-                    this.currentTime++;
+                    for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
+                    {
+                        if (this.isDynamic)
+                        {
+                            Thread.sleep(1000);     
+                        }
+                        
+                        increment_currentTime();
+                    }
+                }
+                catch (InterruptedException ex)
+                {
+                    System.out.println("Process Executing");
+                }
+
+                this.currentProcess.get().set_remainingBurstTime(0);
+                this.currentProcess.get().set_finishedTime(this.currentTime.get());
+                this.completedProcesses.add(this.currentProcess.get());
+                this.calculate_averageWaitingTime();
+                this.calculate_averageTurnAroundTime();
+            }
+            else
+            {
+                Platform.runLater(() -> this.currentProcess.set(null));
+                
+                if (this.isDynamic)
+                {
+                    try
+                    {
+                        Thread.sleep(1000);      
+                        increment_currentTime();
+                    }
+                    catch (InterruptedException ex)
+                    {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+                else
+                {
+                    continue;
                 }
             }
-            catch (InterruptedException ex)
-            {
-                System.out.println("Process Executing");
-            }
-            
-            this.currentProcess.get().set_remainingBurstTime(0);
-            this.currentProcess.get().set_finishedTime(this.currentTime);
-            this.completedProcesses.add(this.currentProcess.get());
-            this.calculate_averageWaitingTime();
-            this.calculate_averageTurnAroundTime();
         }
+    }
+    
+    @Override
+    public void set_observableReadyQueue()
+    {
+        Platform.runLater(() -> this.observableReadyQueue.setAll(this.readyQueue));
     }
 }

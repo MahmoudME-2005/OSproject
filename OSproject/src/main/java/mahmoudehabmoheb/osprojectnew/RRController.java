@@ -5,7 +5,6 @@
 package mahmoudehabmoheb.osprojectnew;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -48,7 +47,7 @@ public class RRController extends SceneController
         if (!burst.isEmpty())
         {
             // Add to internal list for the next scene
-            this.scheduler.add_Process(new Process(
+            RRController.scheduler.add_Process(new Process(
                 Integer.parseInt(burst)
             ));
 
@@ -78,7 +77,7 @@ public class RRController extends SceneController
         
         if (!quantum.isEmpty() && Integer.parseInt(quantum) > 0)
         {
-            ((RoundRobin)this.scheduler).set_quantum(Integer.parseInt(quantum));
+            ((RoundRobin)RRController.scheduler).set_quantum(Integer.parseInt(quantum));
         }
         else
         {

@@ -1,0 +1,95 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Apr 16, 2026, 10:36:57 AM
+    Author     : Mahmoud Ehab
+*/
+
+/* 1. The Main Table Container (Border) */
+.table-view
+{
+    -fx-background-color: white; /* Matches your white pane */
+    -fx-border-color: #7d7d7d;   /* The specific dark-gray border */
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;      /* Slight rounding like the buttons */
+    -fx-background-radius: 5px;
+}
+
+/* 2. Style the Entire Header Area */
+.table-view .column-header-background
+{
+    -fx-background-color: transparent; /* Required to let column colors show through */
+    -fx-padding: 0;
+}
+
+/* 3. Style individual Column Headers (THE PURPLE BAR) */
+.table-view .column-header
+{
+    -fx-background-color: #d8c3ff; /* Your specific light-purple/lavender color */
+    -fx-border-color: #7d7d7d;     /* Column divider color */
+    -fx-border-width: 0 1 1 0;     /* Border only on right and bottom */
+    -fx-padding: 10 0 10 0;        /* Gives it some vertical height */
+}
+
+/* 4. Center the Header Text ("PID" and "Burst Time") */
+.table-view .column-header .label
+{
+    -fx-text-fill: white;          /* Make the text white */
+    -fx-font-weight: bold;         /* Make it pop like the design */
+    -fx-alignment: center;         /* Center horizontally */
+    -fx-pref-width: 1000;         /* Forces it to use all available width for centering */
+}
+
+/* 5. Clean up the hover/pressed effects on the header */
+.table-view .column-header:hover,
+.table-view .column-header:pressed
+{
+    -fx-background-color: #d8c3ff; /* Keeps the lavender when clicked */
+}
+
+/* 6. Style the Cells and Rows */
+.table-view .table-cell
+{
+    -fx-border-color: #7d7d7d;    /* Cell borders */
+    -fx-border-width: 0 1 1 0;    /* Border only on right and bottom */
+    -fx-text-fill: #333333;       /* Dark text for typed data */
+}
+
+/* 7. Remove the default blue selection color on cells */
+.table-view .table-cell:selected
+{
+    -fx-background-color: transparent; 
+    -fx-text-fill: #333333;
+}
+
+/* Set the height for the header row */
+.table-view .column-header
+{
+    -fx-pref-height: 36px;
+}
+
+/* Set the height for every data row */
+.table-view .table-row-cell
+{
+    -fx-cell-size: 35.8px; /* This is the magic property for row height */
+}
+
+/* 1. Style the Header Text (PID, Burst Time, etc.) */
+.table-view .column-header .label
+{
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+/* 2. Style the Data inside the rows */
+.table-view .table-cell
+{
+    -fx-font-size: 20px;
+    -fx-text-fill: #333333;
+    -fx-alignment: CENTER; /* Keep text centered in that 35.8px height */
+    -fx-font-family: "Segoe UI", sans-serif;
+}

@@ -1,8 +1,11 @@
 package mahmoudehabmoheb.osproject.shedulers;
 
+import java.util.ArrayList;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
+import javafx.application.Platform;
 
 /**
  * SJF Scheduler
@@ -31,32 +34,60 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
     @Override
     public void add_Process(Process p)
     {
-        p.set_arrivalTime(this.currentTime);
+        p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
+        set_observableReadyQueue();
     }
 
     @Override
     public void schedule()
     {
-        while (currentProcess != null || !readyQueue.isEmpty())
+        while (this.isRunning)
         {
-            try 
+            if (currentProcess != null || !readyQueue.isEmpty())
             {
-                tick(currentTime);
-                Thread.sleep(1000);
-                currentTime++;
+                try 
+                {
+                    tick(this.currentTime.get());
+
+                    if (this.isDynamic)
+                    {
+                        Thread.sleep(1000);
+                    }
+
+                    increment_currentTime();
+                }
+                catch (InterruptedException e)
+                {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
             }
-            catch (InterruptedException e)
+            else
             {
-                Thread.currentThread().interrupt();
-                break;
+                if (this.isDynamic)
+                {
+                    try
+                    {
+                        Thread.sleep(1000);
+                        increment_currentTime();
+                    }
+                    catch (InterruptedException ex)
+                    {
+                        System.out.println(ex.getMessage());
+                    }
+                }
+                else
+                {
+                    continue;
+                }
             }
         }
     }
 
     public Process tick(int time)
     {
-        this.currentTime = time;
+        Platform.runLater(() -> this.currentTime.set(time));
 
         // 1. Execute current process
         if (this.currentProcess != null)
@@ -65,7 +96,7 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
 
             if (this.currentProcess.get().get_remainingBurstTime() == 0) 
             {
-                this.currentProcess.get().set_finishedTime(this.currentTime + 1);
+                this.currentProcess.get().set_finishedTime(this.currentTime.get());
                 this.completedProcesses.add(this.currentProcess.get());
                 this.calculate_averageWaitingTime();
                 this.calculate_averageTurnAroundTime();
@@ -100,5 +131,15 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
     public boolean is_preemptive()
     {
         return this.isPreemptive;
+    }
+    
+    @Override
+    public void set_observableReadyQueue()
+    {
+        List<Process> sortedList = new ArrayList<>(this.readyQueue);
+        
+        sortedList.sort(Comparator.comparingInt(Process::get_remainingBurstTime));
+        
+        Platform.runLater(() -> this.observableReadyQueue.setAll(sortedList));
     }
 }

@@ -11,15 +11,25 @@ public class Process
     private int priority;
     private static int counter = 0;
     
+    public Process()
+    {
+        this(5, 0);
+    }
+    
     public Process(int initialBurstTime)
     {
+        this(initialBurstTime, 0);
+    }
+    
+    public Process(int initialBurstTime, int priority)
+    {
         Process.counter++;
-        this.id = Process.counter + 1;
+        this.id = Process.counter;
         this.initialBurstTime = initialBurstTime;
-        this.arrivalTime = 0;
         this.remainingBurstTime = this.initialBurstTime;
+        this.arrivalTime = 0;
         this.finishedTime = 0;
-        this.priority = 0;
+        this.priority = priority;
     }
     
     // This setter shouldn't be used unless necessary process id's will be set automatically inorder.

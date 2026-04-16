@@ -6,6 +6,7 @@ package mahmoudehabmoheb.osproject.shedulers;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Platform;
 
 import mahmoudehabmoheb.osproject.Process;
 
@@ -38,8 +39,9 @@ public class Priority extends Scheduler<List<Process>>
     @Override
     public void add_Process(Process p)
     {
-        p.set_arrivalTime(this.currentTime);
+        p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
+        set_observableReadyQueue();
     }
 
     @Override
@@ -77,7 +79,10 @@ public class Priority extends Scheduler<List<Process>>
 
                     try
                     {
-                        Thread.sleep(1000); // 1 second per time unit
+                        if (this.isDynamic)
+                        {
+                            Thread.sleep(1000); // 1 second per time unit
+                        }
                     }
                     catch (InterruptedException e)
                     {
@@ -85,28 +90,34 @@ public class Priority extends Scheduler<List<Process>>
                         break;
                     }
 
-                    this.currentTime++;
+                    increment_currentTime();
 
                     if (this.currentProcess.get().get_remainingBurstTime() == 0)
                     {
-                        this.currentProcess.get().set_finishedTime(this.currentTime);
+                        this.currentProcess.get().set_finishedTime(this.currentTime.get());
                         this.completedProcesses.add(this.currentProcess.get());
                         this.currentProcess = null;
                     }
                 }
                 else
                 {
-
-                    try
+                    if (this.isDynamic)
                     {
-                        Thread.sleep(1000);
+                        try
+                        {
+                            Thread.sleep(1000);
+                            increment_currentTime();
+                        }
+                        catch (InterruptedException e)
+                        {
+                            Thread.currentThread().interrupt();
+                            break;
+                        }
                     }
-                    catch (InterruptedException e)
+                    else
                     {
-                        Thread.currentThread().interrupt();
-                        break;
+                        continue;
                     }
-                    this.currentTime++;
                 }
             }
         } // Non-preemptive priority scheduling
@@ -136,33 +147,41 @@ public class Priority extends Scheduler<List<Process>>
                     {
                         try
                         {
-                            Thread.sleep(1000);
+                            if (this.isDynamic)
+                            {
+                                Thread.sleep(1000);                     
+                            }
                         }
                         catch (InterruptedException e)
                         {
                             Thread.currentThread().interrupt();
                             break;
                         }
-                        this.currentTime++;
+                        increment_currentTime();
                     }
 
-                    highestPriorityProcess.set_finishedTime(this.currentTime);
+                    highestPriorityProcess.set_finishedTime(this.currentTime.get());
                     this.completedProcesses.add(highestPriorityProcess);
                 }
                 else
                 {
-                    // No process, advance time
+                if (this.isDynamic)
+                {
                     try
                     {
                         Thread.sleep(1000);
+                        increment_currentTime();
                     }
                     catch (InterruptedException e)
                     {
                         Thread.currentThread().interrupt();
                         break;
                     }
-                    
-                    this.currentTime++;
+                }
+                else
+                {
+                    continue;
+                }
                 }
             }
         }
@@ -176,5 +195,11 @@ public class Priority extends Scheduler<List<Process>>
     public boolean is_preemptive()
     {
         return this.isPreemptive;
+    }
+    
+    @Override
+    public void set_observableReadyQueue()
+    {
+        Platform.runLater(() -> this.observableReadyQueue.setAll(this.readyQueue));
     }
 }
