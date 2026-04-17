@@ -48,7 +48,7 @@ public class CPU_Scheduling_opController extends SceneController
         xAxis.setLabel("Time");
         xAxis.setAutoRanging(false);
         xAxis.setLowerBound(0);
-        xAxis.setUpperBound(25); // Initial view
+        xAxis.setUpperBound(20); // Initial view
         xAxis.setTickUnit(1);
 
         yAxis.setLabel("CPU");
@@ -159,8 +159,8 @@ public class CPU_Scheduling_opController extends SceneController
         CPU_Scheduling_opController.scheduler.get_currentTimeProperty().addListener((obs, oldValue, newValue) -> {
             this.totalExecTxt.setText("" + newValue);
             
-            this.xAxis.setUpperBound((newValue.intValue()/25 + 1) * 25);
-            this.xAxis.setLowerBound((newValue.intValue()/25) * 25);
+            this.xAxis.setUpperBound((newValue.intValue()/20 + 1) * 20);
+            this.xAxis.setLowerBound((newValue.intValue()/20) * 20);
         });
         
         CPU_Scheduling_opController.scheduler.get_currentProcessProperty().addListener((obs, oldValue, newValue) -> {
