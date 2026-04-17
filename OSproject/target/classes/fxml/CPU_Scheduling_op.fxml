@@ -8,12 +8,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<<<<<<< HEAD
 <?import javafx.scene.layout.VBox?>
-=======
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
->>>>>>> b5bc40381a5e7fb457e2e86af2c5263e6cca09b8
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -236,9 +233,7 @@
          </font>
       </Text>
       <ListView fx:id="readyQueueTxt" layoutX="16.0" layoutY="382.0" orientation="HORIZONTAL" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
-<<<<<<< HEAD
       <VBox fx:id="chartContainer" layoutX="611.0" prefHeight="424.0" prefWidth="195.0" />
-=======
       <HBox alignment="CENTER_LEFT" layoutX="-5.0" layoutY="-9.0" prefHeight="51.0" prefWidth="665.0" spacing="15.0">
     <children>
         <ImageView fitHeight="23.0" fitWidth="32.0" onMouseClicked="#handleBackAction" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
@@ -263,6 +258,5 @@
                </children></javafx.scene.layout.Pane>
     </children>
 </HBox>
->>>>>>> b5bc40381a5e7fb457e2e86af2c5263e6cca09b8
    </children>
 </AnchorPane>

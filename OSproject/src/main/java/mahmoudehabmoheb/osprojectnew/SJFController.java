@@ -53,21 +53,24 @@ public class SJFController extends SceneController
     @FXML
     private void handleAdd()
     {
-        String burst = this.burstField.getText();
-
-        if (!burst.isEmpty())
+        if (Process.get_counter() <= 10)
         {
-            // Add to internal list for the next scene
-            SJFController.scheduler.add_Process(new Process(
-                Integer.parseInt(burst)
-            ));
+            String burst = this.burstField.getText();
 
-            // Add UI Labels to the GridPane
-            addLabelToGrid("P" + Process.get_counter(), 0, this.currentRow);
-            addLabelToGrid(burst, 1, this.currentRow);
+            if (!burst.isEmpty())
+            {
+                // Add to internal list for the next scene
+                SJFController.scheduler.add_Process(new Process(
+                    Integer.parseInt(burst)
+                ));
 
-            this.currentRow++;
-            clearInputs();
+                // Add UI Labels to the GridPane
+                addLabelToGrid("P" + Process.get_counter(), 0, this.currentRow);
+                addLabelToGrid(burst, 1, this.currentRow);
+
+                this.currentRow++;
+                clearInputs();
+            }
         }
     }
 

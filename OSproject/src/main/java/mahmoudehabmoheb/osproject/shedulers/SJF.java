@@ -54,7 +54,7 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
     {
         while (this.isRunning)
         {
-            if (currentProcess != null || !readyQueue.isEmpty())
+            if (this.currentProcess.get() != null || !this.readyQueue.isEmpty())
             {
                 try 
                 {
