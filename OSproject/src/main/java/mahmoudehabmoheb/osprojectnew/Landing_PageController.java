@@ -11,16 +11,11 @@ import mahmoudehabmoheb.osproject.shedulers.Priority;
 
 public class Landing_PageController extends SceneController
 {
-
-    @FXML private TextField processCountField;
     @FXML private ComboBox<String> algorithmComboBox;
-    @FXML private Label errorLabel;
 
     @FXML
     public void initialize()
     {
-        this.errorLabel.setVisible(false);
-        
         if (this.algorithmComboBox != null && this.algorithmComboBox.getItems().isEmpty())
         {
             this.algorithmComboBox.getItems().addAll("FCFS", "SJF", "Priority", "Round Robin");
@@ -39,19 +34,6 @@ public class Landing_PageController extends SceneController
     public void handleStartAction()
     {
         String algo = this.algorithmComboBox.getValue();
-        String countStr = this.processCountField.getText();
-        
-        if (algo == null || countStr.isEmpty()) return;
-        
-        int count = Integer.parseInt(countStr);
-        
-        if (count <= 0 || count > 10)
-        {
-            this.errorLabel.setVisible(true);
-            return;
-        }
-        
-        this.errorLabel.setVisible(false);
         
         if (algo.equals("FCFS"))
         {
