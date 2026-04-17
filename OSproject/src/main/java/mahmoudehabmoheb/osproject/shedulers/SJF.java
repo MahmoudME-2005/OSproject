@@ -37,7 +37,6 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
     {
         p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
-        set_observableReadyQueue();
     }
 
     @Override
@@ -131,47 +130,4 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
     {
         return this.isPreemptive;
     }
-    
-    @Override
-    public void set_observableReadyQueue()
-    {
-        List<Process> sortedList = new ArrayList<>(this.readyQueue);
-
-        sortedList.sort(Comparator.comparingInt(Process::get_remainingBurstTime));
-        
-        Platform.runLater(() -> this.observableReadyQueue.setAll(sortedList));
-    }
-    
-//    @Override
-//    public void set_observableReadyQueue()
-//    {
-//        // 1. Create a latch with a count of 1
-//        CountDownLatch latch = new CountDownLatch(1);
-//
-//        Platform.runLater(() -> {
-//            try
-//            {
-//                List<Process> sortedList = new ArrayList<>(this.readyQueue);
-//        
-//                sortedList.sort(Comparator.comparingInt(Process::get_remainingBurstTime));
-//        
-//                this.observableReadyQueue.setAll(sortedList);
-//            }
-//            finally
-//            {
-//                // 2. This runs AFTER the UI is updated
-//                latch.countDown(); 
-//            }
-//        });
-//
-//        try
-//        {
-//            // 3. The background thread STOPS here until countDown() is called
-//            latch.await(); 
-//        }
-//        catch (InterruptedException e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
 }

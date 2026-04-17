@@ -9,7 +9,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
-import javafx.geometry.Orientation;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedBarChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.layout.VBox;
 import mahmoudehabmoheb.osproject.shedulers.Priority;
 import mahmoudehabmoheb.osproject.shedulers.SJF;
 import mahmoudehabmoheb.osproject.Process;
@@ -23,10 +29,40 @@ public class CPU_Scheduling_opController extends SceneController
     @FXML private Text p1Burst, p2Burst, p3Burst, p4Burst, p5Burst, p6Burst, p7Burst, p8Burst, p9Burst, p10Burst;
     @FXML private Text p1RemainingBurst, p2RemainingBurst, p3RemainingBurst, p4RemainingBurst, p5RemainingBurst, p6RemainingBurst, p7RemainingBurst, p8RemainingBurst, p9RemainingBurst, p10RemainingBurst;
     @FXML private Text p1Priority, p2Priority, p3Priority, p4Priority, p5Priority, p6Priority, p7Priority, p8Priority, p9Priority, p10Priority;
+    @FXML private VBox chartContainer; // Match the ID from FXML
+    
+    private String[] colors = {"#f34336", "#9c27b0", "#2196f3", "#009688", "#4caf50", "#ffeb3b", "#ff9800", "#795548", "#607d8b", "#FFFFFF", "#000000"};
+
+    private int initialTime;
+    
+    private StackedBarChart<Number, String> gantChart;
+    private NumberAxis xAxis;
+    private CategoryAxis yAxis;
     
     @FXML
     private void initialize()
     {
+        xAxis = new NumberAxis();
+        yAxis = new CategoryAxis();
+
+        xAxis.setLabel("Time");
+        xAxis.setAutoRanging(false);
+        xAxis.setLowerBound(0);
+        xAxis.setUpperBound(25); // Initial view
+        xAxis.setTickUnit(1);
+
+        yAxis.setLabel("CPU");
+        yAxis.setCategories(FXCollections.observableArrayList("CPU 1"));
+
+        // 2. Create Chart manually
+        gantChart = new StackedBarChart<>(xAxis, yAxis);
+        gantChart.setAnimated(false);
+        gantChart.setCategoryGap(0); // Make bars touch
+        gantChart.setLegendVisible(false);
+
+        // 3. Set the chart to fill the VBox
+        VBox.setVgrow(gantChart, javafx.scene.layout.Priority.ALWAYS);
+        chartContainer.getChildren().add(gantChart);
         switch (CPU_Scheduling_opController.algo)
         {
             case 0:
@@ -113,8 +149,6 @@ public class CPU_Scheduling_opController extends SceneController
                     break;      
             }
         }
-
-        this.readyQueueTxt.setItems(CPU_Scheduling_opController.scheduler.get_observableReadyQueue());
         
         this.avgWaitTxt.setText("" + 0);
         
@@ -124,16 +158,26 @@ public class CPU_Scheduling_opController extends SceneController
         
         CPU_Scheduling_opController.scheduler.get_currentTimeProperty().addListener((obs, oldValue, newValue) -> {
             this.totalExecTxt.setText("" + newValue);
+            
+            this.xAxis.setUpperBound((newValue.intValue()/25 + 1) * 25);
+            this.xAxis.setLowerBound((newValue.intValue()/25) * 25);
         });
         
         CPU_Scheduling_opController.scheduler.get_currentProcessProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue == null)
             {
                 this.cpuTxt.setText("Idle");
+                this.initialTime = CPU_Scheduling_opController.scheduler.get_currentTimeProperty().get();
             }
             else
             {
+                if (oldValue == null)
+                {
+                    addIdleTime(CPU_Scheduling_opController.scheduler.get_currentTimeProperty().get());
+                }
+                
                 this.cpuTxt.setText("P" + newValue.get_id());
+                
                 
                 newValue.get_remainingBurstTimeProperty().addListener((burstObs, burstOldValue, burstNewValue) -> {
                     switch (newValue.get_id())
@@ -179,6 +223,8 @@ public class CPU_Scheduling_opController extends SceneController
                             this.p10Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;      
                     }
+                    
+                    addBurst("P" + newValue.get_id(), newValue.get_id(),1);
                 });
             }
         });
@@ -190,64 +236,6 @@ public class CPU_Scheduling_opController extends SceneController
         CPU_Scheduling_opController.scheduler.get_averageTurnAroundTimeProperty().addListener((obs, oldValue, newValue) -> {
             this.avgTurnTxt.setText("" + newValue);
         });
-        
-//        Process.get_counterProperty().addListener((obs, oldValue, newValue) -> {
-//            switch (newValue.intValue())
-//            {
-//                case 1:
-//                    this.p1RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p1Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p1Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;
-//                case 2:
-//                    this.p2RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p2Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p2Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;
-//                case 3:
-//                    this.p3RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p3Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p3Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;
-//                case 4:
-//                    this.p4RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p4Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p4Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;
-//                case 5:
-//                    this.p5RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p5Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p5Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;
-//                case 6:
-//                    this.p6RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p6Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p6Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;
-//                case 7:
-//                    this.p7RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p7Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p7Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;
-//                case 8:
-//                    this.p8RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p8Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p8Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;
-//                case 9:
-//                    this.p9RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p9Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p9Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;
-//                case 10:
-//                    this.p10RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p10Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
-//                    this.p10Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
-//                    break;      
-//                default:
-//                    break;
-//            }
-//        });
         
         Thread thread = new Thread(() -> {
             CPU_Scheduling_opController.scheduler.set_isRunning(true);
@@ -287,5 +275,39 @@ public class CPU_Scheduling_opController extends SceneController
         {
             e.printStackTrace();
         }
+    }
+    
+    public void addBurst(String processName, int id, int duration)
+    {
+        Platform.runLater(() -> {
+            XYChart.Series<Number, String> series = new XYChart.Series<>();
+            series.setName(processName);
+
+            XYChart.Data<Number, String> data = new XYChart.Data<>(duration, "CPU 1");
+            series.getData().add(data);
+
+            gantChart.getData().add(series);
+
+            // --- THE COLOR FIX ---
+            // We must wait for the node to be created to style it
+            if (data.getNode() != null)
+            {
+                String color = colors[id % colors.length]; // Cycle colors if IDs > 10
+                data.getNode().setStyle("-fx-bar-fill: " + color + "; -fx-background-color: " + color + ";");
+            }
+        });
+    }
+    
+    public void addIdleTime(int finalTime)
+    {   
+        Platform.runLater(() -> {
+            XYChart.Series<Number, String> idle = new XYChart.Series<>();
+            XYChart.Data<Number, String> data = new XYChart.Data<>(finalTime - this.initialTime, "CPU 1");
+            idle.getData().add(data);
+            gantChart.getData().add(idle);
+
+            // Make the idle block invisible
+            data.getNode().setStyle("-fx-bar-fill: transparent; -fx-background-color: transparent;");
+        });
     }
 }

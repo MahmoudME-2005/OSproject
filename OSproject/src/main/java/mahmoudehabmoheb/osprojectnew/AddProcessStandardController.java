@@ -17,6 +17,8 @@ public class AddProcessStandardController extends SceneController
         AddProcessStandardController.scheduler.add_Process(new Process(
             Integer.parseInt(this.burstTimeField.getText())
         ));
+        
+        this.burstTimeField.clear();
     }
 
     @FXML

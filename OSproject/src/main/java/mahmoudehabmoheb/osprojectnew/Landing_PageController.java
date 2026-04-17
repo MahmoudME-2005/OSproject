@@ -51,8 +51,6 @@ public class Landing_PageController extends SceneController
             return;
         }
         
-        Landing_PageController.numberOfProcesses = count;
-        
         this.errorLabel.setVisible(false);
         
         if (algo.equals("FCFS"))

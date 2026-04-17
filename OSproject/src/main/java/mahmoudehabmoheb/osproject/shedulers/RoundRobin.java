@@ -7,8 +7,6 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.Queue;
 import java.util.ArrayDeque;
-import java.util.concurrent.CountDownLatch;
-import javafx.application.Platform;
 
 /**
  *
@@ -35,7 +33,6 @@ public class RoundRobin extends Scheduler<Queue<Process>>
     {
         p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
-        set_observableReadyQueue();
     }
     
     @Override
@@ -117,39 +114,4 @@ public class RoundRobin extends Scheduler<Queue<Process>>
     {
         return this.quantum;
     }
-    
-    @Override
-    public void set_observableReadyQueue()
-    {
-        Platform.runLater(() -> this.observableReadyQueue.setAll(this.readyQueue));
-    }
-    
-//    @Override
-//    public void set_observableReadyQueue()
-//    {
-//        // 1. Create a latch with a count of 1
-//        CountDownLatch latch = new CountDownLatch(1);
-//
-//        Platform.runLater(() -> {
-//            try
-//            {
-//                this.observableReadyQueue.setAll(this.readyQueue);
-//            }
-//            finally
-//            {
-//                // 2. This runs AFTER the UI is updated
-//                latch.countDown(); 
-//            }
-//        });
-//
-//        try
-//        {
-//            // 3. The background thread STOPS here until countDown() is called
-//            latch.await(); 
-//        }
-//        catch (InterruptedException e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
 }

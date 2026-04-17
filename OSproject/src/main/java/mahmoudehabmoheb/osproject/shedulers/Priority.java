@@ -1,12 +1,7 @@
 package mahmoudehabmoheb.osproject.shedulers;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.PriorityQueue;
-import java.util.concurrent.CountDownLatch;
-
-import javafx.application.Platform;
 import mahmoudehabmoheb.osproject.Process;
 
 /**
@@ -36,62 +31,66 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
     {
         p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
-        set_observableReadyQueue();
     }
 
     @Override
     public void schedule()
     {
-        if (isPreemptive)
+        while (this.isRunning)
         {
-            // Preemptive priority scheduling
-            while (!this.readyQueue.isEmpty() || this.currentProcess.get() != null)
+            if (isPreemptive)
             {
-                while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
+                // Preemptive priority scheduling
+                if (!this.readyQueue.isEmpty() || this.currentProcess.get() != null)
                 {
-                    this.readyQueue.poll();
-                }
-
-                if (this.currentProcess.get() != null && readyQueue.peek() != null && readyQueue.peek().get_priority() < this.currentProcess.get().get_priority())
-                {
-                    this.readyQueue.add(this.currentProcess.get());
-                    set_currentProcess(this.readyQueue.poll());
-                }
-                else if (this.currentProcess.get() == null && this.readyQueue.peek() != null)
-                {
-                    set_currentProcess(this.readyQueue.poll());
-                }
-
-                if (this.currentProcess.get() != null)
-                {
-                    this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
-
-                    try
+                    while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
                     {
-                        if (this.isDynamic)
+                        this.readyQueue.poll();
+                    }
+
+                    if (this.currentProcess.get() != null && readyQueue.peek() != null && readyQueue.peek().get_priority() < this.currentProcess.get().get_priority())
+                    {
+                        this.readyQueue.add(this.currentProcess.get());
+                        set_currentProcess(this.readyQueue.poll());
+                    }
+                    else if (this.currentProcess.get() == null && this.readyQueue.peek() != null)
+                    {
+                        set_currentProcess(this.readyQueue.poll());
+                    }
+
+                    if (this.currentProcess.get() != null)
+                    {
+                        this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
+
+                        try
                         {
-                            Thread.sleep(1000);
+                            if (this.isDynamic)
+                            {
+                                Thread.sleep(1000);
+                            }
                         }
-                    }
-                    catch (InterruptedException e)
-                    {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
+                        catch (InterruptedException e)
+                        {
+                            Thread.currentThread().interrupt();
+                            break;
+                        }
 
-                    increment_currentTime();
+                        increment_currentTime();
 
-                    if (this.currentProcess.get().get_remainingBurstTime() == 0)
-                    {
-                        this.currentProcess.get().set_finishedTime(this.currentTime.get());
-                        this.completedProcesses.add(this.currentProcess.get());
-                        this.calculate_averageWaitingTime();
-                        this.calculate_averageTurnAroundTime();
-                        set_currentProcess(null);
+                        if (this.currentProcess.get().get_remainingBurstTime() == 0)
+                        {
+                            this.currentProcess.get().set_finishedTime(this.currentTime.get());
+                            this.completedProcesses.add(this.currentProcess.get());
+                            this.calculate_averageWaitingTime();
+                            this.calculate_averageTurnAroundTime();
+                            set_currentProcess(null);
+                        }
                     }
                 }
                 else
                 {
+                    set_currentProcess(null);
+
                     if (this.isDynamic)
                     {
                         try
@@ -107,48 +106,51 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
                     }
                 }
             }
-        }
-        else
-        {
-            // Non-preemptive priority scheduling
-            while (!this.readyQueue.isEmpty() || this.currentProcess.get() != null)
+            else
             {
-                // Skip completed processes
-                while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
+                // Non-preemptive priority scheduling
+                if (!this.readyQueue.isEmpty() || this.currentProcess.get() != null)
                 {
-                    this.readyQueue.poll();
-                }
-
-                if (!this.readyQueue.isEmpty())
-                {
-                    set_currentProcess(this.readyQueue.poll());
-
-                    for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
+                    // Skip completed processes
+                    while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
                     {
-                        try
-                        {
-                            if (this.isDynamic)
-                            {
-                                Thread.sleep(1000);
-                            }
-                        }
-                        catch (InterruptedException e)
-                        {
-                            Thread.currentThread().interrupt();
-                            break;
-                        }
-                        
-                        increment_currentTime();
-                        this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
+                        this.readyQueue.poll();
                     }
 
-                    this.currentProcess.get().set_finishedTime(this.currentTime.get());
-                    this.completedProcesses.add(this.currentProcess.get());
-                    this.calculate_averageWaitingTime();
-                    this.calculate_averageTurnAroundTime();
+                    if (!this.readyQueue.isEmpty())
+                    {
+                        set_currentProcess(this.readyQueue.poll());
+
+                        for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
+                        {
+                            try
+                            {
+                                if (this.isDynamic)
+                                {
+                                    Thread.sleep(1000);
+                                }
+                            }
+                            catch (InterruptedException e)
+                            {
+                                Thread.currentThread().interrupt();
+                                break;
+                            }
+
+                            increment_currentTime();
+                            this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
+                        }
+
+                        this.currentProcess.get().set_finishedTime(this.currentTime.get());
+                        this.completedProcesses.add(this.currentProcess.get());
+                        this.calculate_averageWaitingTime();
+                        this.calculate_averageTurnAroundTime();
+                        set_currentProcess(null);
+                    }
                 }
                 else
                 {
+                    set_currentProcess(null);
+
                     if (this.isDynamic)
                     {
                         try
@@ -174,47 +176,4 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
     public boolean is_preemptive() {
         return this.isPreemptive;
     }
-
-    @Override
-    public void set_observableReadyQueue()
-    {
-        List<Process> sortedList = new ArrayList<>(this.readyQueue);
-
-        sortedList.sort(Comparator.comparingInt(Process::get_remainingBurstTime));
-        
-        Platform.runLater(() -> this.observableReadyQueue.setAll(sortedList));
-    }
-    
-//    @Override
-//    public void set_observableReadyQueue()
-//    {
-//        // 1. Create a latch with a count of 1
-//        CountDownLatch latch = new CountDownLatch(1);
-//
-//        Platform.runLater(() -> {
-//            try
-//            {
-//                List<Process> sortedList = new ArrayList<>(this.readyQueue);
-//        
-//                sortedList.sort(Comparator.comparingInt(Process::get_remainingBurstTime));
-//        
-//                this.observableReadyQueue.setAll(sortedList);
-//            }
-//            finally
-//            {
-//                // 2. This runs AFTER the UI is updated
-//                latch.countDown(); 
-//            }
-//        });
-//
-//        try
-//        {
-//            // 3. The background thread STOPS here until countDown() is called
-//            latch.await(); 
-//        }
-//        catch (InterruptedException e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
 }

@@ -27,11 +27,19 @@ public class AddProcessPriorityController extends SceneController
             Integer.parseInt(this.burstTimeField.getText()),
             Integer.parseInt(this.priorityField.getText())
         ));
+        
+        clearInputs();
     }
     
     @FXML
     private void handleBack()
     {
         ((Stage) this.addProcessBtn.getScene().getWindow()).close();
+    }
+    
+    private void clearInputs()
+    {
+        this.burstTimeField.clear();
+        this.priorityField.clear();
     }
 }

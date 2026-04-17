@@ -15,7 +15,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.ObservableList;
 
 /**
  *
@@ -28,7 +27,6 @@ public abstract class Scheduler<T>
     protected IntegerProperty currentTime;
     protected List<Process> completedProcesses;
     protected T readyQueue;
-    protected ObservableList<Process> observableReadyQueue;
     protected DoubleProperty averageWaitingTime;
     protected DoubleProperty averageTurnAroundTime;
     protected boolean isDynamic;
@@ -144,13 +142,6 @@ public abstract class Scheduler<T>
     public boolean get_isRunning()
     {
         return this.isRunning;
-    }
-    
-    public abstract void set_observableReadyQueue();
-    
-    public ObservableList<Process> get_observableReadyQueue()
-    {
-        return this.observableReadyQueue;
     }
     
     public IntegerProperty get_currentTimeProperty()
