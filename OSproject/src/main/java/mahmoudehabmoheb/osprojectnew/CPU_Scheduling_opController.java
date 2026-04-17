@@ -253,7 +253,7 @@ public class CPU_Scheduling_opController extends SceneController
             CPU_Scheduling_opController.scheduler.set_isRunning(true);
             CPU_Scheduling_opController.scheduler.schedule();
         });
-        
+        thread.setDaemon(true);
         thread.start();
     }
     
