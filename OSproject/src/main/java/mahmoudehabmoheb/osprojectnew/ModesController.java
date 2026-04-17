@@ -22,7 +22,7 @@ public class ModesController extends SceneController
     private void handleStaticMode()
     {
         ModesController.scheduler.set_dynamic(false);
-        switchToScene("/fxml/StaticOutput.fxml");
+        switchToScene("/fxml/CPU_Scheduling_op.fxml");
     }
     
     @FXML

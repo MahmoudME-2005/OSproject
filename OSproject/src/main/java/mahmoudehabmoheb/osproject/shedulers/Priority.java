@@ -1,22 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package mahmoudehabmoheb.osproject.shedulers;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import javafx.application.Platform;
+import java.util.PriorityQueue;
 
+import javafx.application.Platform;
 import mahmoudehabmoheb.osproject.Process;
 
 /**
- *
- * @author Mahmoud Ehab
+ * Priority scheduler implementation.
+ * Lower integer priority means higher scheduling priority.
  */
-
-public class Priority extends Scheduler<List<Process>>
-{
+public class Priority extends Scheduler<PriorityQueue<Process>> {
     private boolean isPreemptive;
 
     public Priority()
@@ -27,15 +23,13 @@ public class Priority extends Scheduler<List<Process>>
     public Priority(boolean isPreemptive)
     {
         super();
-        this.readyQueue = new ArrayList<>();
         this.isPreemptive = isPreemptive;
+        this.readyQueue = new PriorityQueue<>(
+                Comparator.comparingInt(Process::get_priority)
+                        .thenComparingInt(Process::get_arrivalTime)
+                        .thenComparingInt(Process::get_id));
     }
 
-    public List<Process> get_readyQueue()
-    {
-        return this.readyQueue;
-    }
-    
     @Override
     public void add_Process(Process p)
     {
@@ -49,31 +43,25 @@ public class Priority extends Scheduler<List<Process>>
     {
         if (isPreemptive)
         {
-            // Preemptive priority scheduling (lower number = higher priority)
-            while (completedProcesses.size() < readyQueue.size())
+            // Preemptive priority scheduling
+            while (!this.readyQueue.isEmpty() || this.currentProcess.get() != null)
             {
-                Process highestPriorityProcess = null;
-
-                for (Process p : this.readyQueue) {
-                    if (!completedProcesses.contains(p))
-                    {
-                        if (highestPriorityProcess == null || p.get_priority() < highestPriorityProcess.get_priority())
-                        {
-                            highestPriorityProcess = p;
-                        }
-                    }
-                }
-
-                if (this.currentProcess != null && highestPriorityProcess != null && highestPriorityProcess.get_priority() < this.currentProcess.get().get_priority())
+                while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
                 {
-                    this.currentProcess.set(highestPriorityProcess);
-                }
-                else if (currentProcess == null && highestPriorityProcess != null)
-                {
-                    this.currentProcess.set(highestPriorityProcess);
+                    this.readyQueue.poll();
                 }
 
-                if (this.currentProcess != null)
+                if (this.currentProcess.get() != null && readyQueue.peek() != null && readyQueue.peek().get_priority() < this.currentProcess.get().get_priority())
+                {
+                    this.readyQueue.add(this.currentProcess.get());
+                    set_currentProcess(this.readyQueue.poll());
+                }
+                else if (this.currentProcess.get() == null && this.readyQueue.peek() != null)
+                {
+                    set_currentProcess(this.readyQueue.poll());
+                }
+
+                if (this.currentProcess.get() != null)
                 {
                     this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
 
@@ -81,7 +69,7 @@ public class Priority extends Scheduler<List<Process>>
                     {
                         if (this.isDynamic)
                         {
-                            Thread.sleep(1000); // 1 second per time unit
+                            Thread.sleep(1000);
                         }
                     }
                     catch (InterruptedException e)
@@ -96,7 +84,10 @@ public class Priority extends Scheduler<List<Process>>
                     {
                         this.currentProcess.get().set_finishedTime(this.currentTime.get());
                         this.completedProcesses.add(this.currentProcess.get());
-                        this.currentProcess = null;
+                        this.calculate_averageWaitingTime();
+                        this.calculate_averageTurnAroundTime();
+                        set_currentProcess(null);
+                        
                     }
                 }
                 else
@@ -114,42 +105,31 @@ public class Priority extends Scheduler<List<Process>>
                             break;
                         }
                     }
-                    else
-                    {
-                        continue;
-                    }
                 }
             }
-        } // Non-preemptive priority scheduling
+        }
         else
         {
-            while (this.completedProcesses.size() < this.readyQueue.size())
+            // Non-preemptive priority scheduling
+            while (!this.readyQueue.isEmpty() || this.currentProcess.get() != null)
             {
-                Process highestPriorityProcess = null;
-
-                for (Process p : this.readyQueue)
+                // Skip completed processes
+                while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
                 {
-                    if (!this.completedProcesses.contains(p))
-                    {
-                        if (highestPriorityProcess == null || p.get_priority() < highestPriorityProcess.get_priority())
-                        {
-                            highestPriorityProcess = p;
-                        }
-                    }
+                    this.readyQueue.poll();
                 }
 
-                if (highestPriorityProcess != null)
+                if (!this.readyQueue.isEmpty())
                 {
-                    this.currentProcess.set(highestPriorityProcess);
+                    set_currentProcess(this.readyQueue.poll());
 
-                    // Execute the process for its full burst time, sleeping 1 second per time unit
-                    for (int i = 0; i < highestPriorityProcess.get_initialBurstTime(); i++)
+                    for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
                     {
                         try
                         {
                             if (this.isDynamic)
                             {
-                                Thread.sleep(1000);                     
+                                Thread.sleep(1000);
                             }
                         }
                         catch (InterruptedException e)
@@ -159,48 +139,48 @@ public class Priority extends Scheduler<List<Process>>
                         }
                         
                         increment_currentTime();
+                        this.currentProcess.get().set_remainingBurstTime(this.currentProcess.get().get_remainingBurstTime() - 1);
                     }
 
-                    highestPriorityProcess.set_finishedTime(this.currentTime.get());
-                    this.completedProcesses.add(highestPriorityProcess);
+                    this.currentProcess.get().set_finishedTime(this.currentTime.get());
+                    this.completedProcesses.add(this.currentProcess.get());
+                    this.calculate_averageWaitingTime();
+                    this.calculate_averageTurnAroundTime();
                 }
                 else
                 {
-                if (this.isDynamic)
-                {
-                    try
+                    if (this.isDynamic)
                     {
-                        Thread.sleep(1000);
-                        increment_currentTime();
+                        try
+                        {
+                            Thread.sleep(1000);
+                            increment_currentTime();
+                        }
+                        catch (InterruptedException e)
+                        {
+                            Thread.currentThread().interrupt();
+                            break;
+                        }
                     }
-                    catch (InterruptedException e)
-                    {
-                        Thread.currentThread().interrupt();
-                        break;
-                    }
-                }
-                else
-                {
-                    continue;
-                }
                 }
             }
         }
     }
-    
-    public void set_preemptive(boolean p)
-    {
+
+    public void set_preemptive(boolean p) {
         this.isPreemptive = p;
     }
-    
-    public boolean is_preemptive()
-    {
+
+    public boolean is_preemptive() {
         return this.isPreemptive;
     }
-    
+
     @Override
-    public void set_observableReadyQueue()
-    {
-        Platform.runLater(() -> this.observableReadyQueue.setAll(this.readyQueue));
+    public void set_observableReadyQueue() {
+        List<Process> sortedList = new ArrayList<>(this.readyQueue);
+        
+        sortedList.sort(Comparator.comparingInt(Process::get_remainingBurstTime));
+        
+        Platform.runLater(() -> this.observableReadyQueue.setAll(sortedList));
     }
 }

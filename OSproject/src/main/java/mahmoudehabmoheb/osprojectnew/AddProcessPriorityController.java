@@ -24,7 +24,8 @@ public class AddProcessPriorityController extends SceneController
     private void handleAdd()
     {
         AddProcessPriorityController.scheduler.add_Process(new Process(
-            Integer.parseInt(this.burstTimeField.getText())
+            Integer.parseInt(this.burstTimeField.getText()),
+            Integer.parseInt(this.priorityField.getText())
         ));
     }
     
