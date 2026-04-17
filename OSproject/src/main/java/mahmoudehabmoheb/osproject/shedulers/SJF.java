@@ -86,7 +86,7 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
         }
     }
 
-    public Process tick()
+ public Process tick()
     {
         // 1. Execute current process
         if (this.currentProcess.get() != null)
@@ -103,13 +103,14 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
             }
         }
 
-        // 2. Preemption Check
+        // 2. Preemption Check (SRTF)
         if (this.isPreemptive && this.currentProcess.get() != null && !this.readyQueue.isEmpty())
         {
             if (this.readyQueue.peek().get_remainingBurstTime() < this.currentProcess.get().get_remainingBurstTime())
             {
                 this.readyQueue.add(this.currentProcess.get());
                 set_currentProcess(null);
+                set_observableReadyQueue(); // Update UI: Process returned to queue
             }
         }
 
@@ -117,11 +118,11 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
         if (this.currentProcess.get() == null && !this.readyQueue.isEmpty())
         {
             set_currentProcess(this.readyQueue.poll());
+            set_observableReadyQueue(); // Update UI: Process removed from queue
         }
 
         return this.currentProcess.get();
     }
-    
     public void set_preemptive(boolean p)
     {
         this.isPreemptive = p;

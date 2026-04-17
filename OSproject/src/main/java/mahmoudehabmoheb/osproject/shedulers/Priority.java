@@ -39,27 +39,31 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
         set_observableReadyQueue();
     }
 
-    @Override
+   @Override
     public void schedule()
     {
         if (isPreemptive)
         {
             // Preemptive priority scheduling
-            while (!this.readyQueue.isEmpty() || this.currentProcess.get() != null)
+            while (this.isRunning && (!this.readyQueue.isEmpty() || this.currentProcess.get() != null))
             {
                 while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
                 {
                     this.readyQueue.poll();
+                    set_observableReadyQueue(); // Update UI after removing completed
                 }
 
+                // Check for preemption
                 if (this.currentProcess.get() != null && readyQueue.peek() != null && readyQueue.peek().get_priority() < this.currentProcess.get().get_priority())
                 {
                     this.readyQueue.add(this.currentProcess.get());
                     set_currentProcess(this.readyQueue.poll());
+                    set_observableReadyQueue(); // Update UI after preemption swap
                 }
                 else if (this.currentProcess.get() == null && this.readyQueue.peek() != null)
                 {
                     set_currentProcess(this.readyQueue.poll());
+                    set_observableReadyQueue(); // Update UI after polling new process
                 }
 
                 if (this.currentProcess.get() != null)
@@ -88,6 +92,7 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
                         this.calculate_averageWaitingTime();
                         this.calculate_averageTurnAroundTime();
                         set_currentProcess(null);
+                        // Queue doesn't change here, but ready to poll next in next iteration
                     }
                 }
                 else
@@ -111,17 +116,19 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
         else
         {
             // Non-preemptive priority scheduling
-            while (!this.readyQueue.isEmpty() || this.currentProcess.get() != null)
+            while (this.isRunning && (!this.readyQueue.isEmpty() || this.currentProcess.get() != null))
             {
                 // Skip completed processes
                 while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
                 {
                     this.readyQueue.poll();
+                    set_observableReadyQueue(); // Update UI
                 }
 
                 if (!this.readyQueue.isEmpty())
                 {
                     set_currentProcess(this.readyQueue.poll());
+                    set_observableReadyQueue(); // Update UI immediately after polling
 
                     for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
                     {
@@ -146,6 +153,7 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
                     this.completedProcesses.add(this.currentProcess.get());
                     this.calculate_averageWaitingTime();
                     this.calculate_averageTurnAroundTime();
+                    set_currentProcess(null);
                 }
                 else
                 {
@@ -166,7 +174,7 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
             }
         }
     }
-
+        
     public void set_preemptive(boolean p) {
         this.isPreemptive = p;
     }

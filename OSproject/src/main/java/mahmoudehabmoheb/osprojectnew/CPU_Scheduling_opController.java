@@ -115,7 +115,17 @@ public class CPU_Scheduling_opController extends SceneController
         }
 
         this.readyQueueTxt.setItems(CPU_Scheduling_opController.scheduler.get_observableReadyQueue());
-        
+        this.readyQueueTxt.setCellFactory(lv -> new ListCell<Process>() {
+            @Override
+            protected void updateItem(Process p, boolean empty) {
+                super.updateItem(p, empty);
+                if (empty || p == null) {
+                    setText(null);
+                } else {
+                    setText("P" + p.get_id());
+                }
+            }
+        });
         this.avgWaitTxt.setText("" + 0);
         
         this.avgTurnTxt.setText("" + 0);

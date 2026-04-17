@@ -43,6 +43,8 @@ public abstract class Scheduler<T>
         this.averageTurnAroundTime = new SimpleDoubleProperty(0.0);
         this.isDynamic = false;
         this.isRunning = false;
+        
+        this.observableReadyQueue = javafx.collections.FXCollections.observableArrayList();
     }
     
     public abstract void add_Process(Process P);

@@ -38,14 +38,16 @@ public class RoundRobin extends Scheduler<Queue<Process>>
         set_observableReadyQueue();
     }
     
-    @Override
+   @Override
     public void schedule()
     {
         while (this.isRunning)
         {
             if (!this.readyQueue.isEmpty())
             {
+                // 1. Remove from queue and update UI
                 this.currentProcess.set(this.readyQueue.poll());
+                set_observableReadyQueue(); 
 
                 for (int i = 0; i < this.quantum; i++)
                 {
@@ -58,7 +60,8 @@ public class RoundRobin extends Scheduler<Queue<Process>>
                     }
                     catch (InterruptedException ex)
                     {
-                        System.out.println("Process Executing");
+                        Thread.currentThread().interrupt();
+                        break;
                     }
 
                     increment_currentTime();
@@ -74,12 +77,16 @@ public class RoundRobin extends Scheduler<Queue<Process>>
                     }
                 }
 
+                // 2. If process isn't finished, add it back and update UI
                 if (this.currentProcess.get().get_remainingBurstTime() != 0)
                 {
                     this.readyQueue.add(this.currentProcess.get());  
+                    set_observableReadyQueue(); 
                 }
                 else
                 {
+                    // Ensure the currentProcess property is cleared when done
+                    this.set_currentProcess(null);
                     continue;
                 }
             }
@@ -91,7 +98,7 @@ public class RoundRobin extends Scheduler<Queue<Process>>
                 {
                     try
                     {
-                        Thread.sleep(1000);
+                        Thread.sleep(5000);
                         increment_currentTime();
                     }
                     catch (InterruptedException e)
@@ -107,7 +114,6 @@ public class RoundRobin extends Scheduler<Queue<Process>>
             }
         }
     }
-    
     public void set_quantum(int quantum)
     {
         this.quantum = quantum;

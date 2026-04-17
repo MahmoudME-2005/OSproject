@@ -38,6 +38,7 @@ public class FCFS extends Scheduler<Queue<Process>>
             if (!this.readyQueue.isEmpty())
             {
                 set_currentProcess(this.readyQueue.poll());
+                set_observableReadyQueue();
                 
                 for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
                 {
