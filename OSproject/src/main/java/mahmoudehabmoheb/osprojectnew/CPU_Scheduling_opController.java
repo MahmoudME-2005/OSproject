@@ -9,10 +9,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.event.ActionEvent;
 import javafx.geometry.Orientation;
 import mahmoudehabmoheb.osproject.shedulers.Priority;
 import mahmoudehabmoheb.osproject.shedulers.SJF;
 import mahmoudehabmoheb.osproject.Process;
+import javafx.scene.input.MouseEvent;
 
 public class CPU_Scheduling_opController extends SceneController
 {
@@ -298,4 +300,16 @@ public class CPU_Scheduling_opController extends SceneController
             e.printStackTrace();
         }
     }
+    
+   @FXML
+private void handleBackAction(MouseEvent event) // Changed ActionEvent to MouseEvent
+{
+    switchToScene("/fxml/Modes.fxml");
+}
+
+@FXML
+private void handleBackActionhome(MouseEvent event) // Changed ActionEvent to MouseEvent
+{
+    switchToScene("/fxml/Landing_Page.fxml");
+}
 }

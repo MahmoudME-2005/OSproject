@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="424.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mahmoudehabmoheb.osprojectnew.CPU_Scheduling_opController">
+<AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mahmoudehabmoheb.osprojectnew.CPU_Scheduling_opController">
    <children>
-      <Text fill="#5800ff" layoutX="14.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm" textAlignment="CENTER" wrappingWidth="55.470062255859375">
+      <Text fill="#5800ff" layoutX="16.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Algorithm" textAlignment="CENTER" wrappingWidth="55.470062255859375">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <Text fill="#5800ff" layoutX="14.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPU" textAlignment="CENTER" wrappingWidth="55.470062255859375">
+      <Text fill="#5800ff" layoutX="16.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CPU" textAlignment="CENTER" wrappingWidth="55.470062255859375">
          <font>
             <Font name="Tahoma" size="13.0" />
          </font>
       </Text>
-      <TextField fx:id="algorithmTxt" alignment="CENTER" editable="false" layoutX="79.0" layoutY="20.0" prefHeight="28.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9; -fx-prompt-text-fill: #5800ff;" />
-      <TextField fx:id="cpuTxt" alignment="CENTER" layoutX="79.0" layoutY="56.0" prefHeight="16.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <TextField fx:id="algorithmTxt" alignment="CENTER" editable="false" layoutX="81.0" layoutY="42.0" prefHeight="28.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9; -fx-prompt-text-fill: #5800ff;" />
+      <TextField fx:id="cpuTxt" alignment="CENTER" layoutX="81.0" layoutY="78.0" prefHeight="16.0" prefWidth="124.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
       <Text fill="#5800ff" layoutX="-5.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Average Waiting time" textAlignment="CENTER" wrappingWidth="130.13671875">
          <font>
             <Font name="Tahoma" size="11.0" />
@@ -227,5 +232,29 @@
          </font>
       </Text>
       <ListView fx:id="readyQueueTxt" layoutX="16.0" layoutY="382.0" orientation="HORIZONTAL" prefHeight="28.0" prefWidth="147.0" style="-fx-background-color: #eae5f7; -fx-border-color: #5800ff; -fx-background-radius: 9; -fx-border-radius: 9;" />
+      <HBox alignment="CENTER_LEFT" layoutX="-5.0" layoutY="-9.0" prefHeight="51.0" prefWidth="665.0" spacing="15.0">
+    <children>
+        <ImageView fitHeight="23.0" fitWidth="32.0" onMouseClicked="#handleBackAction" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+            <image>
+                <Image url="@../images/CPU%20Scheduling%20(3).png" />
+            </image>
+        </ImageView>
+        <Label prefHeight="32.0" prefWidth="53.0" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #5800ff;" text="Back" textFill="#9412ff">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        
+        <javafx.scene.layout.Pane prefHeight="29.0" prefWidth="549.0" HBox.hgrow="ALWAYS">
+               <children>
+      
+              <ImageView fitHeight="36.0" fitWidth="25.0" onMouseClicked="#handleBackActionhome" layoutX="510.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../images/CPU%20Scheduling%20(1).png" />
+                  </image>
+              </ImageView>
+               </children></javafx.scene.layout.Pane>
+    </children>
+</HBox>
    </children>
 </AnchorPane>
