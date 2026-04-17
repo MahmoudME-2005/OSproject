@@ -98,7 +98,7 @@ public class RoundRobin extends Scheduler<Queue<Process>>
                 {
                     try
                     {
-                        Thread.sleep(5000);
+                        Thread.sleep(1000);
                         increment_currentTime();
                     }
                     catch (InterruptedException e)
