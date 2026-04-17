@@ -7,6 +7,7 @@ package mahmoudehabmoheb.osproject.shedulers;
 import mahmoudehabmoheb.osproject.Process;
 import java.util.Queue;
 import java.util.ArrayDeque;
+import javafx.application.Platform;
 
 /**
  *
@@ -28,6 +29,12 @@ public class FCFS extends Scheduler<Queue<Process>>
     }
     
     @Override
+    public void set_observableReadyQueue()
+    {
+        Platform.runLater(() -> this.observableReadyQueue.setAll(this.readyQueue));
+    }
+    
+    @Override
     public void schedule()
     {   
         while (this.isRunning)
@@ -35,6 +42,7 @@ public class FCFS extends Scheduler<Queue<Process>>
             if (!this.readyQueue.isEmpty())
             {
                 set_currentProcess(this.readyQueue.poll());
+                set_observableReadyQueue();
                 
                 for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
                 {

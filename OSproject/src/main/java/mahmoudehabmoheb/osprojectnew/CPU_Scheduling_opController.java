@@ -16,9 +16,12 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
+import javafx.event.ActionEvent;
+import javafx.geometry.Orientation;
 import mahmoudehabmoheb.osproject.shedulers.Priority;
 import mahmoudehabmoheb.osproject.shedulers.SJF;
 import mahmoudehabmoheb.osproject.Process;
+import javafx.scene.input.MouseEvent;
 
 public class CPU_Scheduling_opController extends SceneController
 {
@@ -42,6 +45,8 @@ public class CPU_Scheduling_opController extends SceneController
     @FXML
     private void initialize()
     {
+        CPU_Scheduling_opController.tempScheduler = CPU_Scheduling_opController.scheduler;
+        
         xAxis = new NumberAxis();
         yAxis = new CategoryAxis();
 
@@ -149,6 +154,19 @@ public class CPU_Scheduling_opController extends SceneController
                     break;      
             }
         }
+
+        this.readyQueueTxt.setItems(CPU_Scheduling_opController.scheduler.get_observableReadyQueue());
+        this.readyQueueTxt.setCellFactory(lv -> new ListCell<Process>() {
+            @Override
+            protected void updateItem(Process p, boolean empty) {
+                super.updateItem(p, empty);
+                if (empty || p == null) {
+                    setText(null);
+                } else {
+                    setText("P" + p.get_id());
+                }
+            }
+        });
         
         this.avgWaitTxt.setText("" + 0);
         
@@ -309,5 +327,21 @@ public class CPU_Scheduling_opController extends SceneController
             // Make the idle block invisible
             data.getNode().setStyle("-fx-bar-fill: transparent; -fx-background-color: transparent;");
         });
+    }
+
+   @FXML
+    private void handleBackAction() // Changed ActionEvent to MouseEvent
+    {
+        
+        CPU_Scheduling_opController.scheduler.set_isRunning(false);
+        CPU_Scheduling_opController.scheduler = CPU_Scheduling_opController.tempScheduler;
+        switchToScene("/fxml/Modes.fxml");
+    }
+
+    @FXML
+    private void handleBackActionhome() // Changed ActionEvent to MouseEvent
+    {
+        CPU_Scheduling_opController.scheduler.set_isRunning(false);
+        switchToScene("/fxml/Landing_Page.fxml");
     }
 }

@@ -26,6 +26,7 @@ public class SceneController
     private Scene scene;
     private Parent root;
     protected static Scheduler<?> scheduler;
+    protected static Scheduler<?> tempScheduler;
     protected static int algo;
 
     public void switchToScene(String fxmlFilePath)
