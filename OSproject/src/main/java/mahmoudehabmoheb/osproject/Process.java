@@ -16,6 +16,8 @@ public class Process
     private int finishedTime;
     private int priority;
     private static int counter = 0;
+//    private static IntegerProperty counter = new SimpleIntegerProperty(0);
+//    private static int dataOfLastAddedProcess[] = new int[2];
     
     public Process()
     {
@@ -31,11 +33,15 @@ public class Process
     {
         Process.counter++;
         this.id = Process.counter;
+//        Process.increment_counter();
+//        this.id = Process.counter.get();
         this.initialBurstTime = initialBurstTime;
         this.remainingBurstTime = new SimpleIntegerProperty(this.initialBurstTime);
         this.arrivalTime = 0;
         this.finishedTime = 0;
         this.priority = priority;
+//        Process.dataOfLastAddedProcess[0] = this.initialBurstTime;
+//        Process.dataOfLastAddedProcess[1] = this.priority;
     }
     
     // This setter shouldn't be used unless necessary process id's will be set automatically inorder.
@@ -91,6 +97,96 @@ public class Process
     {
         Process.counter = count;
     }
+    
+//    public static void set_counter(int count)
+//    {
+//        // 1. Create a latch with a count of 1
+//        CountDownLatch latch = new CountDownLatch(1);
+//
+//        Platform.runLater(() -> {
+//            try
+//            {
+//                Process.counter.set(count);
+//            }
+//            finally
+//            {
+//                // 2. This runs AFTER the UI is updated
+//                latch.countDown(); 
+//            }
+//        });
+//
+//        try
+//        {
+//            // 3. The background thread STOPS here until countDown() is called
+//            latch.await(); 
+//        }
+//        catch (InterruptedException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
+//    
+//    public static void set_dataOfLastAddedProcess(int initialBurstTime, int priority)
+//    {
+//        Process.dataOfLastAddedProcess[0] = initialBurstTime;
+//        Process.dataOfLastAddedProcess[1] = priority;
+//    }
+//    
+//    public static void increment_counter()
+//    {
+//        // 1. Create a latch with a count of 1
+//        CountDownLatch latch = new CountDownLatch(1);
+//
+//        Platform.runLater(() -> {
+//            try
+//            {
+//                Process.counter.set(Process.counter.get() + 1);
+//            }
+//            finally
+//            {
+//                // 2. This runs AFTER the UI is updated
+//                latch.countDown(); 
+//            }
+//        });
+//
+//        try
+//        {
+//            // 3. The background thread STOPS here until countDown() is called
+//            latch.await(); 
+//        }
+//        catch (InterruptedException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
+//    
+//    public static void decrement_counter()
+//    {
+//        // 1. Create a latch with a count of 1
+//        CountDownLatch latch = new CountDownLatch(1);
+//
+//        Platform.runLater(() -> {
+//            try
+//            {
+//                Process.counter.set(Process.counter.get() - 1);
+//            }
+//            finally
+//            {
+//                // 2. This runs AFTER the UI is updated
+//                latch.countDown(); 
+//            }
+//        });
+//
+//        try
+//        {
+//            // 3. The background thread STOPS here until countDown() is called
+//            latch.await(); 
+//        }
+//        catch (InterruptedException e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 
     public int get_id()
     {
@@ -132,6 +228,21 @@ public class Process
     {
         return Process.counter;
     }
+    
+//    public static int get_counter()
+//    {
+//        return Process.counter.get();
+//    }
+//    
+//    public static IntegerProperty get_counterProperty()
+//    {
+//        return Process.counter;
+//    }
+//    
+//    public static int[] get_dataOfLastAddedProcess()
+//    {
+//        return Process.dataOfLastAddedProcess;
+//    }
     
     @Override
     public String toString()

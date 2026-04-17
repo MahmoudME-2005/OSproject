@@ -136,37 +136,47 @@ public class CPU_Scheduling_opController extends SceneController
                 this.cpuTxt.setText("P" + newValue.get_id());
                 
                 newValue.get_remainingBurstTimeProperty().addListener((burstObs, burstOldValue, burstNewValue) -> {
-                    switch (CPU_Scheduling_opController.scheduler.get_currentProcess().get_id())
+                    switch (newValue.get_id())
                     {
                         case 1:
                             this.p1RemainingBurst.setText("" + burstNewValue);
+                            this.p1Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;
                         case 2:
                             this.p2RemainingBurst.setText("" + burstNewValue);
+                            this.p2Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;
                         case 3:
                             this.p3RemainingBurst.setText("" + burstNewValue);
+                            this.p3Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;
                         case 4:
                             this.p4RemainingBurst.setText("" + burstNewValue);
+                            this.p4Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;
                         case 5:
                             this.p5RemainingBurst.setText("" + burstNewValue);
+                            this.p5Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;
                         case 6:
                             this.p6RemainingBurst.setText("" + burstNewValue);
+                            this.p6Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;
                         case 7:
                             this.p7RemainingBurst.setText("" + burstNewValue);
+                            this.p7Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;
                         case 8:
                             this.p8RemainingBurst.setText("" + burstNewValue);
+                            this.p8Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;
                         case 9:
                             this.p9RemainingBurst.setText("" + burstNewValue);
+                            this.p9Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;
                         case 10:
                             this.p10RemainingBurst.setText("" + burstNewValue);
+                            this.p10Bar.setProgress(1 - ((double) newValue.get_remainingBurstTime()/newValue.get_initialBurstTime()));
                             break;      
                     }
                 });
@@ -180,6 +190,64 @@ public class CPU_Scheduling_opController extends SceneController
         CPU_Scheduling_opController.scheduler.get_averageTurnAroundTimeProperty().addListener((obs, oldValue, newValue) -> {
             this.avgTurnTxt.setText("" + newValue);
         });
+        
+//        Process.get_counterProperty().addListener((obs, oldValue, newValue) -> {
+//            switch (newValue.intValue())
+//            {
+//                case 1:
+//                    this.p1RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p1Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p1Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;
+//                case 2:
+//                    this.p2RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p2Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p2Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;
+//                case 3:
+//                    this.p3RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p3Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p3Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;
+//                case 4:
+//                    this.p4RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p4Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p4Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;
+//                case 5:
+//                    this.p5RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p5Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p5Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;
+//                case 6:
+//                    this.p6RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p6Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p6Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;
+//                case 7:
+//                    this.p7RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p7Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p7Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;
+//                case 8:
+//                    this.p8RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p8Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p8Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;
+//                case 9:
+//                    this.p9RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p9Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p9Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;
+//                case 10:
+//                    this.p10RemainingBurst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p10Burst.setText("" + Process.get_dataOfLastAddedProcess()[0]);
+//                    this.p10Priority.setText("" + Process.get_dataOfLastAddedProcess()[1]);
+//                    break;      
+//                default:
+//                    break;
+//            }
+//        });
         
         Thread thread = new Thread(() -> {
             CPU_Scheduling_opController.scheduler.set_isRunning(true);
