@@ -44,24 +44,27 @@ public class PriorityController extends SceneController
     @FXML
     private void handleAdd()
     {
-        String burst = this.burstField.getText();
-        String priority = this.priorityField.getText();
-
-        if (!burst.isEmpty() && !priority.isEmpty())
+        if (Process.get_counter() <= 10)
         {
-            // Add to internal list for the next scene
-            PriorityController.scheduler.add_Process(new Process(
-                Integer.parseInt(burst),
-                Integer.parseInt(priority)
-            ));
+            String burst = this.burstField.getText();
+            String priority = this.priorityField.getText();
 
-            // Add UI Labels to the GridPane
-            addLabelToGrid("P" + Process.get_counter(), 0, this.currentRow);
-            addLabelToGrid(burst, 1, this.currentRow);
-            addLabelToGrid(priority, 2, this.currentRow);
+            if (!burst.isEmpty() && !priority.isEmpty())
+            {
+                // Add to internal list for the next scene
+                PriorityController.scheduler.add_Process(new Process(
+                    Integer.parseInt(burst),
+                    Integer.parseInt(priority)
+                ));
 
-            this.currentRow++;
-            clearInputs();
+                // Add UI Labels to the GridPane
+                addLabelToGrid("P" + Process.get_counter(), 0, this.currentRow);
+                addLabelToGrid(burst, 1, this.currentRow);
+                addLabelToGrid(priority, 2, this.currentRow);
+
+                this.currentRow++;
+                clearInputs();
+            }
         }
     }
 

@@ -32,23 +32,23 @@ public class ModesController extends SceneController
         switchToScene("/fxml/CPU_Scheduling_op.fxml");
     }
     
-//    @FXML
-//    private void handleBack()
-//    {
-//        switch (ModesController.algo)
-//        {
-//            case 0:
-//                switchToScene("/fxml/FCFS.fxml");
-//                break;
-//            case 1:
-//                switchToScene("/fxml/SJF.fxml");
-//                break;
-//            case 2:
-//                switchToScene("/fxml/priority.fxml");
-//                break;
-//            default:
-//                switchToScene("/fxml/RR.fxml");
-//                break;
-//        }
-//    }
+    @FXML
+    private void handleBack()
+    {
+        switch (ModesController.algo)
+        {
+            case 0:
+                switchToScene("/fxml/FCFS.fxml");
+                break;
+            case 1:
+                switchToScene("/fxml/SJF.fxml");
+                break;
+            case 2:
+                switchToScene("/fxml/priority.fxml");
+                break;
+            default:
+                switchToScene("/fxml/RR.fxml");
+                break;
+        }
+    }
 }

@@ -1,7 +1,10 @@
 package mahmoudehabmoheb.osproject.shedulers;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.PriorityQueue;
+import javafx.application.Platform;
 import mahmoudehabmoheb.osproject.Process;
 
 /**
@@ -32,8 +35,8 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
         p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
     }
-
-    @Override
+    
+   @Override
     public void schedule()
     {
         while (this.isRunning)
@@ -46,16 +49,19 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
                     while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
                     {
                         this.readyQueue.poll();
+                        set_observableReadyQueue();
                     }
 
                     if (this.currentProcess.get() != null && readyQueue.peek() != null && readyQueue.peek().get_priority() < this.currentProcess.get().get_priority())
                     {
                         this.readyQueue.add(this.currentProcess.get());
                         set_currentProcess(this.readyQueue.poll());
+                        set_observableReadyQueue();
                     }
                     else if (this.currentProcess.get() == null && this.readyQueue.peek() != null)
                     {
                         set_currentProcess(this.readyQueue.poll());
+                        set_observableReadyQueue();
                     }
 
                     if (this.currentProcess.get() != null)
@@ -115,11 +121,13 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
                     while (!this.readyQueue.isEmpty() && this.completedProcesses.contains(this.readyQueue.peek()))
                     {
                         this.readyQueue.poll();
+                        set_observableReadyQueue();
                     }
-
+                    
                     if (!this.readyQueue.isEmpty())
                     {
                         set_currentProcess(this.readyQueue.poll());
+                        set_observableReadyQueue();
 
                         for (int i = 0; i < this.currentProcess.get().get_initialBurstTime(); i++)
                         {
@@ -168,12 +176,22 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
             }
         }
     }
-
+        
     public void set_preemptive(boolean p) {
         this.isPreemptive = p;
     }
 
     public boolean is_preemptive() {
         return this.isPreemptive;
+    }
+    
+    @Override
+    public void set_observableReadyQueue()
+    {
+        List<Process> sortedList = new ArrayList<>(this.readyQueue);
+
+        sortedList.sort(Comparator.comparingInt(Process::get_remainingBurstTime));
+        
+        Platform.runLater(() -> this.observableReadyQueue.setAll(sortedList));
     }
 }
