@@ -41,17 +41,19 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
     public void schedule() {
         if (isPreemptive) {
             // Preemptive priority scheduling
-            while (!readyQueue.isEmpty() || this.currentProcess.get() != null) {
-                while (!readyQueue.isEmpty() && completedProcesses.contains(readyQueue.peek())) {
+            while (!readyQueue.isEmpty() || this.currentProcess.get() != null)
+            {
+                while (!readyQueue.isEmpty() && completedProcesses.contains(readyQueue.peek()))
+                {
                     readyQueue.poll();
                 }
 
-                if (this.currentProcess.get() != null && readyQueue.peek() != null
-                        && readyQueue.peek().get_priority() < this.currentProcess.get().get_priority()) {
+                if (this.currentProcess.get() != null && readyQueue.peek() != null && readyQueue.peek().get_priority() < this.currentProcess.get().get_priority())
+                {
                     readyQueue.add(this.currentProcess.get());
-                    this.currentProcess.set(readyQueue.peek());
-                    readyQueue.poll();
-                } else if (this.currentProcess.get() == null && readyQueue.peek() != null) {
+                    this.currentProcess.set(readyQueue.poll());
+                }
+                else if (this.currentProcess.get() == null && readyQueue.peek() != null) {
                     this.currentProcess.set(readyQueue.peek());
                     readyQueue.poll();
                 }
