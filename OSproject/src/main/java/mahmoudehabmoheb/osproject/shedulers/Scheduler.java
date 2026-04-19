@@ -47,7 +47,7 @@ public abstract class Scheduler<T>
         this.observableReadyQueue = javafx.collections.FXCollections.observableArrayList();
     }
     
-    //    public Scheduler(Scheduler original)
+//    public Scheduler(Scheduler original)
 //    {
 //        this.currentProcess = new SimpleObjectProperty<>();
 //        this.currentTime = new SimpleIntegerProperty(original.currentTime.get());
