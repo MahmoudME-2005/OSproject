@@ -47,6 +47,17 @@ public abstract class Scheduler<T>
         this.observableReadyQueue = javafx.collections.FXCollections.observableArrayList();
     }
     
+//    public Scheduler(Scheduler original)
+//    {
+//        this.currentProcess = new SimpleObjectProperty<>();
+//        this.currentTime = new SimpleIntegerProperty(original.currentTime.get());
+//        this.completedProcesses = new ArrayList<>(original.completedProcesses);
+//        this.averageWaitingTime = new SimpleDoubleProperty(original.averageWaitingTime.get());
+//        this.averageTurnAroundTime = new SimpleDoubleProperty(original.averageTurnAroundTime.get());
+//        this.isDynamic = original.isDynamic;
+//        this.isRunning = original.isRunning;
+//    }
+    
     public abstract void add_Process(Process P);
     
     public abstract void schedule();
