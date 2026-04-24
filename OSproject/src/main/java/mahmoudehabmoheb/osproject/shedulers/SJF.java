@@ -36,6 +36,7 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
     {
         p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
+        set_observableReadyQueue();
     }
     
     @Override
@@ -131,6 +132,7 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
 
         return this.currentProcess.get();
     }
+ 
     public void set_preemptive(boolean p)
     {
         this.isPreemptive = p;

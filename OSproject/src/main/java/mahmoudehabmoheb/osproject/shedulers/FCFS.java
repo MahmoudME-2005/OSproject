@@ -26,6 +26,7 @@ public class FCFS extends Scheduler<Queue<Process>>
     {
         p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
+        set_observableReadyQueue();
     }
     
     @Override

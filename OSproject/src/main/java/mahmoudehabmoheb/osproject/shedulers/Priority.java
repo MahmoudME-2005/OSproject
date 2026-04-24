@@ -25,8 +25,8 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
         this.isPreemptive = isPreemptive;
         this.readyQueue = new PriorityQueue<>(
                 Comparator.comparingInt(Process::get_priority)
-                        .thenComparingInt(Process::get_arrivalTime)
-                        .thenComparingInt(Process::get_id));
+                        .thenComparingInt(Process::get_id)
+        );
     }
 
     @Override
@@ -34,6 +34,7 @@ public class Priority extends Scheduler<PriorityQueue<Process>> {
     {
         p.set_arrivalTime(this.currentTime.get());
         this.readyQueue.add(p);
+        set_observableReadyQueue();
     }
     
    @Override
