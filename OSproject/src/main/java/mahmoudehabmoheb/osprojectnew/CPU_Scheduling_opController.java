@@ -44,9 +44,7 @@ public class CPU_Scheduling_opController extends SceneController
     
     @FXML
     private void initialize()
-    {
-        CPU_Scheduling_opController.tempScheduler = CPU_Scheduling_opController.scheduler;
-        
+    {   
         xAxis = new NumberAxis();
         yAxis = new CategoryAxis();
 
@@ -334,7 +332,6 @@ public class CPU_Scheduling_opController extends SceneController
     {
         Process.set_counter(0);
         CPU_Scheduling_opController.scheduler.set_isRunning(false);
-        CPU_Scheduling_opController.scheduler = CPU_Scheduling_opController.tempScheduler;
         switchToScene("/fxml/Modes.fxml");
     }
 
