@@ -23,12 +23,15 @@ public class AddProcessPriorityController extends SceneController
     @FXML
     private void handleAdd()
     {
-        AddProcessPriorityController.scheduler.add_Process(new Process(
-            Integer.parseInt(this.burstTimeField.getText()),
-            Integer.parseInt(this.priorityField.getText())
-        ));
-        
-        clearInputs();
+        if (Process.get_counter() < 10)
+        {
+            AddProcessPriorityController.scheduler.add_Process(new Process(
+                Integer.parseInt(this.burstTimeField.getText()),
+                Integer.parseInt(this.priorityField.getText())
+            ));
+
+            clearInputs();
+        }
     }
     
     @FXML

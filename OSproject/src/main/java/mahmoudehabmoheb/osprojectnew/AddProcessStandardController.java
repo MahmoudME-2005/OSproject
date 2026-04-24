@@ -14,11 +14,14 @@ public class AddProcessStandardController extends SceneController
     @FXML
     private void handleAdd()
     {
-        AddProcessStandardController.scheduler.add_Process(new Process(
-            Integer.parseInt(this.burstTimeField.getText())
-        ));
-        
-        this.burstTimeField.clear();
+        if (Process.get_counter() < 10)
+        {
+            AddProcessStandardController.scheduler.add_Process(new Process(
+                Integer.parseInt(this.burstTimeField.getText())
+            ));
+
+            this.burstTimeField.clear();
+        }
     }
 
     @FXML

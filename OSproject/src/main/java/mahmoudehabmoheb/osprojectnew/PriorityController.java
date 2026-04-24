@@ -44,7 +44,7 @@ public class PriorityController extends SceneController
     @FXML
     private void handleAdd()
     {
-        if (Process.get_counter() <= 10)
+        if (Process.get_counter() < 10)
         {
             String burst = this.burstField.getText();
             String priority = this.priorityField.getText();
