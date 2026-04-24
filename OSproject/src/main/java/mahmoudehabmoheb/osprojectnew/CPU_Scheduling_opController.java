@@ -332,7 +332,7 @@ public class CPU_Scheduling_opController extends SceneController
    @FXML
     private void handleBackAction() // Changed ActionEvent to MouseEvent
     {
-        
+        Process.set_counter(0);
         CPU_Scheduling_opController.scheduler.set_isRunning(false);
         CPU_Scheduling_opController.scheduler = CPU_Scheduling_opController.tempScheduler;
         switchToScene("/fxml/Modes.fxml");
@@ -341,6 +341,7 @@ public class CPU_Scheduling_opController extends SceneController
     @FXML
     private void handleBackActionhome() // Changed ActionEvent to MouseEvent
     {
+        Process.set_counter(0);
         CPU_Scheduling_opController.scheduler.set_isRunning(false);
         switchToScene("/fxml/Landing_Page.fxml");
     }
