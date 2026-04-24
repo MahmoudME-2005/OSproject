@@ -50,5 +50,7 @@ public class ModesController extends SceneController
                 switchToScene("/fxml/RR.fxml");
                 break;
         }
+        
+        ModesController.scheduler.set_currentTime(0);
     }
 }

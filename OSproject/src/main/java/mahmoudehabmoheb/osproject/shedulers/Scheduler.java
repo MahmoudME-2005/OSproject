@@ -193,6 +193,11 @@ public abstract class Scheduler<T>
         }
     }
     
+    public void set_currentTime(int time)
+    {
+        Platform.runLater(() -> this.currentTime.set(time));
+    }
+    
     public DoubleProperty get_averageWaitingTimeProperty()
     {
         return this.averageWaitingTime;
