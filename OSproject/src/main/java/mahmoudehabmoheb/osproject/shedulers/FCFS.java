@@ -21,6 +21,18 @@ public class FCFS extends Scheduler<Queue<Process>>
         this.readyQueue = new ArrayDeque<>();
     }
     
+    public FCFS(FCFS original)
+    {
+        super(original);
+        
+        this.readyQueue = new ArrayDeque<>();
+        
+        for (Process p : original.readyQueue)
+        {
+            this.readyQueue.add(new Process(p));
+        }
+    }
+    
     @Override
     public void add_Process(Process p)
     {

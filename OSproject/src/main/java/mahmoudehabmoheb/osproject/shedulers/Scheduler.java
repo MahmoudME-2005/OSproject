@@ -4,7 +4,6 @@
  */
 package mahmoudehabmoheb.osproject.shedulers;
 
-import mahmoudehabmoheb.osproject.Process;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -15,7 +14,9 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import static javafx.collections.FXCollections.observableArrayList;
 import javafx.collections.ObservableList;
+import mahmoudehabmoheb.osproject.Process;
 
 /**
  *
@@ -44,19 +45,35 @@ public abstract class Scheduler<T>
         this.isDynamic = false;
         this.isRunning = false;
         
-        this.observableReadyQueue = javafx.collections.FXCollections.observableArrayList();
+        this.observableReadyQueue = observableArrayList();
     }
     
-//    public Scheduler(Scheduler original)
-//    {
-//        this.currentProcess = new SimpleObjectProperty<>();
-//        this.currentTime = new SimpleIntegerProperty(original.currentTime.get());
-//        this.completedProcesses = new ArrayList<>(original.completedProcesses);
-//        this.averageWaitingTime = new SimpleDoubleProperty(original.averageWaitingTime.get());
-//        this.averageTurnAroundTime = new SimpleDoubleProperty(original.averageTurnAroundTime.get());
-//        this.isDynamic = original.isDynamic;
-//        this.isRunning = original.isRunning;
-//    }
+    public Scheduler(Scheduler original)
+    {
+        Process originalProcess = (Process) original.currentProcess.get();
+        this.currentProcess = new SimpleObjectProperty(originalProcess != null ? new Process(originalProcess) : null);
+        this.currentTime = new SimpleIntegerProperty(original.currentTime.get());
+        this.completedProcesses = new ArrayList<>();
+        
+        int completedProcessSize = original.completedProcesses.size();
+        
+        for (int i = 0; i < completedProcessSize; i++)
+        {
+            this.completedProcesses.add(new Process((Process) original.completedProcesses.get(i)));
+        }
+        
+        this.averageWaitingTime = new SimpleDoubleProperty(original.averageWaitingTime.get());
+        this.averageTurnAroundTime = new SimpleDoubleProperty(original.averageTurnAroundTime.get());
+        this.isDynamic = original.isDynamic;
+        this.isRunning = original.isRunning;
+        
+        this.observableReadyQueue = observableArrayList();
+        
+        for (int i = 0; i < original.observableReadyQueue.size(); i++)
+        {
+            this.observableReadyQueue.add(new Process((Process) original.observableReadyQueue.get(i)));
+        }
+    }
     
     public abstract void add_Process(Process P);
     

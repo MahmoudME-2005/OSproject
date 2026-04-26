@@ -73,7 +73,6 @@ public class FCFSController extends SceneController
     @FXML
     private void handleStartAction()
     {
-        FCFSController.algo = 0;
         switchToScene("/fxml/Modes.fxml");
     }
 

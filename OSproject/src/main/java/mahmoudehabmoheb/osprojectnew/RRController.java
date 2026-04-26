@@ -90,8 +90,6 @@ public class RRController extends SceneController
 
         errorLabel.setVisible(false);
         
-        RRController.algo = 3;
-        
         switchToScene("/fxml/Modes.fxml");
     }
 
