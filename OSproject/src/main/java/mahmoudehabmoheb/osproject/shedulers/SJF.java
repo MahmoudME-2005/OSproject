@@ -30,6 +30,19 @@ public class SJF extends Scheduler<PriorityQueue<Process>>
                 Comparator.comparingInt(Process::get_remainingBurstTime).thenComparingInt(Process::get_id)
         );
     }
+    
+    public SJF(SJF original)
+    {
+        super(original);
+        this.isPreemptive = original.isPreemptive;
+        
+        this.readyQueue = new PriorityQueue<>(original.readyQueue.comparator());
+        
+        for (Process p : original.readyQueue)
+        {
+            this.readyQueue.add(new Process(p));
+        }
+    }
 
     @Override
     public void add_Process(Process p)

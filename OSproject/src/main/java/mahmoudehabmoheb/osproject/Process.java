@@ -38,6 +38,16 @@ public class Process
         this.priority = priority;
     }
     
+    public Process(Process original)
+    {
+        this.id = original.id;
+        this.initialBurstTime = original.initialBurstTime;
+        this.remainingBurstTime = new SimpleIntegerProperty(original.remainingBurstTime.get());
+        this.arrivalTime = original.arrivalTime;
+        this.finishedTime = original.finishedTime;
+        this.priority = original.priority;
+    }
+    
     // This setter shouldn't be used unless necessary process id's will be set automatically inorder.
     public void set_id(int id)
     {

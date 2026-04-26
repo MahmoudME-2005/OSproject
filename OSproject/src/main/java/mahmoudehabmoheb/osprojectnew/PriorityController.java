@@ -80,7 +80,6 @@ public class PriorityController extends SceneController
     @FXML
     private void handleStartAction()
     {
-        PriorityController.algo = 2;
         switchToScene("/fxml/Modes.fxml");
     }
 

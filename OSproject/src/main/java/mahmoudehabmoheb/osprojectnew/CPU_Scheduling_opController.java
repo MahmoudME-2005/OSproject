@@ -16,12 +16,11 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.VBox;
-import javafx.event.ActionEvent;
-import javafx.geometry.Orientation;
 import mahmoudehabmoheb.osproject.shedulers.Priority;
 import mahmoudehabmoheb.osproject.shedulers.SJF;
 import mahmoudehabmoheb.osproject.Process;
-import javafx.scene.input.MouseEvent;
+import mahmoudehabmoheb.osproject.shedulers.FCFS;
+import mahmoudehabmoheb.osproject.shedulers.RoundRobin;
 
 public class CPU_Scheduling_opController extends SceneController
 {
@@ -45,6 +44,23 @@ public class CPU_Scheduling_opController extends SceneController
     @FXML
     private void initialize()
     {   
+        if (CPU_Scheduling_opController.scheduler instanceof FCFS)
+        {
+            CPU_Scheduling_opController.tempScheduler = new FCFS((FCFS) CPU_Scheduling_opController.scheduler);
+        }
+        else if (CPU_Scheduling_opController.scheduler instanceof SJF)
+        {
+            CPU_Scheduling_opController.tempScheduler = new SJF((SJF) CPU_Scheduling_opController.scheduler);
+        }
+        else if (CPU_Scheduling_opController.scheduler instanceof RoundRobin)
+        {
+            CPU_Scheduling_opController.tempScheduler = new RoundRobin((RoundRobin) CPU_Scheduling_opController.scheduler);
+        }
+        else
+        {
+            CPU_Scheduling_opController.tempScheduler = new Priority((Priority) CPU_Scheduling_opController.scheduler);
+        }
+        
         xAxis = new NumberAxis();
         yAxis = new CategoryAxis();
 
@@ -66,34 +82,36 @@ public class CPU_Scheduling_opController extends SceneController
         // 3. Set the chart to fill the VBox
         VBox.setVgrow(gantChart, javafx.scene.layout.Priority.ALWAYS);
         chartContainer.getChildren().add(gantChart);
-        switch (CPU_Scheduling_opController.algo)
+        
+        if (CPU_Scheduling_opController.scheduler instanceof FCFS)
         {
-            case 0:
-                algorithmTxt.setPromptText("FCFS");
-                break;
-            case 1:
-                if (((SJF)CPU_Scheduling_opController.scheduler).is_preemptive())
-                {
-                    this.algorithmTxt.setPromptText("SJF (Preemptive)");
-                }
-                else
-                {
-                    this.algorithmTxt.setPromptText("SJF");
-                }
-                break;
-            case 2:
-                if (((Priority)CPU_Scheduling_opController.scheduler).is_preemptive())
-                {
-                    this.algorithmTxt.setPromptText("Priority (Preemptive)");
-                }
-                else
-                {
-                    this.algorithmTxt.setPromptText("Priority");
-                }
-                break;
-            default:
-                this.algorithmTxt.setPromptText("Round Robin");
-                break;
+            algorithmTxt.setPromptText("FCFS");
+        }
+        else if (CPU_Scheduling_opController.scheduler instanceof SJF)
+        {
+            if (((SJF)CPU_Scheduling_opController.scheduler).is_preemptive())
+            {
+                this.algorithmTxt.setPromptText("SJF (Preemptive)");
+            }
+            else
+            {
+                this.algorithmTxt.setPromptText("SJF");
+            }
+        }
+        else if (CPU_Scheduling_opController.scheduler instanceof Priority)
+        {
+            if (((Priority)CPU_Scheduling_opController.scheduler).is_preemptive())
+            {
+                this.algorithmTxt.setPromptText("Priority (Preemptive)");
+            }
+            else
+            {
+                this.algorithmTxt.setPromptText("Priority");
+            }
+        }
+        else
+        {
+            this.algorithmTxt.setPromptText("Round Robin");
         }
 
         for (Process P : (Iterable<Process>) (CPU_Scheduling_opController.scheduler.get_readyQueue()))
@@ -269,7 +287,7 @@ public class CPU_Scheduling_opController extends SceneController
         {
             String fxmlFile;
             
-            if (this.algo == 2)
+            if (CPU_Scheduling_opController.scheduler instanceof Priority)
             {
                 fxmlFile = "/fxml/AddProcessPriority.fxml";
             }
@@ -330,16 +348,38 @@ public class CPU_Scheduling_opController extends SceneController
    @FXML
     private void handleBackAction() // Changed ActionEvent to MouseEvent
     {
-        Process.set_counter(0);
         CPU_Scheduling_opController.scheduler.set_isRunning(false);
+        this.restoreScheduler();
+        Process.set_counter(0);
         switchToScene("/fxml/Modes.fxml");
     }
 
     @FXML
     private void handleBackActionhome() // Changed ActionEvent to MouseEvent
     {
-        Process.set_counter(0);
         CPU_Scheduling_opController.scheduler.set_isRunning(false);
+        this.restoreScheduler();
+        Process.set_counter(0);
         switchToScene("/fxml/Landing_Page.fxml");
+    }
+    
+    private void restoreScheduler()
+    {
+        if (CPU_Scheduling_opController.tempScheduler instanceof FCFS)
+        {
+            CPU_Scheduling_opController.scheduler = new FCFS((FCFS) CPU_Scheduling_opController.tempScheduler);
+        }
+        else if (CPU_Scheduling_opController.tempScheduler instanceof SJF)
+        {
+            CPU_Scheduling_opController.scheduler = new SJF((SJF) CPU_Scheduling_opController.tempScheduler);
+        }
+        else if (CPU_Scheduling_opController.tempScheduler instanceof RoundRobin)
+        {
+            CPU_Scheduling_opController.scheduler = new RoundRobin((RoundRobin) CPU_Scheduling_opController.tempScheduler);
+        }
+        else
+        {
+            CPU_Scheduling_opController.scheduler = new Priority((Priority) CPU_Scheduling_opController.tempScheduler);
+        }
     }
 }

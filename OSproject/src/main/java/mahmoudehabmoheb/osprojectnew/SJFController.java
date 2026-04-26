@@ -86,7 +86,6 @@ public class SJFController extends SceneController
     @FXML
     private void handleStartAction()
     {
-        SJFController.algo = 1;
         switchToScene("/fxml/Modes.fxml");
     }
 

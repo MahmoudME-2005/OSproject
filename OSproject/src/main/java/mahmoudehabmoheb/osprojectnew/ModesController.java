@@ -6,8 +6,9 @@ package mahmoudehabmoheb.osprojectnew;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-
-
+import mahmoudehabmoheb.osproject.shedulers.FCFS;
+import mahmoudehabmoheb.osproject.shedulers.Priority;
+import mahmoudehabmoheb.osproject.shedulers.SJF;
 
 /**
  * FXML Controller class
@@ -35,22 +36,23 @@ public class ModesController extends SceneController
     @FXML
     private void handleBack()
     {
-        switch (ModesController.algo)
+        if (ModesController.scheduler instanceof FCFS)
         {
-            case 0:
-                switchToScene("/fxml/FCFS.fxml");
-                break;
-            case 1:
-                switchToScene("/fxml/SJF.fxml");
-                break;
-            case 2:
-                switchToScene("/fxml/priority.fxml");
-                break;
-            default:
-                switchToScene("/fxml/RR.fxml");
-                break;
+            switchToScene("/fxml/FCFS.fxml");
         }
-        
+        else if (ModesController.scheduler instanceof SJF)
+        {
+            switchToScene("/fxml/SJF.fxml");
+        }
+        else if (ModesController.scheduler instanceof Priority)
+        {
+            switchToScene("/fxml/priority.fxml");
+        }
+        else
+        {
+            switchToScene("/fxml/RR.fxml");
+        }
+
         ModesController.scheduler.set_currentTime(0);
     }
 }
